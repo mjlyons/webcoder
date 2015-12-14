@@ -17,7 +17,7 @@ router.get('/ls/:path(*)', function(req, res, next) {
   res.setHeader("Expires", "0"); // Proxies.
 
   // Get requested path
-  // TODO: Make this a test (can't break out of ROOT_SOURCE_PATH)
+  // TODO: Make this a test (use /, ..) (can't break out of ROOT_SOURCE_PATH)
   let reqPath = path.resolve(ROOT_SOURCE_PATH, (req.params.path || ''));
   if (!reqPath.startsWith(ROOT_SOURCE_PATH)) {
     console.error('Tried to use relative path to escape ROOT_SOURCE_PATH');
