@@ -1,5 +1,9 @@
 "use strict";
 
+const { ROOT_SOURCE_PATH } = require('../localsettings');
+
+let test_dict = {'x': 1};
+const { x } = test_dict;
 
 let debug = require('debug')('webcoder-server:server');
 let express = require('express');
@@ -7,8 +11,7 @@ let fs = require('fs');
 let path = require('path');
 let router = express.Router();
 
-// TODO: make a localsettings.js file somewhere (and load it here?)
-const ROOT_SOURCE_PATH = '/Users/mjlyons/Workspace/webcoder'
+//debug(localsettings);
 
 router.get('/ls/:path(*)', function(req, res, next) {
   // Disable caching on browser
