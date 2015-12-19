@@ -7,7 +7,6 @@ export function ls_to_json(rootPath, reqPath='') {
   // TODO: Make this a test (use /, ..) (can't break out of ROOT_SOURCE_PATH)
   let fullPath = path.resolve(rootPath, reqPath);
   if (!fullPath.startsWith(rootPath)) {
-    console.error('Tried to use relative path to escape ROOT_SOURCE_PATH');
     return {error: 'not-authorized'};
   }
   debug(`fullPath: ${fullPath}`);
