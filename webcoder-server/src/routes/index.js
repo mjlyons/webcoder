@@ -2,16 +2,14 @@
 
 const { ROOT_SOURCE_PATH } = require('../localsettings');
 
+import { ls_to_json } from "../ls.js";
+
 let test_dict = {'x': 1};
 const { x } = test_dict;
 
-let debug = require('debug')('webcoder-server:server');
 let express = require('express');
-let fs = require('fs');
 let path = require('path');
 let router = express.Router();
-
-//debug(localsettings);
 
 router.get('/ls/:path(*)', function(req, res, next) {
   // Disable caching on browser
@@ -19,38 +17,12 @@ router.get('/ls/:path(*)', function(req, res, next) {
   res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
   res.setHeader("Expires", "0"); // Proxies.
 
-  // Get requested path
-  // TODO: Make this a test (use /, ..) (can't break out of ROOT_SOURCE_PATH)
-  let reqPath = path.resolve(ROOT_SOURCE_PATH, (req.params.path || ''));
-  if (!reqPath.startsWith(ROOT_SOURCE_PATH)) {
-    console.error('Tried to use relative path to escape ROOT_SOURCE_PATH');
+  let lsJson = ls_to_json(ROOT_SOURCE_PATH, req.params.path);
+  if (lsJson.error === 'not-authorized') {
     res.render('error', {message: 'Not authorized', error: {status: 403}});
-    return;
+  } else {
+    res.json(lsJson);
   }
-  debug(`reqPath: ${reqPath}`);
-  let childFilenames = fs.readdirSync(reqPath);
-
-  let contents = {}
-  for (let childFilename of childFilenames) {
-    let childPath = path.join(reqPath, childFilename);
-    debug(childPath);
-    let stats = fs.statSync(childPath);
-    let typeDesc = 'unknown';
-    if (stats.isFile()) {
-      typeDesc = 'file';
-    } else if (stats.isDirectory()) {
-      typeDesc = 'dir';
-    }
-    contents[childFilename] = {'type': typeDesc};
-  }
-
-  // Canned data
-  let dirJson = {
-    'path': reqPath,
-    'contents': contents,
-  };
-
-  res.json(dirJson);
 });
 
 

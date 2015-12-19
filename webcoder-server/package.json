@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "babel-node ./src/bin/www"
+    "start": "node --harmony ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -13,5 +13,9 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "gulp-babel": "^6.1.1",
+    "gulp-jasmine": "^2.2.1"
   }
 }
