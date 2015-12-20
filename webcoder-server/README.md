@@ -6,6 +6,7 @@
 
 ## Watch commands
 
-Rebuild: `npm run watch:build`
-Run Tests: `npm run watch:test`
-Run Server: `npm run watch:start`
+* Rebuild: `npm run watch:build`
+* Run Tests: `npm run watch:test`
+* Run Server: `npm run watch:start`
+
