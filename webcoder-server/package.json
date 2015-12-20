@@ -3,7 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node --harmony ./bin/www"
+    "build": "gulp",
+    "start": "cd build && node ./bin/www",
+    "test": "npm run build && jest --testPathPattern build/",
+    "dev": "npm test && npm start",
+    "test:watch": "supervisor -n exit -w src,static -x npm -- run dev",
+    "lint": "gulp lint",
+    "lint:fix": "gulp lint-fix"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -15,7 +21,12 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.11.3",
     "gulp-babel": "^6.1.1",
+    "gulp-eslint": "^1.1.1",
+    "gulp-if": "^2.0.0",
     "gulp-jasmine": "^2.2.1"
   }
 }
