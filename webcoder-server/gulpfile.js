@@ -1,8 +1,7 @@
-var gulp = require("gulp");
-var gulpIf = require('gulp-if');
 var babel = require("gulp-babel");
-var eslint = require('gulp-eslint');
-// var jasmine = require("gulp-jasmine");
+var eslint = require("gulp-eslint");
+var gulp = require("gulp");
+var gulpIf = require("gulp-if");
 
 var paths = {
   scripts: 'src/**/*.js',
@@ -33,15 +32,9 @@ gulp.task('lint', function() {
     .pipe(gulpIf(isFixed, gulp.dest('src/')));
 });
 
-// gulp.task('watch', function() {
-//   gulp.watch(paths.scripts, ['scripts', 'test']),
-//   gulp.watch(paths.static, ['static']);
-// });
+gulp.task('watch', function() {
+  gulp.watch(paths.scripts, ['scripts']),
+  gulp.watch(paths.static, ['static']);
+});
 
-// gulp.task('test', function() {
-//   return gulp.src('build/spec/**')
-//     .pipe(jasmine());
-// });
-
-// gulp.task('default', ['scripts', 'static', 'test', 'watch']);
 gulp.task('default', ['lint', 'scripts', 'static']);

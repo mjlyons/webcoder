@@ -5,11 +5,10 @@
   "scripts": {
     "build": "gulp",
     "start": "cd build && node ./bin/www",
-    "test": "npm run build && jest --testPathPattern build/",
-    "dev": "npm test && npm start",
-    "test:watch": "supervisor -n exit -w src,static -x npm -- run dev",
-    "lint": "gulp lint",
-    "lint:fix": "gulp lint-fix"
+    "test": "jest --testPathPattern build/",
+    "watch:build": "gulp watch",
+    "watch:start": "nodemon --delay 100ms",
+    "watch:test": "nodemon --watch build --delay 100ms --exec 'npm test'"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -27,6 +26,7 @@
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
     "gulp-if": "^2.0.0",
-    "gulp-jasmine": "^2.2.1"
+    "gulp-jasmine": "^2.2.1",
+    "jest-cli": "^0.8.2"
   }
 }
