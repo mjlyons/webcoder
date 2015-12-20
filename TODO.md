@@ -1,4 +1,2 @@
-* Figure out how to write unit tests & integration tests
-* Figure out how to use node debugger
+* Figure out how to write integration tests
 * Clean up inline TODOs
-* TODO: figure out how to set up package.json build system for babel
