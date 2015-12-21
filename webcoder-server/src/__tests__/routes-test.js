@@ -3,7 +3,7 @@ jest.mock('../fswrap');
 jest.mock('../localsettings.js');
 
 const mockLocalsettings = {
-  ROOT_SOURCE_PATH : '/my-root-src',
+  ROOT_SOURCE_PATH: '/my-root-src',
 };
 
 const statResultFile = {
@@ -21,7 +21,7 @@ describe('Routing:index', () => {
   let request;
 
   beforeEach(() => {
-    let localsettings = require('../localsettings');
+    const localsettings = require('../localsettings');
     localsettings.mockReturnValue(mockLocalsettings);
     app = require('../app');
     request = require('supertest');
@@ -29,8 +29,8 @@ describe('Routing:index', () => {
 
   describe('/ls endpoint', () => {
     it('handles /ls for a valid path', () => {
+      const fs = require('../fswrap');
       let done = false;
-      let fs = require('../fswrap');
       let requestError = null;
       let response = null;
 
@@ -59,7 +59,7 @@ describe('Routing:index', () => {
             'myFile.txt': { 'type': 'file' },
           },
         });
-        return true;      
+        return true;
       }, 'request to return');
     });
 
@@ -67,7 +67,7 @@ describe('Routing:index', () => {
       let done = false;
       let requestError = null;
       let response = null;
-      let fs = require('../fswrap');
+      const fs = require('../fswrap');
       fs.existsSync.mockReturnValueOnce(false);
 
       request(app)

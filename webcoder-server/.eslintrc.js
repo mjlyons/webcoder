@@ -5,6 +5,7 @@ module.exports = {
     ],
     "env": {
       "jest": true,
+      'jasmine': true,
     },
     "rules": {
       "no-unused-vars": [2, { "argsIgnorePattern": "^_" }],

@@ -1,4 +1,3 @@
-const debug = require('debug')('webcoder-server:server');
 const fs = require('./fswrap');
 const path = require('path');
 
@@ -22,7 +21,6 @@ module.exports = function ls(rootPath, reqPath = '') {
   for (let childIndex = 0; childIndex < childFilenames.length; childIndex += 1) {
     const childFilename = childFilenames[childIndex];
     const childPath = path.join(fullPath, childFilename);
-    debug(childPath);
     const stats = fs.statSync(childPath);
     let typeDesc = 'unknown';
     if (stats.isFile()) {
@@ -32,9 +30,8 @@ module.exports = function ls(rootPath, reqPath = '') {
     }
     contents[childFilename] = { 'type': typeDesc };
   }
-  let retval = {
+  return {
     'path': fullPath,
     contents,
   };
-  return retval;
 };
