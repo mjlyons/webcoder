@@ -1,4 +1,4 @@
-const { ROOT_SOURCE_PATH } = require('../localsettings');
+const { ROOT_SOURCE_PATH } = require('../localsettings')();
 const ls = require('../ls');
 
 const express = require('express');
@@ -12,7 +12,9 @@ router.get('/ls/:path(*)', function routeLs(req, res, _next) {
 
   const lsJson = ls(ROOT_SOURCE_PATH, req.params.path);
   if (lsJson.error === 'not-authorized') {
-    res.render('error', { message: 'Not authorized', error: { status: 403 } });
+    res.status(403).render('error', { message: 'Not authorized', error: { status: 403 } });
+  } else if (lsJson.error == 'not-exists') {
+    res.status(404).render('error', { message: 'Not found', error: { status: 404} });
   } else {
     res.json(lsJson);
   }

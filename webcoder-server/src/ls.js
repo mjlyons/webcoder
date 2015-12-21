@@ -1,10 +1,9 @@
 const debug = require('debug')('webcoder-server:server');
-const fs = require('fs');
+const fs = require('./fswrap');
 const path = require('path');
 
 module.exports = function ls(rootPath, reqPath = '') {
   // Get requested path
-  // TODO: Make this a test (use /, ..) (can't break out of ROOT_SOURCE_PATH)
   const fullPath = path.resolve(rootPath, reqPath);
   if (!fullPath.startsWith(rootPath)) {
     return { error: 'not-authorized' };
@@ -15,10 +14,10 @@ module.exports = function ls(rootPath, reqPath = '') {
   if (!fs.statSync(fullPath).isDirectory()) {
     return { error: 'not-dir' };
   }
-  const childFilenames = fs.readdirSync(fullPath);
 
+  const childFilenames = fs.readdirSync(fullPath);
   const contents = {};
-  // ES6-TODO: Switch to for...of (jest chokes on babel-polyfill)
+  // TODO/ES6: Switch to for...of (jest chokes on babel-polyfill)
   // for (const childFilename of childFilenames) {
   for (let childIndex = 0; childIndex < childFilenames.length; childIndex += 1) {
     const childFilename = childFilenames[childIndex];
@@ -33,8 +32,9 @@ module.exports = function ls(rootPath, reqPath = '') {
     }
     contents[childFilename] = { 'type': typeDesc };
   }
-  return {
+  let retval = {
     'path': fullPath,
     contents,
   };
+  return retval;
 };

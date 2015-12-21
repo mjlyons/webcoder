@@ -34,4 +34,4 @@ gulp.task('lint', function() {
     .pipe(gulpIf(isFixed, gulp.dest('src/')));
 });
 
-gulp.task('default', ['lint', 'scripts', 'static']);
+gulp.task('default', [/*'lint',*/ 'scripts', 'static']);

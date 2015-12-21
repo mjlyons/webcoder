@@ -31,7 +31,8 @@
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
     "gulp-if": "^2.0.0",
-    "jest-cli": "^0.8.2"
+    "jest-cli": "^0.8.2",
+    "supertest": "^1.1.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

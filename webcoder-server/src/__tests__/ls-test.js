@@ -1,4 +1,5 @@
 jest.dontMock('../ls.js');
+jest.dontMock('../fswrap.js');
 jest.mock('fs');
 
 const statResultFile = {
