@@ -15,7 +15,9 @@ function isFixed(file) {
 
 gulp.task("scripts", function() {
   return gulp.src(paths.scripts)
-    .pipe(babel())
+    .pipe(babel({
+      presets: ['es2015'],
+    }))
     .pipe(gulp.dest("build/"));
 });
 
@@ -30,11 +32,6 @@ gulp.task('lint', function() {
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
     .pipe(gulpIf(isFixed, gulp.dest('src/')));
-});
-
-gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['scripts']),
-  gulp.watch(paths.static, ['static']);
 });
 
 gulp.task('default', ['lint', 'scripts', 'static']);

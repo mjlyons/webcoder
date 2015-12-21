@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "build": "gulp",
-    "start": "cd build && node ./bin/www",
-    "test": "jest --testPathPattern build/",
-    "watch:build": "gulp watch",
-    "watch:start": "nodemon --delay 5",
-    "watch:test": "nodemon --watch build --delay 5 --exec 'npm test'"
+    "start": "npm run build && cd build && node ./bin/www",
+    "test": "jest src",
+    "watch:start": "nodemon --ignore build/ --exec 'npm test && npm start'",
+    "watch:test": "nodemon --ignore build/ --exec 'gulp lint && npm test'"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -21,13 +20,23 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "babel-jest": "^6.0.1",
+    "babel-plugin-transform-es2015-for-of": "^6.3.13",
+    "babel-plugin-transform-runtime": "^6.3.13",
+    "babel-polyfill": "^6.3.14",
+    "debug": "^2.2.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-react": "^3.11.3",
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
     "gulp-if": "^2.0.0",
-    "gulp-jasmine": "^2.2.1",
     "jest-cli": "^0.8.2"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "unmockedModulePathPatterns": [
+      "debug"
+    ]
   }
 }

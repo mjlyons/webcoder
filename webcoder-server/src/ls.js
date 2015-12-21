@@ -9,11 +9,19 @@ module.exports = function ls(rootPath, reqPath = '') {
   if (!fullPath.startsWith(rootPath)) {
     return { error: 'not-authorized' };
   }
-  debug(`fullPath: ${fullPath}`);
+  if (!fs.existsSync(fullPath)) {
+    return { error: 'not-exists' };
+  }
+  if (!fs.statSync(fullPath).isDirectory()) {
+    return { error: 'not-dir' };
+  }
   const childFilenames = fs.readdirSync(fullPath);
 
   const contents = {};
-  for (const childFilename of childFilenames) {
+  // ES6-TODO: Switch to for...of (jest chokes on babel-polyfill)
+  // for (const childFilename of childFilenames) {
+  for (let childIndex = 0; childIndex < childFilenames.length; childIndex += 1) {
+    const childFilename = childFilenames[childIndex];
     const childPath = path.join(fullPath, childFilename);
     debug(childPath);
     const stats = fs.statSync(childPath);
