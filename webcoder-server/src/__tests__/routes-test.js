@@ -27,72 +27,83 @@ describe('Routing:index', () => {
     request = require('supertest');
   });
 
-  it('handles /ls for a valid path', () => {
-    let done = false;
-    let fs = require('../fswrap');
-    fs.readdirSync.mockReturnValue(['myDir', 'myFile.txt']);
-    fs.existsSync.mockReturnValueOnce(true);
-    fs.statSync.mockReturnValueOnce(statResultDir)
-      .mockReturnValueOnce(statResultDir)
-      .mockReturnValueOnce(statResultFile);
+  describe('/ls endpoint', () => {
+    it('handles /ls for a valid path', () => {
+      let done = false;
+      let fs = require('../fswrap');
+      let requestError = null;
+      let response = null;
 
-    runs(() => {
+      fs.readdirSync.mockReturnValue(['myDir', 'myFile.txt']);
+      fs.existsSync.mockReturnValueOnce(true);
+      fs.statSync.mockReturnValueOnce(statResultDir)
+        .mockReturnValueOnce(statResultDir)
+        .mockReturnValueOnce(statResultFile);
+
       request(app)
         .get('/ls/somedir')
-        .expect('Content-Type', /json/)
-        .expect(200)
         .end((err, res) => {
+          response = res;
+          requestError = err;
           done = true;
-          if (err) { throw err; }
-          expect(res.body).toEqual({
-            'path': '/my-root-src/somedir',
-            'contents': {
-              'myDir': { 'type': 'dir' },
-              'myFile.txt': { 'type': 'file' },
-            },
-          });
         });
+      waitsFor(() => {
+        if (!done) { return false; }
+        expect(requestError).toEqual(null);
+        expect(response.status).toEqual(200);
+        expect(response.headers['content-type']).toMatch(/json/);
+        expect(response.body).toEqual({
+          'path': '/my-root-src/somedir',
+          'contents': {
+            'myDir': { 'type': 'dir' },
+            'myFile.txt': { 'type': 'file' },
+          },
+        });
+        return true;      
+      }, 'request to return');
     });
 
-    waitsFor(() => {
-      return done;
-    }, 'request to return');
-  });
+    it('handles /ls for a non-existent path', () => {
+      let done = false;
+      let requestError = null;
+      let response = null;
+      let fs = require('../fswrap');
+      fs.existsSync.mockReturnValueOnce(false);
 
-  it('handles /ls for a non-existent path', () => {
-    let done = false;
-    let fs = require('../fswrap');
-    fs.existsSync.mockReturnValueOnce(false);
-
-    runs(() => {
       request(app)
         .get('/ls/somedir')
-        .expect(404)
         .end((err, res) => {
+          response = res;
+          requestError = err;
           done = true;
-          if (err) { throw err; }
         });
+      waitsFor(() => {
+        if (!done) { return false; }
+        expect(requestError).toEqual(null);
+        expect(response.status).toEqual(404);
+        return true;
+      }, 'request to return');
     });
 
-    waitsFor(() => {
-      return done;
-    }, 'request to return');
-  });
+    it('handles /ls for a disallowed path', () => {
+      let done = false;
+      let requestError = null;
+      let response = null;
 
-  it('handles /ls for a disallowed path', () => {
-    let done = false;
-    runs(() => {
       request(app)
         .get('/ls/../somedir')
         .expect(403)
         .end((err, res) => {
+          response = res;
+          requestError = err;
           done = true;
-          if (err) { throw err; }
         });
+      waitsFor(() => {
+        if (!done) { return false; }
+        expect(requestError).toEqual(null);
+        expect(response.status).toEqual(403);
+        return true;
+      }, 'request to return');
     });
-
-    waitsFor(() => {
-      return done;
-    }, 'request to return');
   });
 });
