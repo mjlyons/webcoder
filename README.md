@@ -10,9 +10,13 @@ if you could just visit a webpage and write some code?
 There's still a lot of work to be done - right now there's just a Node/Express
 server that will let you `ls`, though there isn't a front-end... yet.
 
-# TODO
+## TODO
 
 There's many more things to do, but here's the next steps:
 
 * Build front-end for /ls directory nav with React/Flux
 * Package front-end js in webpack
+
+## License
+
+This project uses the MIT license. See the `LICENSE` file for the details.
