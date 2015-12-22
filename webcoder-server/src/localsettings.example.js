@@ -1,1 +1,5 @@
-exports.ROOT_SOURCE_PATH = '/home/myuser/src/webcoder';
+module.exports = function localsettings() {
+  return {
+    ROOT_SOURCE_PATH: '/Users/mjlyons/Workspace/webcoder',
+  };
+};
