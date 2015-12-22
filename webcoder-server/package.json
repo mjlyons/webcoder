@@ -7,8 +7,8 @@
     "start": "npm run build && cd build && node ./bin/www",
     "test": "jest src",
     "lint": "gulp lint",
-    "watch:start": "nodemon --ignore build/ --exec 'npm run lint && npm test && npm start'",
-    "watch:test": "nodemon --ignore build/ --exec 'npm run lint && npm test'"
+    "watch:start": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
+    "watch:test": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
