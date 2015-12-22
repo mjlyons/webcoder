@@ -1,12 +1,11 @@
 # Usage
 
-* Rebuild: `npm run build`
-* Run tests: `node test`
-* Run server: `node start`
+* Build (but not run) the server: `npm run build`
+* Start (and build) the server: `npm start`
+* Test the server: `npm test`
+* Run tests whenever source changes: `npm run watch:test`
+* Run tests, rebuild, and restart server whenever source changes: `npm run watch:start`
 
-## Watch commands
+If you're doing development, `npm run watch:start` is probably what you want.
 
-* Rebuild: `npm run watch:build`
-* Run Tests: `npm run watch:test`
-* Run Server: `npm run watch:start`
-
+If you just want to run the server, `npm start` is probably what you want.
