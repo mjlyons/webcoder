@@ -1,0 +1,14 @@
+body {
+  font: 12pt sans-serif;
+}
+
+.folder-browser-entry {
+  padding-bottom: 5px;
+}
+
+.file-icon {
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  padding-right: 5px;
+}

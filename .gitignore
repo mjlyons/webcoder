@@ -3,3 +3,4 @@ node_modules
 localsettings.js
 *.log
 build
+*.swp
