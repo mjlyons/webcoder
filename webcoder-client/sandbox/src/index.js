@@ -19,7 +19,7 @@ const FolderBrowser = React.createClass({
   render: () => {
     return (
       <div>
-        <FolderBrowserEntry classnames="fa fa-folder" filename="myfolder" id="/myfolder" />
+        <FolderBrowserEntry classnames="fa fa-folder" filename="myawesomefolder" id="/myfolder" />
         <FolderBrowserEntry classnames="fa fa-file" filename="myfile.txt" id="/myfile.txt" />
       </div>
     );
