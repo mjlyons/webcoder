@@ -6,6 +6,9 @@ const filetypes = {
   FOLDER: Symbol(),
 };
 
+// TODO(mike): create a class for fileinfo
+// TODO(mike): ES6-ify this (use real classes, "() =>" functions, etc.)
+
 const FolderBrowserEntry = React.createClass({
   //propTypes: {
   //  iconClasses: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,

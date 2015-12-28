@@ -4,3 +4,4 @@ localsettings.js
 *.log
 build
 *.swp
+*.swo
