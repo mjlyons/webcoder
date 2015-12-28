@@ -1,3 +1,6 @@
+const React = require('react');
+const ReactDOM = require('react-dom');
+
 const FolderBrowserEntry = React.createClass({
   propTypes: {
   //  iconClasses: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
@@ -16,10 +19,10 @@ const FolderBrowserEntry = React.createClass({
 });
 
 const FolderBrowser = React.createClass({
-  render: () => {
+  render: function() {
     return (
       <div>
-        <FolderBrowserEntry classnames="fa fa-folder" filename="myawesomefolder" id="/myfolder" />
+        <FolderBrowserEntry classnames="fa fa-folder" filename="my-awesome-folder" id="/myfolder" />
         <FolderBrowserEntry classnames="fa fa-file" filename="myfile.txt" id="/myfile.txt" />
       </div>
     );

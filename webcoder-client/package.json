@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --color",
+    "build": "webpack -p --progress --color",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:build": "webpack --progress --color --watch",
     "dev": "webpack-dev-server --progress --colors"
@@ -16,6 +16,8 @@
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
     "webpack": "^1.12.9"
   },
   "devDependencies": {
