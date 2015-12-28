@@ -14,8 +14,7 @@ server that will let you `ls`, though there isn't a front-end... yet.
 
 There's many more things to do, but here's the next steps:
 
-* Build front-end for /ls directory nav with React/Flux
-* Package front-end js in webpack
+* ES6-ify react code
 
 ## License
 
