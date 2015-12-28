@@ -20,6 +20,7 @@ There's many more things to do, but here's the next steps:
 * Add flux support
 * Add some tests for flux code
 * Query server for folder contents
+* Compile SASS/SCSS to CSS and require with webpack
 
 ## License
 
