@@ -14,7 +14,11 @@ server that will let you `ls`, though there isn't a front-end... yet.
 
 There's many more things to do, but here's the next steps:
 
+* Break up index.js
+* Write some tests for react code in jest
 * ES6-ify react code
+* Add flux support
+* Query server for folder contents
 
 ## License
 
