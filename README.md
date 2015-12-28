@@ -18,6 +18,7 @@ There's many more things to do, but here's the next steps:
 * Write some tests for react code in jest
 * ES6-ify react code
 * Add flux support
+* Add some tests for flux code
 * Query server for folder contents
 
 ## License
