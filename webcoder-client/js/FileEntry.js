@@ -1,7 +1,7 @@
 // TODO(mike): create a class for fileinfo
 const Filetypes = {
-  FILE: Symbol(),
-  FOLDER: Symbol(),
+  FILE: Symbol("FILE"),
+  FOLDER: Symbol("FOLDER"),
 };
 
 module.exports = {

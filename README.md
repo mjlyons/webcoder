@@ -14,12 +14,11 @@ server that will let you `ls`, though there isn't a front-end... yet.
 
 There's many more things to do, but here's the next steps:
 
-* Add flux support
+* Add flux support (inital work done, but needs some cleanup)
 * Add some tests for flux code
 * ES6-ify react code (turn Filetype into a class, etc.)
 * Query server for folder contents
-* Compile SASS/SCSS to CSS and require with webpack
-* Get eslint working
+* Get eslint working on frontend
 * Figure out jsdoc (or something like it)
 * Make setting up the localsettings.js file part of install flow
 
