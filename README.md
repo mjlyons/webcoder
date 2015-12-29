@@ -11,7 +11,7 @@ There's still a lot of work to be done - right now you can just browse through y
 source file system - open folders and see what files are in them. You can't view/edit
 the contents of files yet.
 
-![Folder Browser only screenshot](https://github.com/mjlyons/webcoder/blob/master/docs/img/folder-browser-only.png)
+![Folder Browser only screencast](https://www.dropbox.com/s/2a4tndwo4fvf8pb/folder-browser-only.gif?raw=1)
 
 The backend is a Node/Express server. Right now it just responds to /ls/<PATH> with a JSON
 blob describing the (shallow) contents of the file.
