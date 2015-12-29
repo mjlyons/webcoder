@@ -31,7 +31,6 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
   },
 
   updateFolderContents: function(path) {
-    console.log(`SourceFileSystemStore:updateFolderContents: ${path}`);
     const req = new XMLHttpRequest();
     // TODO(mike): handle error (both on HTTP and in response)
     const _this = this;

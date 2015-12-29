@@ -22,7 +22,6 @@ module.exports = React.createClass({
   },
   handleClick: function(evt) {
     evt.preventDefault();
-    console.log(`Clicked ${this.props.fileinfo.path}`);
     FolderBrowserActionCreators.openFileEntry(this.props.fileinfo);
   },
   render: function() {

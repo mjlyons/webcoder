@@ -35,7 +35,6 @@ FolderBrowserStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
 
     case ActionTypes.OPEN_FILE_ENTRY:
-      console.log(`FolderBrowserStore:OPEN_FILE_ENTRY: ${action.fileinfo.path}`);
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
         _data.currentPath = action.fileinfo.path;
         FolderBrowserStore.emitChange();
