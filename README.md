@@ -7,8 +7,17 @@ remote server. You shouldn't need to install a bunch of tools on your computer j
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
 if you could just visit a webpage and write some code?
 
-There's still a lot of work to be done - right now there's just a Node/Express
-server that will let you `ls`, though there isn't a front-end... yet.
+There's still a lot of work to be done - right now you can just browse through your
+source file system - open folders and see what files are in them. You can't view/edit
+the contents of files yet.
+
+![Folder Browser only screenshot](https://github.com/mjlyons/webcoder/blob/master/docs/img/folder-browser-only.png)
+
+The backend is a Node/Express server. Right now it just responds to /ls/<PATH> with a JSON
+blob describing the (shallow) contents of the file.
+
+The front-end is React/Flux, and use the /ls/ endpoint to implement a "Folder Browser" - you can
+see the files and folders inside your source directory, though you can't open them yet.
 
 ## TODO
 
