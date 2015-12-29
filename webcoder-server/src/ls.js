@@ -42,8 +42,9 @@ module.exports = function ls(rootPath, reqPath = '') {
     }
     contents[childFilename] = { 'type': typeDesc };
   }
+
   return {
-    'path': fullPath,
+    'path': '/' + reqPath,
     contents,
   };
 };

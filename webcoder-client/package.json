@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.3.13",
     "classnames": "^2.2.1",
     "css-loader": "^0.23.1",
+    "flux": "^2.1.1",
     "html-webpack-plugin": "^1.7.0",
     "node-sass": "^3.4.2",
     "react": "^0.14.3",
@@ -33,6 +34,7 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
+    "testPathDirs": ["<rootDir>/js"],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",

@@ -19,6 +19,9 @@ There's many more things to do, but here's the next steps:
 * ES6-ify react code (turn Filetype into a class, etc.)
 * Query server for folder contents
 * Compile SASS/SCSS to CSS and require with webpack
+* Get eslint working
+* Figure out jsdoc (or something like it)
+* Make setting up the localsettings.js file part of install flow
 
 ## License
 

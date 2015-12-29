@@ -53,7 +53,7 @@ describe('Routing:index', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toMatch(/json/);
         expect(response.body).toEqual({
-          'path': '/my-root-src/somedir',
+          'path': '/somedir',
           'contents': {
             'myDir': { 'type': 'dir' },
             'myFile.txt': { 'type': 'file' },

@@ -32,7 +32,7 @@ describe('ls', function desc() {
       .mockReturnValueOnce(statResultDir)
       .mockReturnValueOnce(statResultFile);
     expect(ls('/srcdir', 'subdir')).toEqual({
-      'path': '/srcdir/subdir',
+      'path': '/subdir',
       'contents': {
         'aDir': { 'type': 'dir' },
         'aFile.txt': { 'type': 'file' },
@@ -50,7 +50,7 @@ describe('ls', function desc() {
     fs.readdirSync.mockReturnValueOnce([]);
     fs.existsSync.mockReturnValueOnce(true);
     expect(ls('/srcdir', 'subdir')).toEqual({
-      'path': '/srcdir/subdir',
+      'path': '/subdir',
       'contents': {},
     });
   });

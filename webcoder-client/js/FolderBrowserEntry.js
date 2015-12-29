@@ -1,13 +1,13 @@
-// TODO(mike): Get scss requires working in jest
-require("style/FolderBrowserEntry.scss");
-
 const React = require('react');
 const classNames = require('classnames');
 
-// TODO(mike): Get root-based requires working in jest
 const { Filetypes } = require('js/FileEntry');
+const FolderBrowserActionCreators = require('js/FolderBrowserActionCreators');
+
+require("style/FolderBrowserEntry.scss");
 
 module.exports = React.createClass({
+  // TODO(mike): get proptypes working (maybe also set fileinfo class up)
   //propTypes: {
   //  iconClasses: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   //  classnames: React.PropTypes.string.isRequired,
@@ -20,14 +20,19 @@ module.exports = React.createClass({
       'fa-folder': Filetypes.FOLDER == filetype,
     });
   },
+  handleClick: function(evt) {
+    evt.preventDefault();
+    console.log(`Clicked ${this.props.fileinfo.path}`);
+    FolderBrowserActionCreators.openFileEntry(this.props.fileinfo);
+  },
   render: function() {
     return (
-      <div key={this.props.path} className="folder-browser-entry">
+      <a href="#" key={this.props.path} className="folder-browser-entry" onClick={this.handleClick} >
         <span className="file-icon">
           <i ref="fileIcon" className={this.getClassNamesFromFiletype(this.props.fileinfo.filetype)} />
         </span>
         <span ref="filename" className="file-name">{this.props.fileinfo.filename}</span>
-      </div>
+      </a>
     );
   }
 });
