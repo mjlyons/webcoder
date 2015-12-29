@@ -1,7 +1,1 @@
-{
-  "name":"Webcoder",
-  "tagline":"Code editor in your browser",
-  "body":"TODO(mike): Update this page once webcoder is minimally useful for editing source code.",
-  "google":"",
-  "note":"Don't delete this file! It's used internally to help with page regeneration."
-}
+{"name":"Webcoder","tagline":"Code editor in your browser","body":"TODO(mike): Update this page once webcoder is minimally useful for editing source code.","google":"","note":"Don't delete this file! It's used internally to help with page regeneration."}
