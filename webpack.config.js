@@ -3,9 +3,9 @@ const localsettings = require('./js/localsettings');
 const path = require('path');
 
 module.exports = {
-  entry: "./js/index.js",
+  entry: "./js/client/index.js",
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'build/client'),
     filename: "bundle.js"
   },
   resolve: {
@@ -32,7 +32,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'html/index.html',
+      template: 'client/html/index.html',
       localsettings: localsettings
     }),
   ],

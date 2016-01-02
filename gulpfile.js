@@ -18,12 +18,12 @@ gulp.task("scripts", function() {
     .pipe(babel({
       presets: ['es2015'],
     }))
-    .pipe(gulp.dest("build/"));
+    .pipe(gulp.dest("build/server/"));
 });
 
 gulp.task("static", function() {
   return gulp.src(paths.static)
-    .pipe(gulp.dest("build/"));
+    .pipe(gulp.dest("build/server/"));
 });
 
 gulp.task('lint', function() {
@@ -31,7 +31,7 @@ gulp.task('lint', function() {
     .pipe(eslint({"fix": true}))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-    .pipe(gulpIf(isFixed, gulp.dest('src/')));
+    .pipe(gulpIf(isFixed, gulp.dest('js/')));
 });
 
 gulp.task('default', ['scripts', 'static']);
