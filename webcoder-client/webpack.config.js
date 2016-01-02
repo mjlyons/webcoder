@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const localsettings = require('./js/localsettings');
 const path = require('path');
 
 module.exports = {
@@ -32,6 +33,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'html/index.html',
+      localsettings: localsettings
     }),
   ],
 }
