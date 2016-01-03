@@ -5,7 +5,7 @@ const ReactDOM = require('react-dom');
 
 const FolderBrowser = require('js/client/FolderBrowser');
 
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     React.createElement(FolderBrowser, { startPath: '/' }),
     document.getElementById('content')

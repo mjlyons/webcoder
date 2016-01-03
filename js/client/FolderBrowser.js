@@ -18,15 +18,15 @@ function getStateFromStores() {
 
 module.exports = React.createClass({
 
-  getInitialState: function() {
+  propTypes: {
+    startPath: React.PropTypes.string.isRequired,
+  },
+
+  getInitialState: () => {
     return getStateFromStores();
   },
 
-  _onChange: function() {
-    this.setState(getStateFromStores());
-  },
-
-  componentDidMount: function() {
+  componentDidMount: () => {
     FolderBrowserStore.addChangeListener(this._onChange);
     SourceFileSystemStore.addChangeListener(this._onChange);
     FolderBrowserActionCreators.openFileEntry({
@@ -36,25 +36,29 @@ module.exports = React.createClass({
     });
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount: () => {
     FolderBrowserStore.removeChangeListener(this._onChange);
     SourceFileSystemStore.removeChangeListener(this._onChange);
   },
 
   // TODO(mike): Make this a util and unit test separately
-  getParentPath: function() {
+  getParentPath: () => {
     if (this.state.currentPath === '/') {
       return null;
     }
     return this.state.currentPath.match(/(.*\/).+\/*$/)[1];
   },
 
-  render: function() {
+  _onChange: () => {
+    this.setState(getStateFromStores());
+  },
+
+  render: () => {
     return (
       <div>
         <div>{this.state.currentPath}</div>
         <FolderBrowserEntryList folderInfo={this.state.folderContents} parentPath={this.getParentPath()} />
       </div>
     );
-  }
+  },
 });

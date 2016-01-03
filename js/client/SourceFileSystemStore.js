@@ -18,70 +18,69 @@ const _pathContents = {};
 
 const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
 
-  emitChange: function() {
+  emitChange: () => {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener: function(callback) {
+  addChangeListener: callback => {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT);
+  removeChangeListener: callback => {
+    this.removeListener(CHANGE_EVENT, callback);
   },
 
-  updateFolderContents: function(path) {
+  updateFolderContents: requestedPath => {
     const req = new XMLHttpRequest();
     // TODO(mike): handle error (both on HTTP and in response)
     const _this = this;
-    req.addEventListener('load', function() {
-      //console.log(`response: ${this.responseText}`);
+    req.addEventListener('load', () => {
       _this.handleServerLsResponse(this);
     });
-    req.addEventListener('error', function() {
+    req.addEventListener('error', () => {
       // TODO(mike): implement
-      console.error("Error making /ls request");
     });
-    req.open("GET", `http://webcoder:3000/ls${path}`);  // TODO(mike): parameterize path
+    req.open('GET', `http://webcoder:3000/ls${requestedPath}`);  // TODO(mike): parameterize path
     req.send();
   },
 
-  handleServerLsResponse: function (response) {
+  handleServerLsResponse: response => {
     // TODO(mike): handle 403, 404, 500
     const jsonResponse = JSON.parse(response.responseText);
     const contents = [];
     // TODO(mike): This should use a proper classA
     for (const serverFileName in jsonResponse.contents) {
-      const serverFileInfo = jsonResponse.contents[serverFileName];
-      contents.push({
-        filetype: SERVER_FILETYPE_TO_CLIENT_FILETYPE[serverFileInfo.type],
-        filename: serverFileName,
-        path: path.resolve(jsonResponse.path, serverFileName),
-      });
+      if ({}.hasOwnProperty.call(serverFileName, jsonResponse.contents)) {  // TODO(mike): Maybe I can do this better with immutablejs
+        const serverFileInfo = jsonResponse.contents[serverFileName];
+        contents.push({
+          filetype: SERVER_FILETYPE_TO_CLIENT_FILETYPE[serverFileInfo.type],
+          filename: serverFileName,
+          path: path.resolve(jsonResponse.path, serverFileName),
+        });
+      }
     }
     _pathContents[jsonResponse.path] = contents;
     this.emitChange();
   },
 
-  getFolderContents: function(path) {
+  getFolderContents: requestedPath => {
     // TODO: query server if doesn't exist
     if (path in _pathContents) {
       return {
         state: FolderStates.CACHED,
-        contents: _pathContents[path],
+        contents: _pathContents[requestedPath],
       };
-    } else {  // TODO(mike): handle 404, 403, is-a-file
-      return {
-        state: FolderStates.NOT_CACHED,
-        contents: [],
-      };
-    }
-  }
+    } // TODO(mike): handle 404, 403, is-a-file
+    return {
+      state: FolderStates.NOT_CACHED,
+      contents: [],
+    };
+  },
 
 });
 
-SourceFileSystemStore.dispatchToken = Dispatcher.register(function(action) {
-  switch(action.type) {
+SourceFileSystemStore.dispatchToken = Dispatcher.register(action => {
+  switch (action.type) {
 
     case ActionTypes.OPEN_FILE_ENTRY:
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
@@ -89,8 +88,11 @@ SourceFileSystemStore.dispatchToken = Dispatcher.register(function(action) {
       }
       break;
 
+    default:
+      // Do nothing
+      break;
+
   }
 });
 
 module.exports = SourceFileSystemStore;
-

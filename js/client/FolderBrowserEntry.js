@@ -4,27 +4,23 @@ const classNames = require('classnames');
 const { Filetypes } = require('js/common/FileEntry');
 const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
 
-require("client/style/FolderBrowserEntry.scss");
+require('client/style/FolderBrowserEntry.scss');
 
-module.exports = React.createClass({
-  // TODO(mike): get proptypes working (maybe also set fileinfo class up)
-  //propTypes: {
-  //  iconClasses: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  //  classnames: React.PropTypes.string.isRequired,
-  //  filename: React.PropTypes.string.isRequired,
-  //  id: React.PropTypes.string.isRequired,
-  //},
-  getClassNamesFromFiletype: function(filetype) {
+class FolderBrowserEntry extends React.Component {
+
+  getClassNamesFromFiletype(filetype) {
     return classNames('fa', {
-      'fa-file': Filetypes.FILE == filetype,
-      'fa-folder': Filetypes.FOLDER == filetype,
+      'fa-file': Filetypes.FILE === filetype,
+      'fa-folder': Filetypes.FOLDER === filetype,
     });
-  },
-  handleClick: function(evt) {
+  }
+
+  handleClick(evt) {
     evt.preventDefault();
     FolderBrowserActionCreators.openFileEntry(this.props.fileinfo);
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <a href="#" key={this.props.path} className="folder-browser-entry" onClick={this.handleClick} >
         <span className="file-icon">
@@ -34,4 +30,12 @@ module.exports = React.createClass({
       </a>
     );
   }
-});
+
+}
+
+FolderBrowserEntry.propTypes = {
+  path: React.PropTypes.string.isRequired,
+  fileinfo: React.PropTypes.object.isRequired,
+};
+
+module.exports = FolderBrowserEntry;

@@ -1,7 +1,6 @@
 jest.dontMock('js/common/FileEntry');
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
