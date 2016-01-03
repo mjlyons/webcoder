@@ -18,7 +18,7 @@
     "server:build": "gulp",
     "server:start": "node ./bin/server/www",
     "server:start:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
-    "test": "jest",
+    "test": "jest ./js/",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
   },
   "dependencies": {
@@ -64,22 +64,18 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
-    "testPathDirs": [
-      "<rootDir>/js"
-    ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/classnames",
       "<rootDir>/node_modules/fbjs",
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-addons-test-utils",
       "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/supertest",
-      "<rootDir>/style"
+      "<rootDir>/node_modules/supertest"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/build/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/style/"
     ]
-  },
-  "modulePathIgnorePatterns": [
-    "<rootDir>/node_modules/",
-    "<rootDir>/style/"
-  ],
-  "rootDir": "<rootDir>"
+  }
 }
