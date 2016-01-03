@@ -22,15 +22,15 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener: callback => {
+  addChangeListener: function addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: callback => {
+  removeChangeListener: function removeChangeListener (callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  updateFolderContents: requestedPath => {
+  updateFolderContents: function updateFolderContents(requestedPath) {
     const req = new XMLHttpRequest();
     // TODO(mike): handle error (both on HTTP and in response)
     const _this = this;
@@ -40,11 +40,11 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     req.addEventListener('error', () => {
       // TODO(mike): implement
     });
-    req.open('GET', `http://webcoder:3000/ls${requestedPath}`);  // TODO(mike): parameterize path
+    req.open('GET', `http://localhost:3000/ls${requestedPath}`);  // TODO(mike): parameterize path
     req.send();
   },
 
-  handleServerLsResponse: response => {
+  handleServerLsResponse: function handleServerLsResponse(response) {
     // TODO(mike): handle 403, 404, 500
     const jsonResponse = JSON.parse(response.responseText);
     const contents = [];
@@ -63,7 +63,7 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     this.emitChange();
   },
 
-  getFolderContents: requestedPath => {
+  getFolderContents: function getFolderContents(requestedPath) {
     // TODO: query server if doesn't exist
     if (path in _pathContents) {
       return {

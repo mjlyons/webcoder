@@ -25,7 +25,7 @@ app.use(express.static(path.join(process.env.PWD, './server/static')));
 app.use((_req, res, next) => {
   // TODO(mike): parameterize allow-origin server
   // TODO(mike): switch to HTTPS
-  res.setHeader('Access-Control-Allow-Origin', 'http://webcoder:8080');  // TODO(mike): parameterize
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');  // TODO(mike): parameterize
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });

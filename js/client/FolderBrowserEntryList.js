@@ -5,7 +5,6 @@ const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
 
 class FolderBrowserEntryList extends React.Component {
 
-
   // TODO(mike): This function is hard to read and should use helper methods.
   render() {
     let parentFolderBrowserEntry = null;

@@ -8,6 +8,11 @@ require('client/style/FolderBrowserEntry.scss');
 
 class FolderBrowserEntry extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+  }
+
   getClassNamesFromFiletype(filetype) {
     return classNames('fa', {
       'fa-file': Filetypes.FILE === filetype,
