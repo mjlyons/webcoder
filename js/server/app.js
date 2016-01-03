@@ -4,13 +4,13 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const routes = require('./routes/index');
-const users = require('./routes/users');
+const routes = require('js/server/routes/index');
+const users = require('js/server/routes/users');
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(process.env.PWD, './server/views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -19,13 +19,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(process.env.PWD, './server/static')));
 
 // Allows javascript (at webcoder:8080) to access all routes on server
 app.use((_req, res, next) => {
   // TODO(mike): parameterize allow-origin server
   // TODO(mike): switch to HTTPS
-  res.setHeader('Access-Control-Allow-Origin', 'http://webcoder:8080');
+  res.setHeader('Access-Control-Allow-Origin', 'http://webcoder:8080');  // TODO(mike): parameterize
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });

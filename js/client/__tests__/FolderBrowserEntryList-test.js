@@ -1,12 +1,12 @@
-jest.dontMock('js/FileEntry');
+jest.dontMock('js/common/FileEntry');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-const FolderBrowserEntry = require('js/FolderBrowserEntry');
-const FolderBrowserEntryList = require.requireActual('js/FolderBrowserEntryList');
-const { Filetypes } = require.requireActual('js/FileEntry');
+const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
+const FolderBrowserEntryList = require.requireActual('js/client/FolderBrowserEntryList');
+const { Filetypes } = require.requireActual('js/common/FileEntry');
 
 describe('FolderBrowserEntryList', () => {
   it('displays a list with a file and a folder', () => {

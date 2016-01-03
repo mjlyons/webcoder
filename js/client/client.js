@@ -1,9 +1,9 @@
-require('style/index');
+require('client/style/client');
 
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-const FolderBrowser = require('js/FolderBrowser');
+const FolderBrowser = require('js/client/FolderBrowser');
 
 document.addEventListener("DOMContentLoaded", (event) => {
   ReactDOM.render(

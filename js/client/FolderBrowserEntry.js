@@ -1,10 +1,10 @@
 const React = require('react');
 const classNames = require('classnames');
 
-const { Filetypes } = require('js/FileEntry');
-const FolderBrowserActionCreators = require('js/FolderBrowserActionCreators');
+const { Filetypes } = require('js/common/FileEntry');
+const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
 
-require("style/FolderBrowserEntry.scss");
+require("client/style/FolderBrowserEntry.scss");
 
 module.exports = React.createClass({
   // TODO(mike): get proptypes working (maybe also set fileinfo class up)

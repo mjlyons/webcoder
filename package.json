@@ -10,18 +10,19 @@
     "url": "https://github.com/mjlyons/webcoder"
   },
   "scripts": {
-    "build:client": "webpack -p --progress --color",
-    "build:server": "gulp",
-    "dev:client": "webpack-dev-server -d --inline --progress --colors",
-    "start:server": "npm run build && cd build && node ./bin/www",
-    "test:client": "jest",
-    "test:server": "jest src",
-    "lint:server": "gulp lint",
-    "watch:build:client": "webpack -d --progress --color --watch",
-    "watch:start:server": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
-    "watch:test:server": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
+    "client:build": "webpack -p --progress --color",
+    "client:build:watch": "webpack -d --progress --color --watch",
+    "client:dev": "webpack-dev-server -d --inline --progress --colors",
+    "debug:server": "node debug ./bin/server/www",
+    "lint": "gulp lint",
+    "server:build": "gulp",
+    "server:start": "node ./bin/server/www",
+    "server:start:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
+    "test": "jest ./js/",
+    "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
   },
   "dependencies": {
+    "app-module-path": "^1.0.5",
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
@@ -63,20 +64,18 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
-    "testPathDirs": ["<rootDir>/js"],
     "unmockedModulePathPatterns": [
-      "debug",
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/fbjs",
       "<rootDir>/node_modules/classnames",
-      "<rootDir>/style"
+      "<rootDir>/node_modules/fbjs",
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/react-addons-test-utils",
+      "<rootDir>/node_modules/react-dom",
+      "<rootDir>/node_modules/supertest"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/build/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/style/"
     ]
-  },
-  "modulePathIgnorePatterns": [
-    "<rootDir>/node_modules/",
-    "<rootDir>/style/"
-  ],
-  "rootDir": "<rootDir>"
+  }
 }

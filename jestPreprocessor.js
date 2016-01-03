@@ -10,7 +10,6 @@ function matches(filename) {
 
 module.exports = {
   process: function (src, filename) {
-    var stage = process.env.BABEL_JEST_STAGE || 2;
     if (filename.indexOf("node_modules") !== -1) {  // Pass-through external modules
       return src;
     } else if (filename.toLowerCase().endsWith('.scss')) {  //  Ignore scss files

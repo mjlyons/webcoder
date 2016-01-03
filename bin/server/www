@@ -4,7 +4,12 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+// This import must come before any non-node_modules imports
+const path = require('path');
+const buildServerPath = path.resolve(process.env.PWD, 'build/server/');
+require('app-module-path').addPath(buildServerPath);
+
+var app = require('js/server/app');
 var debug = require('debug')('webcoder-server:server');
 var http = require('http');
 

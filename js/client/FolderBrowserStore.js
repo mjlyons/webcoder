@@ -1,8 +1,8 @@
 const { EventEmitter } = require('events');
 
-const { ActionTypes } = require('js/Constants');
-const Dispatcher = require('js/Dispatcher');
-const { Filetypes } = require('js/FileEntry');
+const { ActionTypes } = require('js/client/Constants');
+const Dispatcher = require('js/client/Dispatcher');
+const { Filetypes } = require('js/common/FileEntry');
 
 const CHANGE_EVENT = 'change';
 

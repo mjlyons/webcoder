@@ -2,11 +2,11 @@ const React = require('react');
 
 const path = require('path');
 
-const { Filetypes } = require('js/FileEntry');
-const FolderBrowserActionCreators = require('js/FolderBrowserActionCreators');
-const FolderBrowserEntryList = require('js/FolderBrowserEntryList');
-const FolderBrowserStore = require('js/FolderBrowserStore');
-const SourceFileSystemStore = require('js/SourceFileSystemStore');
+const { Filetypes } = require('js/common/FileEntry');
+const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
+const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
+const FolderBrowserStore = require('js/client/FolderBrowserStore');
+const SourceFileSystemStore = require('js/client/SourceFileSystemStore');
 
 function getStateFromStores() {
   const currentPath = FolderBrowserStore.get().currentPath;
