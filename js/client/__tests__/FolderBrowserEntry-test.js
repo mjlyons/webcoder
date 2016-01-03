@@ -15,7 +15,7 @@ describe('FolderBrowserEntry', () => {
       path: '/ParentFolder/MyFolder',
     };
     const folderBrowserEntry = TestUtils.renderIntoDocument(
-      <FolderBrowserEntry fileinfo={folderInfo} path="/" />
+      <FolderBrowserEntry fileinfo={folderInfo} />
     );
     const entryNode = ReactDOM.findDOMNode(folderBrowserEntry);
 
@@ -29,7 +29,7 @@ describe('FolderBrowserEntry', () => {
       path: '/ParentFolder/MyFile.txt',
     };
     const folderBrowserEntry = TestUtils.renderIntoDocument(
-      <FolderBrowserEntry fileinfo={folderInfo} path="/" />
+      <FolderBrowserEntry fileinfo={folderInfo} />
     );
     const entryNode = ReactDOM.findDOMNode(folderBrowserEntry);
 
