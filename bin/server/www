@@ -6,7 +6,7 @@
 
 // This import must come before any non-node_modules imports
 const path = require('path');
-const buildServerPath = path.resolve(process.env.PWD, 'build/server/');
+const buildServerPath = path.resolve(process.env.PWD, 'build/');
 require('app-module-path').addPath(buildServerPath);
 
 var app = require('js/server/app');

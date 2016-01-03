@@ -19,7 +19,7 @@ app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(process.env.PWD, './server/static')));
+app.use('/static', express.static(path.join(__dirname, '../../static')));
 
 // Allows javascript (at webcoder:8080) to access all routes on server
 app.use((_req, res, next) => {

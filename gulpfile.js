@@ -11,7 +11,7 @@ var paths = {
   allScripts: [
     'js/**/*.js'
   ],
-  static: 'server/static/**',
+  static: ['static/**', '!**/.*'],
   localsettings: 'localsettings.js'
 };
 
@@ -25,17 +25,17 @@ gulp.task("scripts", function() {
     .pipe(babel({
       presets: ['es2015'],
     }))
-    .pipe(gulp.dest("build/server/js/"));
+    .pipe(gulp.dest("build/js/"));
 });
 
 gulp.task("static", function() {
   return gulp.src(paths.static)
-    .pipe(gulp.dest("build/server/static/"));
+    .pipe(gulp.dest("build/static/"));
 });
 
 gulp.task("localsettings", function() {
   return gulp.src(paths.localsettings)
-    .pipe(gulp.dest("build/server/"));
+    .pipe(gulp.dest("build/"));
 });
 
 gulp.task('lint', function() {
