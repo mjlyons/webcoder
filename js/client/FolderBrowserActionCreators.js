@@ -1,5 +1,5 @@
-const { ActionTypes } = require('js/Constants');
-const Dispatcher = require('js/Dispatcher');
+const { ActionTypes } = require('js/client/Constants');
+const Dispatcher = require('js/client/Dispatcher');
 
 module.exports = {
 

@@ -1,4 +1,4 @@
-const fs = require('./fswrap');
+const fs = require('js/server/fswrap');
 const path = require('path');
 
 // Returns a json object with information about files in the requested

@@ -4,8 +4,12 @@ var gulp = require("gulp");
 var gulpIf = require("gulp-if");
 
 var paths = {
-  scripts: 'src/**/*.js',
-  static: 'static/**'
+  scripts: [
+    'js/**/*.js',
+    '!js/client/**',
+  ],
+  static: 'server/static/**',
+  localsettings: 'localsettings.js'
 };
 
 function isFixed(file) {
@@ -18,11 +22,16 @@ gulp.task("scripts", function() {
     .pipe(babel({
       presets: ['es2015'],
     }))
-    .pipe(gulp.dest("build/server/"));
+    .pipe(gulp.dest("build/server/js/"));
 });
 
 gulp.task("static", function() {
   return gulp.src(paths.static)
+    .pipe(gulp.dest("build/server/static/"));
+});
+
+gulp.task("localsettings", function() {
+  return gulp.src(paths.localsettings)
     .pipe(gulp.dest("build/server/"));
 });
 
@@ -34,4 +43,4 @@ gulp.task('lint', function() {
     .pipe(gulpIf(isFixed, gulp.dest('js/')));
 });
 
-gulp.task('default', ['scripts', 'static']);
+gulp.task('default', ['localsettings', 'scripts', 'static']);

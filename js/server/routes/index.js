@@ -1,4 +1,4 @@
-const { ROOT_SOURCE_PATH } = require('../localsettings')();
+const { ROOT_SOURCE_PATH } = require('localsettings')();
 const ls = require('../ls');
 
 const express = require('express');

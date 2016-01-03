@@ -1,6 +1,6 @@
 jest.autoMockOff();
 jest.mock('../fswrap');
-jest.mock('../localsettings.js');
+jest.mock('localsettings');
 
 const mockLocalsettings = {
   ROOT_SOURCE_PATH: '/my-root-src',
@@ -21,7 +21,7 @@ describe('Routing:index', () => {
   let request;
 
   beforeEach(() => {
-    const localsettings = require('../localsettings');
+    const localsettings = require('localsettings');
     localsettings.mockReturnValue(mockLocalsettings);
     app = require('../app');
     request = require('supertest');

@@ -1,7 +1,7 @@
 const React = require('react');
 
-const { Filetypes } = require('js/FileEntry');
-const FolderBrowserEntry = require('js/FolderBrowserEntry');
+const { Filetypes } = require('js/common/FileEntry');
+const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
 
 module.exports = React.createClass({
   render: function() {
