@@ -18,7 +18,7 @@ const _pathContents = {};
 
 const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
 
-  emitChange: () => {
+  emitChange: function emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
@@ -26,7 +26,7 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: function removeChangeListener (callback) {
+  removeChangeListener: function removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
@@ -34,10 +34,10 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     const req = new XMLHttpRequest();
     // TODO(mike): handle error (both on HTTP and in response)
     const _this = this;
-    req.addEventListener('load', () => {
+    req.addEventListener('load', function onLoad() {
       _this.handleServerLsResponse(this);
     });
-    req.addEventListener('error', () => {
+    req.addEventListener('error', function onError() {
       // TODO(mike): implement
     });
     req.open('GET', `http://localhost:3000/ls${requestedPath}`);  // TODO(mike): parameterize path
@@ -50,7 +50,7 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     const contents = [];
     // TODO(mike): This should use a proper classA
     for (const serverFileName in jsonResponse.contents) {
-      if ({}.hasOwnProperty.call(serverFileName, jsonResponse.contents)) {  // TODO(mike): Maybe I can do this better with immutablejs
+      if ({}.hasOwnProperty.call(jsonResponse.contents, serverFileName)) {  // TODO(mike): Maybe I can do this better with immutablejs
         const serverFileInfo = jsonResponse.contents[serverFileName];
         contents.push({
           filetype: SERVER_FILETYPE_TO_CLIENT_FILETYPE[serverFileInfo.type],
@@ -65,7 +65,7 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
 
   getFolderContents: function getFolderContents(requestedPath) {
     // TODO: query server if doesn't exist
-    if (path in _pathContents) {
+    if (requestedPath in _pathContents) {
       return {
         state: FolderStates.CACHED,
         contents: _pathContents[requestedPath],
