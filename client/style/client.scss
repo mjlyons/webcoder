@@ -1,0 +1,12 @@
+body {
+  font: 12pt sans-serif;
+}
+
+a {
+  color: #284E82;
+  text-decoration: none;
+
+  &:hover {
+    color: #3E79C9;
+  }
+}

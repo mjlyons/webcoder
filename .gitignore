@@ -5,3 +5,4 @@ localsettings.js
 build
 *.swp
 *.swo
+.vscode

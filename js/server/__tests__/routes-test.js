@@ -23,7 +23,7 @@ describe('Routing:index', () => {
   beforeEach(() => {
     const localsettings = require('localsettings');
     localsettings.mockReturnValue(mockLocalsettings);
-    app = require('../app');
+    app = require('js/server/app');
     request = require('supertest');
   });
 
