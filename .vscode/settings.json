@@ -5,6 +5,10 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/build": true
+  },
+  
+  "ecmaFeatures": {
+    "jsx": true
   }
 
 }

@@ -3,6 +3,8 @@ const React = require('react');
 const path = require('path');
 
 const { Filetypes } = require('js/common/FileEntry');
+const SourcePath = require('js/common/SourcePath');
+
 const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
 const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
 const FolderBrowserStore = require('js/client/FolderBrowserStore');
@@ -39,23 +41,19 @@ class FolderBrowser extends React.Component {
     SourceFileSystemStore.removeChangeListener(this._onChange);
   }
 
-  // TODO(mike): Make this a util and unit test separately
-  getParentPath() {
-    if (this.state.currentPath === '/') {
-      return null;
-    }
-    return this.state.currentPath.match(/(.*\/).+\/*$/)[1];
-  }
-
   _onChange() {
     this.setState(getStateFromStores());
   }
 
   render() {
+    const parentPath = SourcePath.getParentPath(this.state.currentPath);
     return (
       <div>
         <div>{this.state.currentPath}</div>
-        <FolderBrowserEntryList folderInfo={this.state.folderContents} parentPath={this.getParentPath()} />
+        <FolderBrowserEntryList
+          folderInfo={this.state.folderContents}
+          parentPath={parentPath}
+        />
       </div>
     );
   }
