@@ -14,7 +14,7 @@
     "build:client": "webpack -p --progress --color",
     "build:server": "gulp",
     "client:build:watch": "webpack -d --progress --color --watch",
-    "client:dev": "webpack-dev-server -d --inline --progress --colors",
+    "client:dev": "export WEBPACK_DEV_SERVER=1 && npm run build && npm start | webpack-dev-server -d --inline --progress --colors",
     "debug:server": "node debug ./bin/server/www",
     "lint": "gulp lint",
     "start": "node ./bin/server/www",
