@@ -5,30 +5,35 @@ const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
 
 class FolderBrowserEntryList extends React.Component {
 
-  // TODO(mike): This function is hard to read and should use helper methods.
-  render() {
-    let parentFolderBrowserEntry = null;
+  // Returns a FolderBrowserEntry for the parent folder if it exists, null if not.
+  _renderParentFolderEntry() {
     if (this.props.parentPath) {
       const parentFileinfo = {
         filetype: Filetypes.FOLDER,
         filename: '..',
         path: this.props.parentPath,
       };
-      parentFolderBrowserEntry = (
+      return (
         <FolderBrowserEntry fileinfo={parentFileinfo} key={parentFileinfo.path} />
       );
     }
+    return null;
+  }
 
-    const fileEntries = this.props.folderInfo.map(fileInfo => {
+  // Returns an array of FolderBrowserEntry's, one for each file/folder in the folder.
+  _renderContentEntries() {
+    return this.props.folderInfo.map(fileInfo => {
       return (
         <FolderBrowserEntry fileinfo={fileInfo} key={fileInfo.path} />
       );
     });
+  }
 
+  render() {
     return (
       <div>
-        {parentFolderBrowserEntry}
-        {fileEntries}
+        {this._renderParentFolderEntry()}
+        {this._renderContentEntries()}
       </div>
     );
   }
