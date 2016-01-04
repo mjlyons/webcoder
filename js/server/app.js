@@ -24,7 +24,7 @@ app.use('/static', express.static(path.join(__dirname, '../../static')));
 // Allows javascript (at webcoder:8080) to access all routes on server
 app.use((_req, res, next) => {
   // Uncomment/modify the following if static client html is hosted on a different domain
-  // res.setHeader('Access-Control-Allow-Origin', '[STATIC_HTML_HOST]');  // TODO(mike): parameterize
+  // res.setHeader('Access-Control-Allow-Origin', '[STATIC_HTML_HOST]');
   // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });

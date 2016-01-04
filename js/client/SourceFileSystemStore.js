@@ -1,4 +1,5 @@
 const { EventEmitter } = require('events');
+const localsettings = require('localsettings')();
 const path = require('path');
 
 const { ActionTypes, FolderStates } = require('js/client/Constants');
@@ -40,7 +41,7 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     req.addEventListener('error', function onError() {
       // TODO(mike): implement
     });
-    req.open('GET', `http://localhost:3000/ls${requestedPath}`);  // TODO(mike): parameterize path
+    req.open('GET', `${localsettings.SERVER_HOST}/ls${requestedPath}`);
     req.send();
   },
 
@@ -48,7 +49,7 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
     // TODO(mike): handle 403, 404, 500
     const jsonResponse = JSON.parse(response.responseText);
     const contents = [];
-    // TODO(mike): This should use a proper classA
+    // TODO(mike): This should use a proper class
     for (const serverFileName in jsonResponse.contents) {
       if ({}.hasOwnProperty.call(jsonResponse.contents, serverFileName)) {  // TODO(mike): Maybe I can do this better with immutablejs
         const serverFileInfo = jsonResponse.contents[serverFileName];
