@@ -5,6 +5,8 @@ const path = require('path');
 const { Filetypes } = require('js/common/FileEntry');
 const SourcePath = require('js/common/SourcePath');
 
+const AlertHeader = require('js/client/AlertHeader');
+const AlertStore = require('js/client/AlertStore');
 const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
 const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
 const FolderBrowserStore = require('js/client/FolderBrowserStore');
@@ -13,6 +15,7 @@ const SourceFileSystemStore = require('js/client/SourceFileSystemStore');
 function getStateFromStores() {
   const currentPath = FolderBrowserStore.get().currentPath;
   return {
+    alertMessage: AlertStore.getMessage(),
     currentPath,
     folderContents: SourceFileSystemStore.getFolderContents(currentPath).contents,
   };
@@ -27,6 +30,7 @@ class FolderBrowser extends React.Component {
   }
 
   componentDidMount() {
+    AlertStore.addChangeListener(this._onChange);
     FolderBrowserStore.addChangeListener(this._onChange);
     SourceFileSystemStore.addChangeListener(this._onChange);
     FolderBrowserActionCreators.openFileEntry({
@@ -37,6 +41,7 @@ class FolderBrowser extends React.Component {
   }
 
   componentWillUnmount() {
+    AlertStore.removeChangeListener(this._onChange);
     FolderBrowserStore.removeChangeListener(this._onChange);
     SourceFileSystemStore.removeChangeListener(this._onChange);
   }
@@ -49,6 +54,7 @@ class FolderBrowser extends React.Component {
     const parentPath = SourcePath.getParentPath(this.state.currentPath);
     return (
       <div>
+        <AlertHeader message={this.state.alertMessage} />
         <div>{this.state.currentPath}</div>
         <FolderBrowserEntryList
           folderInfo={this.state.folderContents}

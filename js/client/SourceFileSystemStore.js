@@ -2,11 +2,14 @@ const { EventEmitter } = require('events');
 const localsettings = require('localsettings')();
 const path = require('path');
 
+const AlertActionCreators = require('js/client/AlertActionCreators');
 const { ActionTypes, FolderStates } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const { Filetypes } = require('js/common/FileEntry');
 
 const CHANGE_EVENT = 'change';
+
+const LS_NETWORK_ERROR_MESSAGE = 'Error getting folder contents from server';
 
 const SERVER_FILETYPE_TO_CLIENT_FILETYPE = {
   dir: Filetypes.FOLDER,
@@ -39,7 +42,8 @@ const SourceFileSystemStore = Object.assign({}, EventEmitter.prototype, {
       _this.handleServerLsResponse(this);
     });
     req.addEventListener('error', function onError() {
-      // TODO(mike): implement
+      // TODO(mike): test this case
+      AlertActionCreators.showAlert(LS_NETWORK_ERROR_MESSAGE);
     });
     req.open('GET', `${localsettings.SERVER_HOST}/ls${requestedPath}`);
     req.send();
