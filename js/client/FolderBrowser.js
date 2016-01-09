@@ -9,7 +9,7 @@ const AlertHeader = require('js/client/AlertHeader');
 const AlertStore = require('js/client/AlertStore');
 const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
 const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
-const FolderBrowserStore = require('js/client/FolderBrowserStore');
+const FolderBrowserStore = require('js/client/Stores/FolderBrowserStore');
 const SourceFileSystemStore = require('js/client/SourceFileSystemStore');
 
 function getStateFromStores() {

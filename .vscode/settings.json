@@ -9,6 +9,7 @@
   
   "ecmaFeatures": {
     "jsx": true
-  }
+  },
 
+  "files.trimTrailingWhitespace": true
 }
