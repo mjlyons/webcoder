@@ -1,10 +1,9 @@
-const Store = require('js/client/Stores/Store');
+const Store = require('js/client/stores/Store');
 const Dispatcher = require('js/client/Dispatcher');
 const { ActionTypes } = require('js/client/Constants');
 const { Filetypes } = require('js/common/FileEntry');
 
 
-// TODO(mike): Test this
 // TODO(mike): Make this immutable
 const _state = {
   currentPath: '/',
