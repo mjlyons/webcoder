@@ -10,7 +10,7 @@ describe('FolderBrowserStore', () => {
     const { ActionTypes } = require('js/client/Constants');
     const { Filetypes } = require.requireActual('js/common/FileEntry');
     const Dispatcher = require('js/client/Dispatcher');
-    const Store = require('js/client/Stores/Store');
+    const Store = require('js/client/stores/Store');
     const FolderBrowserStore = require.requireActual('../FolderBrowserStore');
     expect(Dispatcher.register).toBeCalled();
     const actionHandler = Dispatcher.register.mock.calls[0][0];
@@ -25,7 +25,7 @@ describe('FolderBrowserStore', () => {
     const { ActionTypes } = require('js/client/Constants');
     const { Filetypes } = require.requireActual('js/common/FileEntry');
     const Dispatcher = require('js/client/Dispatcher');
-    const Store = require('js/client/Stores/Store');
+    const Store = require('js/client/stores/Store');
     const FolderBrowserStore = require.requireActual('../FolderBrowserStore');
     expect(Dispatcher.register).toBeCalled();
     const actionHandler = Dispatcher.register.mock.calls[0][0];
