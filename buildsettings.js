@@ -5,7 +5,7 @@ const isTestOnly = 'TEST_ONLY' in process.env;
 const isWebpackDevServer = 'WEBPACK_DEV_SERVER' in process.env;
 
 // TODO(mike): make this immutable.
-let buildsettings = null;
+var buildsettings = null;
 
 if (isTestOnly) {  // When run on CI test server
   buildsettings = {
