@@ -1,6 +1,6 @@
 const buildsettings = require('./buildsettings');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const settings = require('./settings');
+const settings = require('./settings')();
 const path = require('path');
 
 const clientJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_JS_PACKAGE_PATH;
