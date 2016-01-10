@@ -89,8 +89,99 @@ describe('SourceFileSystemStore', () => {
     expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
   });
 
-  // TODO(mike): write test for "not allowed" (403)
-  // TODO(mike): write test for "doesn't exist" (404)
-  // TODO(mike): write test for "server error" (non-200)
-  // TODO(mike): write test for "not-dir" (in json)
+  it('shows an alert when not authorized (403)', () => {
+    const initialStoreState = SourceFileSystemStore.get();
+
+    // verify request is made
+    actionHandler({
+      type: ActionTypes.OPEN_FILE_ENTRY,
+      fileinfo: { filetype: Filetypes.FOLDER, filename: 'somefolder', path: '/somefolder' },
+    });
+    expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
+    const loadCallback = XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][1];
+    expect(XMLHttpRequestWrap.prototype.open).toBeCalledWith('GET', 'https://example.org/ls/somefolder');
+    expect(XMLHttpRequestWrap.prototype.send).toBeCalled();
+
+    // Call load callback with 403 status
+    loadCallback.bind({
+      status: 403,
+    })();
+
+    // verify shows an alert, doesn't notify listener, store doesn't change
+    expect(AlertActionCreators.showAlert).toBeCalledWith("You don't have access to that folder");
+    expect(Store.prototype.emitChange).not.toBeCalled();
+    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+  });
+
+  it("shows an alert when folder doesn't exist (404)", () => {
+    const initialStoreState = SourceFileSystemStore.get();
+
+    // verify request is made
+    actionHandler({
+      type: ActionTypes.OPEN_FILE_ENTRY,
+      fileinfo: { filetype: Filetypes.FOLDER, filename: 'somefolder', path: '/somefolder' },
+    });
+    expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
+    const loadCallback = XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][1];
+    expect(XMLHttpRequestWrap.prototype.open).toBeCalledWith('GET', 'https://example.org/ls/somefolder');
+    expect(XMLHttpRequestWrap.prototype.send).toBeCalled();
+
+    // Call load callback with 403 status
+    loadCallback.bind({
+      status: 404,
+    })();
+
+    // verify shows an alert, doesn't notify listener, store doesn't change
+    expect(AlertActionCreators.showAlert).toBeCalledWith("Couldn't find that folder");
+    expect(Store.prototype.emitChange).not.toBeCalled();
+    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+  });
+
+  it('shows an alert when try to /ls a file (405)', () => {
+    const initialStoreState = SourceFileSystemStore.get();
+
+    // verify request is made
+    actionHandler({
+      type: ActionTypes.OPEN_FILE_ENTRY,
+      fileinfo: { filetype: Filetypes.FOLDER, filename: 'somefolder', path: '/somefolder' },
+    });
+    expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
+    const loadCallback = XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][1];
+    expect(XMLHttpRequestWrap.prototype.open).toBeCalledWith('GET', 'https://example.org/ls/somefolder');
+    expect(XMLHttpRequestWrap.prototype.send).toBeCalled();
+
+    // Call load callback with 403 status
+    loadCallback.bind({
+      status: 405,
+    })();
+
+    // verify shows an alert, doesn't notify listener, store doesn't change
+    expect(AlertActionCreators.showAlert).toBeCalledWith("That isn't a folder");
+    expect(Store.prototype.emitChange).not.toBeCalled();
+    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+  });
+
+  it('shows an alert when server has an error (500)', () => {
+    const initialStoreState = SourceFileSystemStore.get();
+
+    // verify request is made
+    actionHandler({
+      type: ActionTypes.OPEN_FILE_ENTRY,
+      fileinfo: { filetype: Filetypes.FOLDER, filename: 'somefolder', path: '/somefolder' },
+    });
+    expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
+    const loadCallback = XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][1];
+    expect(XMLHttpRequestWrap.prototype.open).toBeCalledWith('GET', 'https://example.org/ls/somefolder');
+    expect(XMLHttpRequestWrap.prototype.send).toBeCalled();
+
+    // Call load callback with 403 status
+    loadCallback.bind({
+      status: 500,
+    })();
+
+    // verify shows an alert, doesn't notify listener, store doesn't change
+    expect(AlertActionCreators.showAlert).toBeCalledWith('The source server had an error while examining the folder');
+    expect(Store.prototype.emitChange).not.toBeCalled();
+    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+  });
 });

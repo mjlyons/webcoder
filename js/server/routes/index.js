@@ -15,6 +15,8 @@ router.get('/ls/:path(*)', function routeLs(req, res, _next) {
     res.status(403).render('error', { message: 'Not authorized', error: { status: 403 } });
   } else if (lsJson.error === 'not-exists') {
     res.status(404).render('error', { message: 'Not found', error: { status: 404 } });
+  } else if (lsJson.error === 'not-dir') {
+    res.status(405).render('error', { message: 'Not allowed (not a folder)', error: { status: 405 } });
   } else {
     res.json(lsJson);
   }

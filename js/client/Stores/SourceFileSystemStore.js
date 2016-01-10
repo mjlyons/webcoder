@@ -9,6 +9,10 @@ const { Filetypes } = require('js/common/FileEntry');
 const XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
 
 const LS_NETWORK_ERROR_MESSAGE = 'Error getting folder contents from server';
+const LS_FORBIDDEN_ERROR_MESSAGE = "You don't have access to that folder";
+const LS_NOT_FOUND_ERROR_MESSAGE = "Couldn't find that folder";
+const LS_NOT_FOLDER_ERROR_MESSAGE = "That isn't a folder";
+const LS_SERVER_ERROR_MESSAGE = 'The source server had an error while examining the folder';
 
 const SERVER_FILETYPE_TO_CLIENT_FILETYPE = {
   dir: Filetypes.FOLDER,
@@ -21,13 +25,12 @@ const _state = {
 };
 
 function _getFolderContents(folderPath) {
-  // TODO: query server if doesn't exist
   if (folderPath in _state.folderContents) {
     return {
       state: FolderStates.CACHED,
       contents: _state.folderContents[folderPath],
     };
-  } // TODO(mike): handle 404, 403, is-a-file
+  }
   return {
     state: FolderStates.NOT_CACHED,
     contents: [],
@@ -43,7 +46,17 @@ class SourceFileSystemStore extends Store {
 const storeInst = new SourceFileSystemStore();
 
 function _handleServerLsResponse(response) {
-  // TODO(mike): handle 403, 404, 500
+  const statusToError = {
+    403: LS_FORBIDDEN_ERROR_MESSAGE,
+    404: LS_NOT_FOUND_ERROR_MESSAGE,
+    405: LS_NOT_FOLDER_ERROR_MESSAGE,
+    500: LS_SERVER_ERROR_MESSAGE,
+  };
+  if (response.status in statusToError) {
+    AlertActionCreators.showAlert(statusToError[response.status]);
+    return;
+  }
+
   const jsonResponse = JSON.parse(response.responseText);
   const contents = [];
   // TODO(mike): This should use a proper class
@@ -67,7 +80,6 @@ function _updateFolderContents(requestedPath) {
     _handleServerLsResponse(this);
   });
   req.addEventListener('error', function onError() {
-    // TODO(mike): test this case
     AlertActionCreators.showAlert(LS_NETWORK_ERROR_MESSAGE);
   });
   req.open('GET', `${localsettings.SERVER_HOST}/ls${requestedPath}`);
