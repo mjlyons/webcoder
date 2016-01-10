@@ -2,6 +2,8 @@
 
 Edit code on a remote server in your browser.
 
+[![Build Status](https://travis-ci.org/mjlyons/webcoder.svg?branch=master)](https://travis-ci.org/mjlyons/webcoder)
+
 The goal of this project is to let you edit source code for projects living on a
 remote server. You shouldn't need to install a bunch of tools on your computer just to 
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
