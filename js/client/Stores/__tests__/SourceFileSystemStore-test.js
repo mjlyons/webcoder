@@ -12,8 +12,8 @@ describe('SourceFileSystemStore', () => {
   let AlertActionCreators = null;
 
   beforeEach(() => {
-    const localsettings = require('localsettings');
-    localsettings.mockReturnValue({ SERVER_HOST: 'https://example.org' });
+    const settings = require('settings');
+    settings.mockReturnValue({ SERVER_HOST: 'https://example.org' });
     ({ ActionTypes, FolderStates } = require.requireActual('js/client/Constants'));
     ({ Filetypes } = require.requireActual('js/common/FileEntry'));
     const Dispatcher = require('js/client/Dispatcher');

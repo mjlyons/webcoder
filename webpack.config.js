@@ -1,6 +1,6 @@
 const buildsettings = require('./buildsettings');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const localsettings = require('./localsettings')();
+const settings = require('./settings')();
 const path = require('path');
 
 const clientJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_JS_PACKAGE_PATH;
@@ -36,7 +36,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'client.html',
       template: 'client/html/client.html',
-      localsettings: localsettings,
+      settings: settings,
       CLIENT_JS_PACKAGE_URL: clientJsPackageUrl
     }),
   ],

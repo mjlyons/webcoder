@@ -1,4 +1,4 @@
-const localsettings = require('localsettings')();
+const settings = require('settings')();
 const path = require('path');
 
 const Store = require('js/client/stores/Store');
@@ -82,7 +82,7 @@ function _updateFolderContents(requestedPath) {
   req.addEventListener('error', function onError() {
     AlertActionCreators.showAlert(LS_NETWORK_ERROR_MESSAGE);
   });
-  req.open('GET', `${localsettings.SERVER_HOST}/ls${requestedPath}`);
+  req.open('GET', `${settings.SERVER_HOST}/ls${requestedPath}`);
   req.send();
 }
 

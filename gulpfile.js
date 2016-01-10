@@ -12,7 +12,7 @@ var paths = {
     'js/**/*.js'
   ],
   static: ['static/**', '!**/.*'],
-  localsettings: 'localsettings.js'
+  localsettings: ['settings.js', 'localsettings.js', 'buildsettings.js']
 };
 
 function isFixed(file) {
