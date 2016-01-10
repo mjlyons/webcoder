@@ -1,5 +1,5 @@
 jest.autoMockOff();
-jest.mock('localsettings');
+jest.mock('settings');
 jest.mock('js/server/fswrap');
 
 const mockLocalsettings = {
@@ -21,8 +21,8 @@ describe('Routing:index', () => {
   let request;
 
   beforeEach(() => {
-    const localsettings = require('localsettings');
-    localsettings.mockReturnValue(mockLocalsettings);
+    const settings = require('settings');
+    settings.mockReturnValue(mockLocalsettings);
     app = require.requireActual('js/server/app');
     request = require.requireActual('supertest');
   });

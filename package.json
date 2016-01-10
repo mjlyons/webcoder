@@ -71,8 +71,7 @@
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-addons-test-utils",
       "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/supertest",
-      "<rootDir>/settings.js"
+      "<rootDir>/node_modules/supertest"
     ],
     "modulePathIgnorePatterns": [
       "<rootDir>/build/",

@@ -1,4 +1,4 @@
-const settings = require('settings');
+const settings = require('settings')();
 const path = require('path');
 
 const Store = require('js/client/stores/Store');

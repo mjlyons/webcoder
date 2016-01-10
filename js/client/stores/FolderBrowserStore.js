@@ -23,13 +23,10 @@ class FolderBrowserStore extends Store {
 
 const storeInst = new FolderBrowserStore();
 storeInst.dispatchToken = Dispatcher.register(action => {
-  console.log('FBS:1');
   switch (action.type) {
 
     case ActionTypes.OPEN_FILE_ENTRY:
-      console.log('FBS:2');
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
-        console.log('FBS:3');
         _state.currentPath = action.fileinfo.path;
         storeInst.emitChange();
       }
