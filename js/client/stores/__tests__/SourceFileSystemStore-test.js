@@ -5,6 +5,7 @@ describe('SourceFileSystemStore', () => {
   let ActionTypes = null;
   let FileEntry = null;
   let Filetypes = null;
+  let FolderStates = null;
   let SourceFileSystemStore = null;
   let Store = null;
   let actionHandler = null;
@@ -14,7 +15,7 @@ describe('SourceFileSystemStore', () => {
   beforeEach(() => {
     const settings = require('settings');
     settings.mockReturnValue({ SERVER_HOST: 'https://example.org' });
-    ({ ActionTypes } = require.requireActual('js/client/Constants'));
+    ({ ActionTypes, FolderStates } = require.requireActual('js/client/Constants'));
     ({ FileEntry, Filetypes } = require.requireActual('js/common/FileEntry'));
     const Dispatcher = require('js/client/Dispatcher');
     SourceFileSystemStore = require.requireActual('../SourceFileSystemStore');
@@ -58,17 +59,13 @@ describe('SourceFileSystemStore', () => {
 
     // verify store caches results and notifies listener
     expect(Store.prototype.emitChange).toBeCalled();
-    expect(SourceFileSystemStore.getFolderContents('/somefolder').contents).toEqual([
-      new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }),
-      new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder/subfolder' }),
-    ]);
-    // expect(SourceFileSystemStore.getFolderContents('/somefolder')).toEqual({
-    //   state: FolderStates.CACHED,
-    //   contents: [
-    //     new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }),
-    //     new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder/subfolder' }),
-    //   ],
-    // });
+    expect(SourceFileSystemStore.getFolderContents('/somefolder')).toEqual({
+      state: FolderStates.CACHED,
+      contents: [
+        new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }),
+        new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder/subfolder' }),
+      ],
+    });
   });
 
   it('shows an alert on network error', () => {
