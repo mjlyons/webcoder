@@ -1,6 +1,6 @@
 const Store = require('js/client/stores/Store');
 const Dispatcher = require('js/client/Dispatcher');
-const { ActionTypes } = require('js/client/Constants');
+const { FolderBrowserActionTypes } = require('js/client/Constants');
 const { Filetypes } = require('js/common/FileEntry');
 
 
@@ -25,7 +25,7 @@ const storeInst = new FolderBrowserStore();
 storeInst.dispatchToken = Dispatcher.register(action => {
   switch (action.type) {
 
-    case ActionTypes.OPEN_FILE_ENTRY:
+    case FolderBrowserActionTypes.OPEN_FILE_ENTRY:
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
         _state.currentPath = action.fileinfo.path;
         storeInst.emitChange();

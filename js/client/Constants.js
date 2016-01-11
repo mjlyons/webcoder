@@ -1,7 +1,6 @@
 module.exports = {
 
-  // TODO(mike): rename this to FolderBrowserActionTypes
-  ActionTypes: {
+  FolderBrowserActionTypes: {
     OPEN_FILE_ENTRY: Symbol('OPEN_FILE_ENTRY'),
   },
 

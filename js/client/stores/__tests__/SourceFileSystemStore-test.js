@@ -2,7 +2,7 @@ jest.dontMock('js/client/Constants');
 jest.dontMock('js/common/FileEntry');
 
 describe('SourceFileSystemStore', () => {
-  let ActionTypes = null;
+  let FolderBrowserActionTypes = null;
   let FileEntry = null;
   let Filetypes = null;
   let FolderStates = null;
@@ -15,7 +15,7 @@ describe('SourceFileSystemStore', () => {
   beforeEach(() => {
     const settings = require('settings');
     settings.mockReturnValue({ SERVER_HOST: 'https://example.org' });
-    ({ ActionTypes, FolderStates } = require.requireActual('js/client/Constants'));
+    ({ FolderBrowserActionTypes, FolderStates } = require.requireActual('js/client/Constants'));
     ({ FileEntry, Filetypes } = require.requireActual('js/common/FileEntry'));
     const Dispatcher = require('js/client/Dispatcher');
     SourceFileSystemStore = require.requireActual('../SourceFileSystemStore');
@@ -33,7 +33,7 @@ describe('SourceFileSystemStore', () => {
   it('does nothing if a file is opened', () => {
     const initialStoreState = SourceFileSystemStore.get();
     actionHandler({
-      type: ActionTypes.FILE,
+      type: FolderBrowserActionTypes.FILE,
       fileinfo: new FileEntry({ filetype: Filetypes.FILE, path: '/somefile.txt' }),
     });
     expect(XMLHttpRequestWrap.prototype.send).not.toBeCalled();
@@ -44,7 +44,7 @@ describe('SourceFileSystemStore', () => {
   it('stores folder contents on successful server /ls', () => {
     // verify request is made
     actionHandler({
-      type: ActionTypes.OPEN_FILE_ENTRY,
+      type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder' }),
     });
     expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
@@ -73,7 +73,7 @@ describe('SourceFileSystemStore', () => {
 
     // verify request is made
     actionHandler({
-      type: ActionTypes.OPEN_FILE_ENTRY,
+      type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder' }),
     });
     expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[1][0]).toEqual('error');
@@ -95,7 +95,7 @@ describe('SourceFileSystemStore', () => {
 
     // verify request is made
     actionHandler({
-      type: ActionTypes.OPEN_FILE_ENTRY,
+      type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder' }),
     });
     expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
@@ -119,7 +119,7 @@ describe('SourceFileSystemStore', () => {
 
     // verify request is made
     actionHandler({
-      type: ActionTypes.OPEN_FILE_ENTRY,
+      type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder' }),
     });
     expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
@@ -143,7 +143,7 @@ describe('SourceFileSystemStore', () => {
 
     // verify request is made
     actionHandler({
-      type: ActionTypes.OPEN_FILE_ENTRY,
+      type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder' }),
     });
     expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');
@@ -167,7 +167,7 @@ describe('SourceFileSystemStore', () => {
 
     // verify request is made
     actionHandler({
-      type: ActionTypes.OPEN_FILE_ENTRY,
+      type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder' }),
     });
     expect(XMLHttpRequestWrap.prototype.addEventListener.mock.calls[0][0]).toEqual('load');

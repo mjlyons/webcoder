@@ -3,7 +3,7 @@ const path = require('path');
 
 const Store = require('js/client/stores/Store');
 const AlertActionCreators = require('js/client/AlertActionCreators');
-const { ActionTypes, FolderStates } = require('js/client/Constants');
+const { FolderBrowserActionTypes, FolderStates } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
@@ -88,7 +88,7 @@ function _updateFolderContents(requestedPath) {
 SourceFileSystemStore.dispatchToken = Dispatcher.register(action => {
   switch (action.type) {
 
-    case ActionTypes.OPEN_FILE_ENTRY:
+    case FolderBrowserActionTypes.OPEN_FILE_ENTRY:
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
         _updateFolderContents(action.fileinfo.path);
       }
