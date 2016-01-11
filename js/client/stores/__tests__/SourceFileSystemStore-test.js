@@ -5,17 +5,17 @@ describe('SourceFileSystemStore', () => {
   let FolderBrowserActionTypes = null;
   let FileEntry = null;
   let Filetypes = null;
-  let FolderStates = null;
   let SourceFileSystemStore = null;
   let Store = null;
   let actionHandler = null;
   let XMLHttpRequestWrap = null;
   let AlertActionCreators = null;
+  let Immutable = null;
 
   beforeEach(() => {
     const settings = require('settings');
     settings.mockReturnValue({ SERVER_HOST: 'https://example.org' });
-    ({ FolderBrowserActionTypes, FolderStates } = require.requireActual('js/client/Constants'));
+    ({ FolderBrowserActionTypes } = require.requireActual('js/client/Constants'));
     ({ FileEntry, Filetypes } = require.requireActual('js/common/FileEntry'));
     const Dispatcher = require('js/client/Dispatcher');
     SourceFileSystemStore = require.requireActual('../SourceFileSystemStore');
@@ -24,21 +24,22 @@ describe('SourceFileSystemStore', () => {
     actionHandler = Dispatcher.register.mock.calls[0][0];
     XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
     AlertActionCreators = require('js/client/AlertActionCreators');
+    Immutable = require('immutable');
   });
 
   it('starts with nothing in store', () => {
-    expect(SourceFileSystemStore.getAllFolderContents()).toEqual({});
+    expect(SourceFileSystemStore.getState().toJS()).toEqual({});
   });
 
   it('does nothing if a file is opened', () => {
-    const initialStoreState = SourceFileSystemStore.get();
+    const initialStoreState = SourceFileSystemStore.getState();
     actionHandler({
       type: FolderBrowserActionTypes.FILE,
       fileinfo: new FileEntry({ filetype: Filetypes.FILE, path: '/somefile.txt' }),
     });
     expect(XMLHttpRequestWrap.prototype.send).not.toBeCalled();
     expect(Store.prototype.emitChange).not.toBeCalled();
-    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+    expect(SourceFileSystemStore.getState()).toEqual(initialStoreState);
   });
 
   it('stores folder contents on successful server /ls', () => {
@@ -59,17 +60,14 @@ describe('SourceFileSystemStore', () => {
 
     // verify store caches results and notifies listener
     expect(Store.prototype.emitChange).toBeCalled();
-    expect(SourceFileSystemStore.getFolderContents('/somefolder')).toEqual({
-      state: FolderStates.CACHED,
-      contents: [
-        new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }),
-        new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder/subfolder' }),
-      ],
-    });
+    expect(SourceFileSystemStore.getFolderContents('/somefolder')).toEqual(Immutable.List([
+      new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }),
+      new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder/subfolder' }),
+    ]));
   });
 
   it('shows an alert on network error', () => {
-    const initialStoreState = SourceFileSystemStore.get();
+    const initialStoreState = SourceFileSystemStore.getState();
 
     // verify request is made
     actionHandler({
@@ -87,11 +85,11 @@ describe('SourceFileSystemStore', () => {
     // verify shows an alert, doesn't notify listener, store doesn't change
     expect(AlertActionCreators.showAlert).toBeCalledWith('Error getting folder contents from server');
     expect(Store.prototype.emitChange).not.toBeCalled();
-    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+    expect(SourceFileSystemStore.getState()).toEqual(initialStoreState);
   });
 
   it('shows an alert when not authorized (403)', () => {
-    const initialStoreState = SourceFileSystemStore.get();
+    const initialStoreState = SourceFileSystemStore.getState();
 
     // verify request is made
     actionHandler({
@@ -111,11 +109,11 @@ describe('SourceFileSystemStore', () => {
     // verify shows an alert, doesn't notify listener, store doesn't change
     expect(AlertActionCreators.showAlert).toBeCalledWith("You don't have access to that folder");
     expect(Store.prototype.emitChange).not.toBeCalled();
-    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+    expect(SourceFileSystemStore.getState()).toEqual(initialStoreState);
   });
 
   it("shows an alert when folder doesn't exist (404)", () => {
-    const initialStoreState = SourceFileSystemStore.get();
+    const initialStoreState = SourceFileSystemStore.getState();
 
     // verify request is made
     actionHandler({
@@ -135,11 +133,11 @@ describe('SourceFileSystemStore', () => {
     // verify shows an alert, doesn't notify listener, store doesn't change
     expect(AlertActionCreators.showAlert).toBeCalledWith("Couldn't find that folder");
     expect(Store.prototype.emitChange).not.toBeCalled();
-    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+    expect(SourceFileSystemStore.getState()).toEqual(initialStoreState);
   });
 
   it('shows an alert when try to /ls a file (405)', () => {
-    const initialStoreState = SourceFileSystemStore.get();
+    const initialStoreState = SourceFileSystemStore.getState();
 
     // verify request is made
     actionHandler({
@@ -159,11 +157,11 @@ describe('SourceFileSystemStore', () => {
     // verify shows an alert, doesn't notify listener, store doesn't change
     expect(AlertActionCreators.showAlert).toBeCalledWith("That isn't a folder");
     expect(Store.prototype.emitChange).not.toBeCalled();
-    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+    expect(SourceFileSystemStore.getState()).toEqual(initialStoreState);
   });
 
   it('shows an alert when server has an error (500)', () => {
-    const initialStoreState = SourceFileSystemStore.get();
+    const initialStoreState = SourceFileSystemStore.getState();
 
     // verify request is made
     actionHandler({
@@ -183,6 +181,6 @@ describe('SourceFileSystemStore', () => {
     // verify shows an alert, doesn't notify listener, store doesn't change
     expect(AlertActionCreators.showAlert).toBeCalledWith('The source server had an error while examining the folder');
     expect(Store.prototype.emitChange).not.toBeCalled();
-    expect(SourceFileSystemStore.get()).toEqual(initialStoreState);
+    expect(SourceFileSystemStore.getState()).toEqual(initialStoreState);
   });
 });

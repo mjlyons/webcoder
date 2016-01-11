@@ -3,10 +3,11 @@ const path = require('path');
 
 const Store = require('js/client/stores/Store');
 const AlertActionCreators = require('js/client/AlertActionCreators');
-const { FolderBrowserActionTypes, FolderStates } = require('js/client/Constants');
+const { FolderBrowserActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
+const Immutable = require('immutable');
 
 const LS_NETWORK_ERROR_MESSAGE = 'Error getting folder contents from server';
 const LS_FORBIDDEN_ERROR_MESSAGE = "You don't have access to that folder";
@@ -19,28 +20,15 @@ const SERVER_FILETYPE_TO_CLIENT_FILETYPE = {
   file: Filetypes.FILE,
 };
 
-// TODO(mike): This should be immutable?
-const _state = {
-  folderContents: {},
-};
+let _state = Immutable.Map({});
 
 function _getFolderContents(folderPath) {
-  if (folderPath in _state.folderContents) {
-    return {
-      state: FolderStates.CACHED,
-      contents: _state.folderContents[folderPath],
-    };
-  }
-  return {
-    state: FolderStates.NOT_CACHED,
-    contents: [],
-  };
+  return _state.get(folderPath, null);
 }
 
 class SourceFileSystemStore extends Store {
   constructor() { super(); }
-  get() { return _state; }
-  getAllFolderContents() { return _state.folderContents; }
+  getState() { return _state; }
   getFolderContents(folderPath) { return _getFolderContents(folderPath); }
 }
 const storeInst = new SourceFileSystemStore();
@@ -59,9 +47,8 @@ function _handleServerLsResponse(response) {
 
   const jsonResponse = JSON.parse(response.responseText);
   const contents = [];
-  // TODO(mike): This should use a proper class
   for (const serverFileName in jsonResponse.contents) {
-    if ({}.hasOwnProperty.call(jsonResponse.contents, serverFileName)) {  // TODO(mike): Maybe I can do this better with immutablejs
+    if ({}.hasOwnProperty.call(jsonResponse.contents, serverFileName)) {
       const serverFileInfo = jsonResponse.contents[serverFileName];
       contents.push(new FileEntry({
         filetype: SERVER_FILETYPE_TO_CLIENT_FILETYPE[serverFileInfo.type],
@@ -69,7 +56,7 @@ function _handleServerLsResponse(response) {
       }));
     }
   }
-  _state.folderContents[jsonResponse.path] = contents;
+  _state = _state.set(jsonResponse.path, Immutable.List(contents));
   storeInst.emitChange();
 }
 

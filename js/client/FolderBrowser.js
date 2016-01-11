@@ -16,7 +16,7 @@ function getStateFromStores() {
   return {
     alertMessage: AlertStore.getState().get('message'),
     currentPath,
-    folderContents: SourceFileSystemStore.getFolderContents(currentPath).contents,
+    folderContents: SourceFileSystemStore.getFolderContents(currentPath),
   };
 }
 

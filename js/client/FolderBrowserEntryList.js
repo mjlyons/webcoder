@@ -26,6 +26,9 @@ class FolderBrowserEntryList extends React.Component {
 
   // Returns an array of FolderBrowserEntry's, one for each file/folder in the folder.
   _renderContentEntries() {
+    if (!this.props.folderInfo) {
+      return null;
+    }
     return this.props.folderInfo.map(fileInfo => {
       return (
         <FolderBrowserEntry fileinfo={fileInfo} key={fileInfo.path} />
@@ -47,7 +50,7 @@ class FolderBrowserEntryList extends React.Component {
 
 FolderBrowserEntryList.propTypes = {
   parentPath: React.PropTypes.string,
-  folderInfo: React.PropTypes.array.isRequired,
+  folderInfo: React.PropTypes.array,
 };
 
 module.exports = FolderBrowserEntryList;
