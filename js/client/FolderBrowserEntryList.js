@@ -1,6 +1,6 @@
 const React = require('react');
 
-const { Filetypes } = require('js/common/FileEntry');
+const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
 
 class FolderBrowserEntryList extends React.Component {
@@ -8,11 +8,10 @@ class FolderBrowserEntryList extends React.Component {
   // Returns a FolderBrowserEntry for the parent folder if it exists, null if not.
   _renderParentFolderEntry() {
     if (this.props.parentPath) {
-      const parentFileinfo = {
+      const parentFileinfo = new FileEntry({
         filetype: Filetypes.FOLDER,
-        filename: '..',
         path: this.props.parentPath,
-      };
+      });
       return (
         <FolderBrowserEntry fileinfo={parentFileinfo} key={parentFileinfo.path} />
       );

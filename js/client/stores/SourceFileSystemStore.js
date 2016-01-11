@@ -5,7 +5,7 @@ const Store = require('js/client/stores/Store');
 const AlertActionCreators = require('js/client/AlertActionCreators');
 const { ActionTypes, FolderStates } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
-const { Filetypes } = require('js/common/FileEntry');
+const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
 
 const LS_NETWORK_ERROR_MESSAGE = 'Error getting folder contents from server';
@@ -63,11 +63,10 @@ function _handleServerLsResponse(response) {
   for (const serverFileName in jsonResponse.contents) {
     if ({}.hasOwnProperty.call(jsonResponse.contents, serverFileName)) {  // TODO(mike): Maybe I can do this better with immutablejs
       const serverFileInfo = jsonResponse.contents[serverFileName];
-      contents.push({
+      contents.push(new FileEntry({
         filetype: SERVER_FILETYPE_TO_CLIENT_FILETYPE[serverFileInfo.type],
-        filename: serverFileName,
         path: path.resolve(jsonResponse.path, serverFileName),
-      });
+      }));
     }
   }
   _state.folderContents[jsonResponse.path] = contents;

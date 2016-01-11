@@ -9,6 +9,6 @@ module.exports = {
   },
   'rules': {
     'no-unused-vars': [2, { 'argsIgnorePattern': '^_' }],
-    'new-cap': [2, { 'capIsNewExceptions': ['Router'] }],
+    'new-cap': [2, { 'capIsNewExceptions': ['Router', 'Record'] }],
   },
 };

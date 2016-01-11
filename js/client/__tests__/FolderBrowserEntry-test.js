@@ -5,15 +5,14 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 const FolderBrowserEntry = require.requireActual('../FolderBrowserEntry');
-const { Filetypes } = require.requireActual('js/common/FileEntry');
+const { FileEntry, Filetypes } = require.requireActual('js/common/FileEntry');
 
 describe('FolderBrowserEntry', () => {
   it('displays folders properly', () => {
-    const folderInfo = {
+    const folderInfo = new FileEntry({
       filetype: Filetypes.FOLDER,
-      filename: 'MyFolder',
       path: '/ParentFolder/MyFolder',
-    };
+    });
     const folderBrowserEntry = TestUtils.renderIntoDocument(
       <FolderBrowserEntry fileinfo={folderInfo} />
     );
@@ -23,11 +22,10 @@ describe('FolderBrowserEntry', () => {
     expect(ReactDOM.findDOMNode(folderBrowserEntry.refs.fileIcon).className).toEqual('fa fa-folder');
   });
   it('displays files properly', () => {
-    const folderInfo = {
+    const folderInfo = new FileEntry({
       filetype: Filetypes.FILE,
-      filename: 'MyFile.txt',
       path: '/ParentFolder/MyFile.txt',
-    };
+    });
     const folderBrowserEntry = TestUtils.renderIntoDocument(
       <FolderBrowserEntry fileinfo={folderInfo} />
     );

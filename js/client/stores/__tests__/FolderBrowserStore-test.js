@@ -8,7 +8,7 @@ describe('FolderBrowserStore', () => {
   });
   it('updates and notifies listeners when a folder is opened', () => {
     const { ActionTypes } = require('js/client/Constants');
-    const { Filetypes } = require.requireActual('js/common/FileEntry');
+    const { FileEntry, Filetypes } = require.requireActual('js/common/FileEntry');
     const Dispatcher = require('js/client/Dispatcher');
     const Store = require('js/client/stores/Store');
     const FolderBrowserStore = require.requireActual('../FolderBrowserStore');
@@ -16,14 +16,14 @@ describe('FolderBrowserStore', () => {
     const actionHandler = Dispatcher.register.mock.calls[0][0];
     actionHandler({
       type: ActionTypes.OPEN_FILE_ENTRY,
-      fileinfo: { path: '/myfolder', filename: 'myfolder', filetype: Filetypes.FOLDER },
+      fileinfo: new FileEntry({ path: '/myfolder', filetype: Filetypes.FOLDER }),
     });
     expect(Store.prototype.emitChange).toBeCalled();
     expect(FolderBrowserStore.get()).toEqual({ currentPath: '/myfolder' });
   });
   it('does not update or notify listeners when a file is opened', () => {
     const { ActionTypes } = require('js/client/Constants');
-    const { Filetypes } = require.requireActual('js/common/FileEntry');
+    const { FileEntry, Filetypes } = require.requireActual('js/common/FileEntry');
     const Dispatcher = require('js/client/Dispatcher');
     const Store = require('js/client/stores/Store');
     const FolderBrowserStore = require.requireActual('../FolderBrowserStore');
@@ -31,7 +31,7 @@ describe('FolderBrowserStore', () => {
     const actionHandler = Dispatcher.register.mock.calls[0][0];
     actionHandler({
       type: ActionTypes.OPEN_FILE_ENTRY,
-      fileinfo: { path: '/myfile.txt', filename: 'myfile.txt', filetype: Filetypes.FILE },
+      fileinfo: new FileEntry({ path: '/myfile.txt', filetype: Filetypes.FILE }),
     });
     expect(Store.prototype.emitChange).not.toBeCalled();
     expect(FolderBrowserStore.get()).toEqual({ currentPath: '/' });

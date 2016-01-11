@@ -5,13 +5,13 @@ import TestUtils from 'react-addons-test-utils';
 
 const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
 const FolderBrowserEntryList = require.requireActual('js/client/FolderBrowserEntryList');
-const { Filetypes } = require.requireActual('js/common/FileEntry');
+const { FileEntry, Filetypes } = require.requireActual('js/common/FileEntry');
 
 describe('FolderBrowserEntryList', () => {
   it('displays a list with a file and a folder', () => {
     const folderContents = [
-      { filetype: Filetypes.FILE, filename: 'myfile.txt', path: '/myfolder/myfile.txt' },
-      { filetype: Filetypes.FOLDER, filename: 'mySubFolder', path: '/myfolder/mysubfolder' },
+      new FileEntry({ filetype: Filetypes.FILE, path: '/myfolder/myfile.txt' }),
+      new FileEntry({ filetype: Filetypes.FOLDER, path: '/myfolder/mysubfolder' }),
     ];
     const folderBrowserEntryList = TestUtils.renderIntoDocument(
       <FolderBrowserEntryList folderInfo={folderContents} />
