@@ -14,7 +14,7 @@ const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
 function getStateFromStores() {
   const currentPath = FolderBrowserStore.get().currentPath;
   return {
-    alertMessage: AlertStore.get().message,
+    alertMessage: AlertStore.get().get('message'),
     currentPath,
     folderContents: SourceFileSystemStore.getFolderContents(currentPath).contents,
   };

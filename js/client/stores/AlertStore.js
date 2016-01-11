@@ -1,13 +1,14 @@
 const Store = require('js/client/stores/Store');
 const { AlertActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
+const Immutable = require('immutable');
 
 const MESSAGE_TIME_MSEC = 5000;
 
 // TODO(mike): Make this immutable?
-const _state = {
+let _state = Immutable.Map({
   message: null,
-};
+});
 
 let _messageTimeout = null;
 
@@ -18,7 +19,7 @@ class AlertStore extends Store {
 const storeInst = new AlertStore();
 
 function _changeMessage(newMessage) {
-  _state.message = newMessage;
+  _state = _state.set('message', newMessage);
   storeInst.emitChange();
 }
 

@@ -8,12 +8,12 @@ describe('AlertStore', () => {
     const Store = require('js/client/stores/Store');
     expect(Dispatcher.register).toBeCalled();
     const actionHandler = Dispatcher.register.mock.calls[0][0];
-    expect(AlertStore.get().message).toEqual(null);
+    expect(AlertStore.get().get('message')).toEqual(null);
 
     // Test initial "show alert" updates store with message
     actionHandler({ type: AlertActionTypes.SHOW_ALERT, message: 'mymessage' });
     expect(Store.prototype.emitChange).toBeCalled();
-    expect(AlertStore.get()).toEqual({ message: 'mymessage' });
+    expect(AlertStore.get().get('message')).toEqual('mymessage');
 
     // Test alert goes away after a few seconds
     expect(setTimeout).toBeCalled();
@@ -22,6 +22,6 @@ describe('AlertStore', () => {
     Store.prototype.emitChange.mockClear();
     hideAlertCallback();
     expect(Store.prototype.emitChange).toBeCalled();
-    expect(AlertStore.get()).toEqual({ message: null });
+    expect(AlertStore.get().get('message')).toEqual(null);
   });
 });
