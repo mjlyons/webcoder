@@ -1,7 +1,5 @@
 const React = require('react');
 
-const path = require('path');
-
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const SourcePath = require('js/common/SourcePath');
 
@@ -37,7 +35,7 @@ class FolderBrowser extends React.Component {
     FolderBrowserActionCreators.openFileEntry(new FileEntry({
       filetype: Filetypes.FOLDER,
       path: this.props.startPath,
-    });
+    }));
   }
 
   componentWillUnmount() {

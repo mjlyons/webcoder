@@ -3,7 +3,6 @@ jest.dontMock('js/common/FileEntry');
 
 describe('SourceFileSystemStore', () => {
   let ActionTypes = null;
-  let FolderStates = null;
   let FileEntry = null;
   let Filetypes = null;
   let SourceFileSystemStore = null;
@@ -15,7 +14,7 @@ describe('SourceFileSystemStore', () => {
   beforeEach(() => {
     const settings = require('settings');
     settings.mockReturnValue({ SERVER_HOST: 'https://example.org' });
-    ({ ActionTypes, FolderStates } = require.requireActual('js/client/Constants'));
+    ({ ActionTypes } = require.requireActual('js/client/Constants'));
     ({ FileEntry, Filetypes } = require.requireActual('js/common/FileEntry'));
     const Dispatcher = require('js/client/Dispatcher');
     SourceFileSystemStore = require.requireActual('../SourceFileSystemStore');
@@ -59,8 +58,6 @@ describe('SourceFileSystemStore', () => {
 
     // verify store caches results and notifies listener
     expect(Store.prototype.emitChange).toBeCalled();
-    console.log(new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }));
-    console.log(SourceFileSystemStore.getFolderContents('/somefolder').contents[0]);
     expect(SourceFileSystemStore.getFolderContents('/somefolder').contents).toEqual([
       new FileEntry({ filetype: Filetypes.FILE, path: '/somefolder/somefile.txt' }),
       new FileEntry({ filetype: Filetypes.FOLDER, path: '/somefolder/subfolder' }),
