@@ -2,23 +2,15 @@ const Store = require('js/client/stores/Store');
 const Dispatcher = require('js/client/Dispatcher');
 const { FolderBrowserActionTypes } = require('js/client/Constants');
 const { Filetypes } = require('js/common/FileEntry');
+const Immutable = require('immutable');
 
-
-// TODO(mike): Make this immutable
-const _state = {
+let _state = Immutable.Map({
   currentPath: '/',
-};
+});
 
 class FolderBrowserStore extends Store {
-
-  constructor() {
-    super();
-  }
-
-  get() {
-    return _state;
-  }
-
+  constructor() { super(); }
+  getState() { return _state; }
 }
 
 const storeInst = new FolderBrowserStore();
@@ -27,7 +19,7 @@ storeInst.dispatchToken = Dispatcher.register(action => {
 
     case FolderBrowserActionTypes.OPEN_FILE_ENTRY:
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
-        _state.currentPath = action.fileinfo.path;
+        _state = _state.set('currentPath', action.fileinfo.path);
         storeInst.emitChange();
       }
       break;

@@ -12,9 +12,9 @@ const FolderBrowserStore = require('js/client/stores/FolderBrowserStore');
 const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
 
 function getStateFromStores() {
-  const currentPath = FolderBrowserStore.get().currentPath;
+  const currentPath = FolderBrowserStore.getState().get('currentPath');
   return {
-    alertMessage: AlertStore.get().get('message'),
+    alertMessage: AlertStore.getState().get('message'),
     currentPath,
     folderContents: SourceFileSystemStore.getFolderContents(currentPath).contents,
   };

@@ -5,7 +5,6 @@ const Immutable = require('immutable');
 
 const MESSAGE_TIME_MSEC = 5000;
 
-// TODO(mike): Make this immutable?
 let _state = Immutable.Map({
   message: null,
 });
@@ -14,7 +13,7 @@ let _messageTimeout = null;
 
 class AlertStore extends Store {
   constructor() { super(); }
-  get() { return _state; }
+  getState() { return _state; }
 }
 const storeInst = new AlertStore();
 
