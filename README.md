@@ -25,13 +25,8 @@ see the files and folders inside your source directory, though you can't open th
 
 There's many more things to do, but here's the next steps:
 
-* Add flux support (inital work done, but needs some cleanup)
-* Add some tests for flux code
-* ES6-ify react code (turn Filetype into a class, etc.)
-* Query server for folder contents
-* Get eslint working on frontend
 * Figure out jsdoc (or something like it)
-* Make setting up the localsettings.js file part of install flow
+* Display contents of text/source files in editor (Ace? CodeMirror?)
 
 ## License
 
