@@ -1,12 +1,14 @@
+@import "client/style/Colors";
+
 body {
   font: 12pt sans-serif;
 }
 
 a {
-  color: #284E82;
+  color: $darkblue;
   text-decoration: none;
 
   &:hover {
-    color: #3E79C9;
+    color: $lightblue;
   }
 }

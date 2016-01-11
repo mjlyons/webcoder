@@ -3,6 +3,8 @@ const React = require('react');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
 
+require('client/style/FolderBrowserEntryList.scss');
+
 class FolderBrowserEntryList extends React.Component {
 
   // Returns a FolderBrowserEntry for the parent folder if it exists, null if not.
@@ -13,7 +15,10 @@ class FolderBrowserEntryList extends React.Component {
         path: this.props.parentPath,
       });
       return (
-        <FolderBrowserEntry fileinfo={parentFileinfo} key={parentFileinfo.path} />
+        <div>
+          <div className="horizontal-divider" />
+          <FolderBrowserEntry fileinfo={parentFileinfo} key={parentFileinfo.path} />
+        </div>
       );
     }
     return null;
@@ -32,6 +37,7 @@ class FolderBrowserEntryList extends React.Component {
     return (
       <div>
         {this._renderParentFolderEntry()}
+        <div className="horizontal-divider" />
         {this._renderContentEntries()}
       </div>
     );

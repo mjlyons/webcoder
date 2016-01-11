@@ -1,7 +1,6 @@
 const { Record } = require('immutable');
 const path = require('path');
 
-// TODO(mike): create a class for fileinfo
 const Filetypes = {
   FILE: Symbol('FILE'),
   FOLDER: Symbol('FOLDER'),
