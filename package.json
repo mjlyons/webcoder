@@ -18,11 +18,12 @@
     "coveralls": "npm run test:cov && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "debug:server": "node debug ./bin/server/www",
     "lint": "gulp lint",
+    "make:jestcovrc": "node ./makeJestCovRc.js",
     "start": "node ./bin/server/www",
     "start:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
     "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
-    "test:cov": "jest --coverage ./js/",
-    "test:nocov": "jest ./js/",
+    "test:cov": "npm run make:jestcovrc && jest --coverage --config=.jestcovrc && rm -rf .jestcovrc",
+    "test:nocov": "jest --config=.jestrc",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
   },
   "dependencies": {
@@ -67,22 +68,5 @@
     "react-addons-test-utils": "^0.14.3",
     "supertest": "^1.1.0",
     "webpack-dev-server": "^1.14.0"
-  },
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/classnames",
-      "<rootDir>/node_modules/fbjs",
-      "<rootDir>/node_modules/immutable",
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/supertest"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/build/",
-      "<rootDir>/node_modules/",
-      "<rootDir>/style/"
-    ]
   }
 }
