@@ -15,11 +15,14 @@
     "build:server": "gulp",
     "client:build:watch": "webpack -d --progress --color --watch",
     "client:dev": "export WEBPACK_DEV_SERVER=1 && npm run build && npm start | webpack-dev-server -d --inline --progress --colors",
+    "coveralls": "npm run test:cov && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "debug:server": "node debug ./bin/server/www",
     "lint": "gulp lint",
     "start": "node ./bin/server/www",
     "start:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
-    "test": "jest ./js/",
+    "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
+    "test:cov": "jest --coverage ./js/",
+    "test:nocov": "jest ./js/",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
   },
   "dependencies": {
@@ -54,6 +57,7 @@
   "devDependencies": {
     "babel-jest": "^6.0.1",
     "babel-polyfill": "^6.3.14",
+    "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-react": "^3.11.3",
