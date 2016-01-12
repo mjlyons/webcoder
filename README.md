@@ -3,6 +3,7 @@
 Edit code on a remote server in your browser.
 
 [![Build Status](https://travis-ci.org/mjlyons/webcoder.svg?branch=master)](https://travis-ci.org/mjlyons/webcoder)
+[![Coverage Status](https://coveralls.io/repos/mjlyons/webcoder/badge.svg?branch=master&service=github)](https://coveralls.io/github/mjlyons/webcoder?branch=master)
 
 The goal of this project is to let you edit source code for projects living on a
 remote server. You shouldn't need to install a bunch of tools on your computer just to 
