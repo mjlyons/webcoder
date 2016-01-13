@@ -1,20 +1,20 @@
 // This is a simple wrapper around XMLHttpRequest so that it can be unit tested.
 
 class XMLHttpRequestWrap {
-  constructor() {
-    this.req = new XMLHttpRequest();
+  constructor(...funcArgs) {
+    this.req = new XMLHttpRequest(...funcArgs);
   }
 
-  addEventListener(eventName, callback) {
-    this.req.addEventListener(eventName, callback);
+  addEventListener(...funcArgs) {
+    this.req.addEventListener(...funcArgs);
   }
 
-  open(method, url) {
-    this.req.open(method, url);
+  open(...funcArgs) {
+    this.req.open(...funcArgs);
   }
 
-  send() {
-    this.req.send();
+  send(...funcArgs) {
+    this.req.send(...funcArgs);
   }
 }
 

@@ -2,16 +2,16 @@
 // tests where the fs module may be used for other unrelated purposes.
 const fs = require('fs');
 
-function readdirSync(path) {
-  return fs.readdirSync(path);
+function readdirSync(...funcArgs) {
+  return fs.readdirSync(...funcArgs);
 }
 
-function existsSync(path) {
-  return fs.existsSync(path);
+function existsSync(...funcArgs) {
+  return fs.existsSync(...funcArgs);
 }
 
-function statSync(path) {
-  return fs.statSync(path);
+function statSync(...funcArgs) {
+  return fs.statSync(...funcArgs);
 }
 
 module.exports = { readdirSync, existsSync, statSync };

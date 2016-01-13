@@ -10,6 +10,7 @@ const path = require('path');
 
 // Read .jestrc as json object`
 const jestrcJson = JSON.parse(fs.readFileSync('./.jestrc'));
+const coverageFilesExclude = JSON.parse(fs.readFileSync('./coverageFilesExclude.json'));
 
 // Find list of non-test .js files in js/
 const jsFilesToCover = {};
@@ -20,7 +21,9 @@ function scanFiles(scanPath) {
       scanFiles(path.resolve(scanPath, childFilename));
     }
   } else {
-    if (scanPath.endsWith('.js') && scanPath.indexOf('__tests__') === -1) {
+    if (scanPath.endsWith('.js') &&
+        scanPath.indexOf('__tests__') === -1 &&
+        coverageFilesExclude.indexOf(path.relative(__dirname, scanPath)) === -1) {
       jsFilesToCover[scanPath] = true;
     }
   }
