@@ -20,4 +20,25 @@ describe('FolderBrowserEntryList', () => {
     expect(entryNodes[0].props.fileinfo).toBe(folderContents[0]);
     expect(entryNodes[1].props.fileinfo).toBe(folderContents[1]);
   });
+  it('displays a list with a parent folder', () => {
+    const folderContents = [
+      new FileEntry({ filetype: Filetypes.FILE, path: '/myfolder/myfile.txt' }),
+    ];
+    const folderBrowserEntryList = TestUtils.renderIntoDocument(
+      <FolderBrowserEntryList folderInfo={folderContents} parentPath={'/subfolder'} />
+    );
+    const entryNodes = TestUtils.scryRenderedComponentsWithType(folderBrowserEntryList, FolderBrowserEntry);
+    expect(entryNodes[0].props.fileinfo).toEqual(new FileEntry({
+      filetype: Filetypes.FOLDER,
+      path: '/subfolder',
+    }));
+    expect(entryNodes[1].props.fileinfo).toBe(folderContents[0]);
+  });
+  it('Proceeds if folder contents are not available', () => {
+    const folderBrowserEntryList = TestUtils.renderIntoDocument(
+      <FolderBrowserEntryList folderInfo={null} />
+    );
+    const entryNodes = TestUtils.scryRenderedComponentsWithType(folderBrowserEntryList, FolderBrowserEntry);
+    expect(entryNodes.length).toEqual(0);
+  });
 });

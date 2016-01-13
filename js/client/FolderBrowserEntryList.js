@@ -27,6 +27,7 @@ class FolderBrowserEntryList extends React.Component {
   // Returns an array of FolderBrowserEntry's, one for each file/folder in the folder.
   _renderContentEntries() {
     if (!this.props.folderInfo) {
+      // folderInfo may be missing if it hasn't been loaded from server yet.
       return null;
     }
     return this.props.folderInfo.map(fileInfo => {
