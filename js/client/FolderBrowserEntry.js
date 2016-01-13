@@ -22,7 +22,7 @@ class FolderBrowserEntry extends React.Component {
 
   render() {
     return (
-      <a href="#" className="folder-browser-entry" onClick={this.handleClick.bind(this)} >
+      <a href="#" className="folder-browser-entry" ref="folderBrowserEntryLink" onClick={this.handleClick.bind(this)} >
         <span className="file-icon">
           <i ref="fileIcon" className={this.getClassNamesFromFiletype(this.props.fileinfo.filetype)} />
         </span>

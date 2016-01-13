@@ -1,11 +1,15 @@
 jest.dontMock('js/common/FileEntry');
+jest.dontMock('../FolderBrowserEntry');
+jest.mock('js/client/FolderBrowserActionCreators');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-const FolderBrowserEntry = require.requireActual('../FolderBrowserEntry');
+const ReactTestUtils = require.requireActual('react-addons-test-utils');
+const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
 const { FileEntry, Filetypes } = require.requireActual('js/common/FileEntry');
+const FolderBrowserEntry = require.requireActual('../FolderBrowserEntry');
 
 describe('FolderBrowserEntry', () => {
   it('displays folders properly', () => {
@@ -22,16 +26,31 @@ describe('FolderBrowserEntry', () => {
     expect(ReactDOM.findDOMNode(folderBrowserEntry.refs.fileIcon).className).toEqual('fa fa-folder');
   });
   it('displays files properly', () => {
-    const folderInfo = new FileEntry({
+    const fileInfo = new FileEntry({
       filetype: Filetypes.FILE,
       path: '/ParentFolder/MyFile.txt',
     });
     const folderBrowserEntry = TestUtils.renderIntoDocument(
-      <FolderBrowserEntry fileinfo={folderInfo} />
+      <FolderBrowserEntry fileinfo={fileInfo} />
     );
     const entryNode = ReactDOM.findDOMNode(folderBrowserEntry);
 
     expect(entryNode.textContent).toEqual('MyFile.txt');
     expect(ReactDOM.findDOMNode(folderBrowserEntry.refs.fileIcon).className).toEqual('fa fa-file');
+  });
+  it('handles clicks and triggers action', () => {
+    const fileInfo = new FileEntry({
+      filetype: Filetypes.FILE,
+      path: '/ParentFolder/MyFile.txt',
+    });
+    const folderBrowserEntry = TestUtils.renderIntoDocument(
+      <FolderBrowserEntry fileinfo={fileInfo} />
+    );
+    const fakeEvt = {
+      preventDefault: jest.genMockFunction(),
+    };
+    ReactTestUtils.Simulate.click(folderBrowserEntry.refs.folderBrowserEntryLink, fakeEvt);
+    expect(fakeEvt.preventDefault).toBeCalled();
+    expect(FolderBrowserActionCreators.openFileEntry).toBeCalledWith(fileInfo);
   });
 });
