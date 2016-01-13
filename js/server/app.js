@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const routes = require('js/server/routes/index');
 const users = require('js/server/routes/users');
+const testroutes = require('js/server/routes/testroutes');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use((_req, res, next) => {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/test', testroutes);
 
 // catch 404 and forward to error handler
 app.use(function routeNotFoundError(req, res, next) {
