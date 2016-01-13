@@ -24,7 +24,6 @@ function _changeMessage(newMessage) {
 
 AlertStore.dispatchToken = Dispatcher.register(action => {
   switch (action.type) {
-
     case AlertActionTypes.SHOW_ALERT:
       _changeMessage(action.message);
 
@@ -37,9 +36,6 @@ AlertStore.dispatchToken = Dispatcher.register(action => {
       break;
 
     default:
-      // Do nothing
-      break;
-
   }
 });
 

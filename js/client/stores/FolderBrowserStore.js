@@ -25,7 +25,6 @@ storeInst.dispatchToken = Dispatcher.register(action => {
       break;
 
     default:
-      return;
   }
 });
 
