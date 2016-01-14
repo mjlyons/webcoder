@@ -7,4 +7,4 @@ build
 *.swo
 coverage
 .jestcovrc
-esdoc
+jsdoc
