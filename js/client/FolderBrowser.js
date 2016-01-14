@@ -68,4 +68,8 @@ FolderBrowser.propTypes = {
   startPath: React.PropTypes.string.isRequired,
 };
 
+FolderBrowser.defaultProps = {
+  startPath: '/',
+};
+
 module.exports = FolderBrowser;

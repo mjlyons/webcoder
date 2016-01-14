@@ -51,7 +51,7 @@ class FolderBrowserEntryList extends React.Component {
 
 FolderBrowserEntryList.propTypes = {
   parentPath: React.PropTypes.string,
-  folderInfo: React.PropTypes.array,
+  folderInfo: React.PropTypes.object, // Immutable.List
 };
 
 module.exports = FolderBrowserEntryList;
