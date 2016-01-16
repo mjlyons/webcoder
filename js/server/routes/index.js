@@ -1,14 +1,18 @@
 const { ROOT_SOURCE_PATH } = require('settings')();
+const { readfile } = require('../serverfs');
 const ls = require('../ls');
 
 const express = require('express');
 const router = express.Router();
 
-router.get('/ls/:path(*)', function routeLs(req, res, _next) {
-  // Disable caching on browser
+function disableBrowserCache(res) {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
   res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
   res.setHeader('Expires', '0'); // Proxies.
+}
+
+router.get('/ls/:path(*)', function routeLs(req, res, _next) {
+  disableBrowserCache(res);
 
   const lsJson = ls(ROOT_SOURCE_PATH, req.params.path);
   if (lsJson.error === 'not-authorized') {
@@ -22,5 +26,12 @@ router.get('/ls/:path(*)', function routeLs(req, res, _next) {
   }
 });
 
+// TODO(mike): integration-test this
+router.get('/readfile/:path(*)', (req, res, _next) => {
+  disableBrowserCache(res);
+  // TODO(mike): handle error cases
+  const readfileResult = readfile(ROOT_SOURCE_PATH, req.params.path);
+  res.json(readfileResult);
+});
 
 module.exports = router;

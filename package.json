@@ -21,11 +21,12 @@
     "lint": "gulp lint",
     "make:jestcovrc": "node ./makeJestCovRc.js",
     "start": "node ./bin/server/www",
-    "start:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint && npm start'",
+    "start:watch": "nodemon --ignore build/ --exec 'npm test && npm run build && npm start'",
     "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
     "test:cov": "npm run make:jestcovrc && jest --coverage --config=.jestcovrc && rm -rf .jestcovrc",
     "test:nocov": "jest --config=.jestrc",
-    "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'"
+    "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'",
+    "watch:server": "nodemon --ignore build/ --exec 'npm test && npm run build:server && npm start'"
   },
   "dependencies": {
     "app-module-path": "^1.0.5",

@@ -28,7 +28,7 @@ describe('SourceFileSystemStore', () => {
   });
 
   it('starts with nothing in store', () => {
-    expect(SourceFileSystemStore.getState().toJS()).toEqual({});
+    expect(SourceFileSystemStore.getState().toJS()).toEqual({ fileContents: {}, filesystem: {} });
   });
 
   it('does nothing if a file is opened', () => {

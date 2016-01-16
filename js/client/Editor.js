@@ -1,8 +1,18 @@
 const React = require('react');
 const AceEditor = require('react-ace');
 const EditorStore = require('js/client/stores/EditorStore');
+const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
 
 require('client/style/Editor');
+
+function _getStateFromStores() {
+  const currentPath = EditorStore.getState().get('currentPath');
+  const fileContents = SourceFileSystemStore.getFileContents(currentPath);
+  return { currentPath, fileContents };
+}
+
+// TODO(mike): Separate the state/render into controller + component
+// TODO(mike): unit test this
 
 /**
  * React controller for text editor
@@ -17,10 +27,12 @@ class Editor extends React.Component {
 
   componentDidMount() {
     EditorStore.addChangeListener(this.onStoreChange);
+    SourceFileSystemStore.addChangeListener(this.onStoreChange);
   }
 
   componentWillUnmount() {
     EditorStore.removeChangeListener(this.onStoreChange);
+    SourceFileSystemStore.removeChangeListener(this.onStoreChange);
   }
 
   onStoreChange() {
@@ -36,12 +48,9 @@ class Editor extends React.Component {
   }
 
   render() {
-    let fileContents = '';
-    if (!fileContents) { fileContents = ''; }  // Make sure pass in a string
-
     return (
       <AceEditor
-        value={fileContents}
+        value={this.state.fileContents || ''}
         onChange={this.onEditorChange}
         className="ace-editor"
         height={null}
@@ -49,12 +58,6 @@ class Editor extends React.Component {
       />
     );
   }
-}
-
-function _getStateFromStores() {
-  return {
-    currentPath: EditorStore.getState().get('currentPath'),
-  };
 }
 
 module.exports = Editor;
