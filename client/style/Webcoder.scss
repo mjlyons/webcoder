@@ -1,6 +1,8 @@
 @import "client/style/Colors";
 
 .pane-container {
+  color: $text-color;
+  background-color: $background-color;
   position: fixed;
   height: 100%;
   width: 100%;
@@ -11,7 +13,7 @@
 .sidebar-pane {
   width: 200px;
   padding: 5px;
-  border-right: 1px solid $darkblue;
+  border-right: 1px solid $divider-color;
   overflow-y: scroll;
   overflow-x: hidden;
   white-space: nowrap;
