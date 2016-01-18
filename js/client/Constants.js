@@ -1,6 +1,7 @@
 module.exports = {
-  FolderBrowserActionTypes: {
+  WebcoderActionTypes: {
     OPEN_FILE_ENTRY: Symbol('OPEN_FILE_ENTRY'),
+    SAVE_FILE: Symbol('SAVE_FILE'),
   },
 
   AlertActionTypes: {

@@ -2,6 +2,7 @@ const React = require('react');
 const EditorStore = require('js/client/stores/EditorStore');
 const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
 const aceExtModelist = require('build/ext-modelist');
+const WebcoderActions = require('js/client/WebcoderActions');
 
 // There isn't a great way to require ace right now, load it as a separate package
 // which puts it on window.
@@ -45,6 +46,13 @@ class Editor extends React.Component {
     this.editor = ace.edit('ace-editor');
     this.editor.setTheme(`ace/theme/${ACE_THEME}`);
     this.editor.$blockScrolling = Infinity;
+
+    // Set up save command
+    this.editor.commands.addCommand({
+      name: 'saveFile',
+      bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+      exec: this.onSave.bind(this),
+    });
   }
 
   componentWillUnmount() {
@@ -54,6 +62,13 @@ class Editor extends React.Component {
     // Dispose Ace
     this.editor.destroy();
     this.editor.container.remove();
+  }
+
+  onSave() {
+    if (!this.state.currentPath) {
+      return;
+    }
+    WebcoderActions.saveFile(this.state.currentPath, this.editor.getValue());
   }
 
   onStoreChange() {

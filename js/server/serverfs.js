@@ -24,4 +24,27 @@ function readfile(rootPath, reqPath = '') {
   };
 }
 
-module.exports = { readfile };
+// TODO(mike): unit test storefile
+function storefile(rootPath, reqPath, contents) {
+  // TODO(mike): Should probably merge this with the ls code (very similar)
+  const fullPath = path.resolve(rootPath, reqPath);
+  if (!fullPath.startsWith(rootPath)) {
+    return { error: 'not-authorized' };
+  }
+//  if (!fs.existsSync(fullPath)) {
+//    return { error: 'not-exists' };
+//  }
+
+  // TODO(mike): Should probably check/test if trying to save over a folder, etc.
+//  if (!fs.statSync(fullPath).isFile()) {
+//    return { error: 'not-file' };
+//  }
+
+  fs.writeFileSync(fullPath, contents, 'utf8');
+
+  return {
+    path: '/' + reqPath,
+  };
+}
+
+module.exports = { readfile, storefile };

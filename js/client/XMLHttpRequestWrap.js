@@ -16,6 +16,10 @@ class XMLHttpRequestWrap {
   send(...funcArgs) {
     this.req.send(...funcArgs);
   }
+
+  setRequestHeader(...funcArgs) {
+    this.req.setRequestHeader(...funcArgs);
+  }
 }
 
 module.exports = XMLHttpRequestWrap;

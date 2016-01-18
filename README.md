@@ -26,8 +26,10 @@ see the files and folders inside your source directory, though you can't open th
 
 There's many more things to do, but here's the next steps:
 
-* Figure out jsdoc (or something like it)
-* Display contents of text/source files in editor (Ace? CodeMirror?)
+* Authenticate users (right now anyone could just modify code)
+* Fast fuzzy filename search (ctrl-p style)
+* Do more to not let you lose unsaved changes
+* Testing/cleanup
 
 ## License
 

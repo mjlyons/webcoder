@@ -1,5 +1,5 @@
 const { ROOT_SOURCE_PATH } = require('settings')();
-const { readfile } = require('../serverfs');
+const { readfile, storefile } = require('../serverfs');
 const ls = require('../ls');
 
 const express = require('express');
@@ -32,6 +32,13 @@ router.get('/readfile/:path(*)', (req, res, _next) => {
   // TODO(mike): handle error cases
   const readfileResult = readfile(ROOT_SOURCE_PATH, req.params.path);
   res.json(readfileResult);
+});
+
+// TODO(mike): integration-test this
+router.post('/storefile/:path(*)', (req, res, _next) => {
+  // TODO(mike): handle error cases
+  const storefileResult = storefile(ROOT_SOURCE_PATH, req.params.path, req.body.contents);
+  res.json(storefileResult);
 });
 
 module.exports = router;

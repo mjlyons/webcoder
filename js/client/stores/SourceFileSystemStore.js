@@ -3,7 +3,7 @@ const path = require('path');
 
 const Store = require('js/client/stores/Store');
 const AlertActionCreators = require('js/client/AlertActionCreators');
-const { FolderBrowserActionTypes } = require('js/client/Constants');
+const { WebcoderActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
@@ -20,6 +20,9 @@ const READFILE_FORBIDDEN_ERROR_MESSAGE = "You don't have access to that file";
 const READFILE_NOT_FOUND_ERROR_MESSAGE = "Couldn't find that file";
 const READFILE_NOT_FILE_ERROR_MESSAGE = "That isn't a file";
 const READFILE_SERVER_ERROR_MESSAGE = 'The source server had an error while examining the file';
+
+const STOREFILE_RESULT_OK = 'File saved successfully';
+const STOREFILE_NETWORK_ERROR_MESSAGE = 'Error saving file on the server';
 
 const SERVER_FILETYPE_TO_CLIENT_FILETYPE = {
   dir: Filetypes.FOLDER,
@@ -119,15 +122,41 @@ function _updateFileContents(requestedPath) {
   req.send();
 }
 
+function _handleServerStorefileResponse(response) {
+  // TODO(mike): error messages
+  if (response.status !== 200) {
+    AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE);
+  } else {
+    AlertActionCreators.showAlert(STOREFILE_RESULT_OK);
+  }
+}
+
+function _storeFileContents(filepath, contents) {
+  const req = new XMLHttpRequestWrap();
+  req.addEventListener('load', function onLoad() {
+    _handleServerStorefileResponse(this);
+  });
+  req.addEventListener('error', function onError() {
+    AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE);
+  });
+  req.open('POST', `${settings.SERVER_HOST}/storefile${filepath}`);
+  req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  req.send(JSON.stringify({ contents }));
+}
+
 SourceFileSystemStore.dispatchToken = Dispatcher.register(action => {
   switch (action.type) {
 
-    case FolderBrowserActionTypes.OPEN_FILE_ENTRY:
+    case WebcoderActionTypes.OPEN_FILE_ENTRY:
       if (action.fileinfo.filetype === Filetypes.FOLDER) {
         _updateFolderContents(action.fileinfo.path);
       } else if (action.fileinfo.filetype === Filetypes.FILE) {
         _updateFileContents(action.fileinfo.path);
       }
+      break;
+
+    case WebcoderActionTypes.SAVE_FILE:
+      _storeFileContents(action.filepath, action.contents);
       break;
 
     default:
