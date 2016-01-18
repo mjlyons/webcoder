@@ -1,19 +1,13 @@
 const Path = require('path');
 const React = require('react');
-const AceEditor = require('react-ace');
 const EditorStore = require('js/client/stores/EditorStore');
 const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
 
 require('client/style/Editor');
+const { getModeForPath } = require('thirdparty/ace-builds/src/ext-modelist');
 
-// TODO(mike): Should be smarter than this
-require('brace/mode/javascript');
-require('brace/mode/json');
-require('brace/mode/markdown');
-require('brace/mode/plain_text');
-require('brace/mode/yaml');
-
-require('brace/theme/solarized_dark');
+// For now, just hard-code the theme
+const ACE_THEME = 'solarized_dark';
 
 function _getStateFromStores() {
   const currentPath = EditorStore.getState().get('currentPath');
@@ -34,11 +28,17 @@ class Editor extends React.Component {
     super(props);
     this.state = _getStateFromStores();
     this.onStoreChange = this.onStoreChange.bind(this);
+    this.editor = null;
+    this.lastPath = null;
   }
 
   componentDidMount() {
     EditorStore.addChangeListener(this.onStoreChange);
     SourceFileSystemStore.addChangeListener(this.onStoreChange);
+
+    this.editor = ace.edit("ace-editor");
+    this.editor.setTheme(`ace/theme/${ACE_THEME}`);
+    this.editor.$blockScrolling = Infinity;
   }
 
   componentWillUnmount() {
@@ -59,29 +59,26 @@ class Editor extends React.Component {
   }
 
   render() {
-    // TODO(mike): Somehow script this (like localsettings.js) to only use the formats that are wanted
-    const extToMode = {
-      '.js': 'javascript',
-      '.json': 'json',
-      '.md': 'markdown',
-      '.yaml': 'yaml',
-      '.yml': 'yaml',
-    };
-    const ext = this.state.currentPath ? Path.extname(this.state.currentPath.toLowerCase()) : null;
-    const mode = ext in extToMode ? extToMode[ext] : 'plain_text';
+    // During the first render, the ace editor may not yet exist. It needs the #ace-editor div
+    // to be in the DOM, which doenst' happen until this is first rendered. DO NOT use this.editor
+    // unless inside this block
+    if (this.editor) {
+      if (this.lastPath !== this.state.currentPath) {  // TODO(mike): invalidate when reload file
+        this.editor.setValue(this.state.fileContents || '');
+        this.editor.selection.moveCursorTo(0, 0, false);
+        this.editor.selection.clearSelection();
+        this.editor.lastPath = this.state.currentPath;
 
-    const theme = 'solarized_dark';
+        const ext = getModeForPath(this.state.currentPath);
+        const aceMode = ext in extToMode ? extToMode[ext] : 'plain_text';
+
+        this.editor.getSession().setMode(`ace/mode/${aceMode}`);
+      }
+    }
+
 
     return (
-      <AceEditor
-        value={this.state.fileContents || ''}
-        onChange={this.onEditorChange}
-        className="ace-editor"
-        height={null}
-        width={null}
-        mode={mode}
-        theme={theme}
-      />
+      <div id="ace-editor" className="ace-editor" />
     );
   }
 }

@@ -11,8 +11,11 @@ var paths = {
   allScripts: [
     'js/**/*.js'
   ],
+  ace: [
+    'thirdparty/ace-builds/src-min-noconflict/**',
+  ],
   static: ['static/**', '!**/.*'],
-  localsettings: ['settings.js', 'localsettings.js', 'buildsettings.js']
+  localsettings: ['settings.js', 'localsettings.js', 'buildsettings.js'],
 };
 
 function isFixed(file) {
@@ -26,6 +29,11 @@ gulp.task("scripts", function() {
       presets: ['es2015'],
     }))
     .pipe(gulp.dest("build/js/"));
+});
+
+gulp.task('ace', function() {
+  return gulp.src(paths.ace)
+    .pipe(gulp.dest('./build/static/client/ace/'));
 });
 
 gulp.task("static", function() {
@@ -46,4 +54,4 @@ gulp.task('lint', function() {
     .pipe(gulpIf(isFixed, gulp.dest('js/')));
 });
 
-gulp.task('default', ['localsettings', 'scripts', 'static']);
+gulp.task('default', ['localsettings', 'scripts', 'static', 'ace']);
