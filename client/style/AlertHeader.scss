@@ -1,9 +1,9 @@
 @import "client/style/Colors";
 
 .alert-header {
-  margin-bottom: 5px;
   padding: 3px;
 
-  background-color: $background-color;
-  color: $text-color;
+  background-color: $alert-background;
+  color: $alert-text-color;
+  text-align: center;
 }

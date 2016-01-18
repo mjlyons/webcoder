@@ -1,4 +1,18 @@
 "use strict";
+
+/**
+ * This file cleans up ext-modelist.js, which comes with the Ace editor.
+ * The figures out the Ace filetype mode that corresponds to a filename's extension.
+ * The file uses AMD RequireJS, which is incompatible with the rest of webcoder,
+ * which uses CommonJS.
+ *
+ * This file cleans up ext-modelist.js by doing the following
+ * - Removing the AMD wrapper
+ * - Removing the "use strict"; command at the top
+ *
+ * The result is stored in the build/ directory and is used when building webcoder.
+ */
+
 const FILENAME = 'ext-modelist.js';
 const INPUT_PATH = './thirdparty/ace-builds/src';
 const OUTPUT_PATH = './build';
@@ -32,5 +46,9 @@ for (let i = firstOpenBracketIndex + 1; closeBracketIndex === -1 && i < extModel
 const noAmdCode = extModelistSrc.substring(firstOpenBracketIndex + 1, closeBracketIndex).replace('"use strict";', '');
 
 // Write resulting js
-fs.mkdirSync(OUTPUT_PATH);
+try {
+  fs.mkdirSync(OUTPUT_PATH);
+} catch (ex) {
+  // Probably folder already exists
+}
 fs.writeFileSync(path.resolve(OUTPUT_PATH, FILENAME), noAmdCode);

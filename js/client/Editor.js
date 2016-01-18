@@ -15,7 +15,10 @@ const ACE_THEME = 'solarized_dark';
 function _getStateFromStores() {
   const currentPath = EditorStore.getState().get('currentPath');
   const fileContents = SourceFileSystemStore.getFileContents(currentPath);
-  return { currentPath, fileContents };
+  return {
+    currentPath,
+    fileContents,
+  };
 }
 
 // TODO(mike): Separate the state/render into controller + component
@@ -47,6 +50,10 @@ class Editor extends React.Component {
   componentWillUnmount() {
     EditorStore.removeChangeListener(this.onStoreChange);
     SourceFileSystemStore.removeChangeListener(this.onStoreChange);
+
+    // Dispose Ace
+    this.editor.destroy();
+    this.editor.container.remove();
   }
 
   onStoreChange() {
