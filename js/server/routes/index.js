@@ -1,7 +1,8 @@
 const { ROOT_SOURCE_PATH } = require('settings')();
 const { readfile, storefile } = require('../serverfs');
 const ls = require('../ls');
-
+const passport = require('passport');
+const path = require('path');
 const express = require('express');
 const router = express.Router();
 
@@ -11,7 +12,33 @@ function disableBrowserCache(res) {
   res.setHeader('Expires', '0'); // Proxies.
 }
 
-router.get('/ls/:path(*)', function routeLs(req, res, _next) {
+function loggedInHtml(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
+function loggedInJson(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).json({error: 'logged-out'});
+  }
+}
+
+router.get('/', (req, res, _next) => {
+  res.render('index.jade', {});
+});
+
+const clientHtmlPath = path.join(__dirname, '../../../static/client/client.html');
+router.get('/editor', loggedInHtml, (req, res) => { res.sendFile(clientHtmlPath); });
+
+
+// TODO(mike): test all ajax calls all enforce logged in
+// TODO(mike): add logged out status to all ajax call responses
+router.get('/ls/:path(*)', loggedInJson, function routeLs(req, res, _next) {
   disableBrowserCache(res);
 
   const lsJson = ls(ROOT_SOURCE_PATH, req.params.path);
@@ -27,7 +54,7 @@ router.get('/ls/:path(*)', function routeLs(req, res, _next) {
 });
 
 // TODO(mike): integration-test this
-router.get('/readfile/:path(*)', (req, res, _next) => {
+router.get('/readfile/:path(*)', loggedInJson, (req, res, _next) => {
   disableBrowserCache(res);
   // TODO(mike): handle error cases
   const readfileResult = readfile(ROOT_SOURCE_PATH, req.params.path);
@@ -35,7 +62,7 @@ router.get('/readfile/:path(*)', (req, res, _next) => {
 });
 
 // TODO(mike): integration-test this
-router.post('/storefile/:path(*)', (req, res, _next) => {
+router.post('/storefile/:path(*)', loggedInJson, (req, res, _next) => {
   // TODO(mike): handle error cases
   const storefileResult = storefile(ROOT_SOURCE_PATH, req.params.path, req.body.contents);
   res.json(storefileResult);

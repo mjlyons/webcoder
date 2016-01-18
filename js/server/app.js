@@ -3,10 +3,41 @@ const path = require('path');
 // const logger = require('morgan');  // uncomment for access logging
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+const expressSession = require('express-session');
+const sessionFileStore = require('session-file-store')(expressSession);
 const routes = require('js/server/routes/index');
-const users = require('js/server/routes/users');
+//const users = require('js/server/routes/users');  // TODO(mike): Is this okay to remove?
 const testroutes = require('js/server/routes/testroutes');
+const { SESSION_SECRET } = require('settings')();
+
+const passport = require('passport');
+const localPassportStrategy = require('passport-local').Strategy;
+const users = require('js/server/users');
+
+passport.use(new localPassportStrategy(
+    function(username, password, done) {
+      users.findByUsername(username, function(err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!users.isPasswordValidForUser(user, password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      });
+    }
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  users.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
 
 const app = express();
 
@@ -19,7 +50,18 @@ app.set('view engine', 'jade');
 // app.use(logger('dev'));  // uncomment for access logging
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressSession({
+  secret: SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  store: new sessionFileStore({
+    path: './build/sessions',
+    ttl: (60 * 60 * 24 * 7),  // 1 week
+  }),
+}));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/static', express.static(path.join(__dirname, '../../static')));
 
 // Allows javascript (at webcoder:8080) to access all routes on server
@@ -31,8 +73,18 @@ app.use((_req, res, next) => {
 });
 
 app.use('/', routes);
-app.use('/users', users);
+// TODO(mike): Is this okay to remove?
+// app.use('/users', users);
 app.use('/test', testroutes);
+
+app.get('/login', (req, res) => {
+  res.render('login', {});
+});
+app.post('/login', passport.authenticate('local', { successRedirect: '/editor', failureRedirect: '/login' }));
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use(function routeNotFoundError(req, res, next) {

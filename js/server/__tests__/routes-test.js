@@ -2,8 +2,27 @@ jest.autoMockOff();
 jest.mock('settings');
 jest.mock('js/server/fswrap');
 
+/**
+ * Server-integration tests. Makes requests to the server as if it were the
+ * client and verifies the result.
+ *
+ * @todo Add tests to make sure authenticated json requests enforce auth
+ * @todo Add tests for logging in/out
+ */
+
 const mockLocalsettings = {
   ROOT_SOURCE_PATH: '/my-root-src',
+  SESSION_SECRET: 'session-secret',
+  userRecords: [
+    {
+      id: 1,
+      username: 'testuser',
+      displayName: 'Test User',
+      emails: ['testuser@example.org'],
+      passhash: '$2a$10$vohRxRVFiavPH766eBy6eOJWa1vbElTm202f4Qd9TM9ZucxYQ1lo.',  // password: "testpass"
+    },
+  ],
+
 };
 
 const statResultFile = {
@@ -19,12 +38,27 @@ const statResultDir = {
 describe('Routing:index', () => {
   let app;
   let request;
+  let agent;
 
   beforeEach(() => {
     const settings = require('settings');
     settings.mockReturnValue(mockLocalsettings);
     app = require.requireActual('js/server/app');
+
     request = require.requireActual('supertest');
+    agent = request.agent(app);
+
+    let done = false;
+    agent
+      .post('/login')
+      .send({ username: 'testuser', password: 'testpass' })
+      .end((err, res) => {
+        done = true;
+      });
+    waitsFor(() => {
+      if (!done) { return false; }
+      return true;
+    }, 'request to return');
   });
 
   describe('/ls endpoint', () => {
@@ -38,8 +72,7 @@ describe('Routing:index', () => {
       fs.statSync.mockReturnValueOnce(statResultDir)
         .mockReturnValueOnce(statResultDir)
         .mockReturnValueOnce(statResultFile);
-
-      request(app)
+      agent
         .get('/ls/somedir')
         .end((err, res) => {
           response = res;
@@ -66,7 +99,7 @@ describe('Routing:index', () => {
       const fs = require('../fswrap');
       fs.existsSync.mockReturnValueOnce(false);
 
-      request(app)
+      agent
         .get('/ls/somedir')
         .end((err, res) => {
           response = res;
@@ -84,7 +117,7 @@ describe('Routing:index', () => {
       let requestError = null;
       let response = null;
 
-      request(app)
+      agent
         .get('/ls/../somedir')
         .end((err, res) => {
           response = res;
@@ -108,7 +141,7 @@ describe('Routing:index', () => {
       fs.existsSync.mockReturnValueOnce(true);
       fs.statSync.mockReturnValueOnce(statResultFile);
 
-      request(app)
+      agent
         .get('/ls/myFile.txt')
         .end((err, res) => {
           response = res;

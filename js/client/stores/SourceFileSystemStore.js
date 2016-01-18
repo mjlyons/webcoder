@@ -9,6 +9,8 @@ const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const XMLHttpRequestWrap = require('js/client/XMLHttpRequestWrap');
 const Immutable = require('immutable');
 
+const LOGGED_OUT_MESSAGE = 'You are logged out from the server';
+
 const LS_NETWORK_ERROR_MESSAGE = 'Error getting folder contents from server';
 const LS_FORBIDDEN_ERROR_MESSAGE = "You don't have access to that folder";
 const LS_NOT_FOUND_ERROR_MESSAGE = "Couldn't find that folder";
@@ -56,6 +58,7 @@ const storeInst = new SourceFileSystemStore();
 
 function _handleServerLsResponse(response) {
   const statusToError = {
+    401: LOGGED_OUT_MESSAGE,
     403: LS_FORBIDDEN_ERROR_MESSAGE,
     404: LS_NOT_FOUND_ERROR_MESSAGE,
     405: LS_NOT_FOLDER_ERROR_MESSAGE,
@@ -95,6 +98,7 @@ function _updateFolderContents(requestedPath) {
 
 function _handleServerReadfileResponse(response) {
   const statusToError = {
+    401: LOGGED_OUT_MESSAGE,
     403: READFILE_FORBIDDEN_ERROR_MESSAGE,
     404: READFILE_NOT_FOUND_ERROR_MESSAGE,
     405: READFILE_NOT_FILE_ERROR_MESSAGE,
@@ -123,7 +127,7 @@ function _updateFileContents(requestedPath) {
 }
 
 function _handleServerStorefileResponse(response) {
-  // TODO(mike): error messages
+  // TODO(mike): sane error messages (401, 403, ...)
   if (response.status !== 200) {
     AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE);
   } else {
