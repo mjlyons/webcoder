@@ -1,12 +1,12 @@
 jest.dontMock('js/client/Constants');
-jest.dontMock('../FolderBrowserActionCreators');
+jest.dontMock('../WebcoderActions');
 
-describe('FolderBrowserActionCreators', () => {
+describe('WebcoderActions', () => {
   it('opeFileEntry action is dispatched', () => {
-    const FolderBrowserActionCreators = require('../FolderBrowserActionCreators');
+    const WebcoderActions = require('../WebcoderActions');
     const { FolderBrowserActionTypes } = require('js/client/Constants');
     const Dispatcher = require('js/client/Dispatcher');
-    FolderBrowserActionCreators.openFileEntry('fakefileinfo');
+    WebcoderActions.openFileEntry('fakefileinfo');
     expect(Dispatcher.dispatch).toBeCalledWith({
       type: FolderBrowserActionTypes.OPEN_FILE_ENTRY,
       fileinfo: 'fakefileinfo',

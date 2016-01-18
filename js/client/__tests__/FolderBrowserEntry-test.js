@@ -1,13 +1,13 @@
 jest.dontMock('js/common/FileEntry');
 jest.dontMock('../FolderBrowserEntry');
-jest.mock('js/client/FolderBrowserActionCreators');
+jest.mock('js/client/WebcoderActions');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 const ReactTestUtils = require.requireActual('react-addons-test-utils');
-const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
+const WebcoderActions = require('js/client/WebcoderActions');
 const { FileEntry, Filetypes } = require.requireActual('js/common/FileEntry');
 const FolderBrowserEntry = require.requireActual('../FolderBrowserEntry');
 
@@ -51,6 +51,6 @@ describe('FolderBrowserEntry', () => {
     };
     ReactTestUtils.Simulate.click(folderBrowserEntry.refs.folderBrowserEntryLink, fakeEvt);
     expect(fakeEvt.preventDefault).toBeCalled();
-    expect(FolderBrowserActionCreators.openFileEntry).toBeCalledWith(fileInfo);
+    expect(WebcoderActions.openFileEntry).toBeCalledWith(fileInfo);
   });
 });

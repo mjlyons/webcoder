@@ -2,7 +2,7 @@ const React = require('react');
 const classNames = require('classnames');
 
 const { Filetypes } = require('js/common/FileEntry');
-const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
+const WebcoderActions = require('js/client/WebcoderActions');
 
 require('client/style/FolderBrowserEntry.scss');
 
@@ -17,7 +17,7 @@ class FolderBrowserEntry extends React.Component {
 
   handleClick(evt) {
     evt.preventDefault();
-    FolderBrowserActionCreators.openFileEntry(this.props.fileinfo);
+    WebcoderActions.openFileEntry(this.props.fileinfo);
   }
 
   render() {

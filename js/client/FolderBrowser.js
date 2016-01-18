@@ -3,7 +3,7 @@ const React = require('react');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const SourcePath = require('js/common/SourcePath');
 
-const FolderBrowserActionCreators = require('js/client/FolderBrowserActionCreators');
+const WebcoderActions = require('js/client/WebcoderActions');
 const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
 
 const FolderBrowserStore = require('js/client/stores/FolderBrowserStore');
@@ -28,7 +28,7 @@ class FolderBrowser extends React.Component {
   componentDidMount() {
     FolderBrowserStore.addChangeListener(this._onChange);
     SourceFileSystemStore.addChangeListener(this._onChange);
-    FolderBrowserActionCreators.openFileEntry(new FileEntry({
+    WebcoderActions.openFileEntry(new FileEntry({
       filetype: Filetypes.FOLDER,
       path: this.props.startPath,
     }));
