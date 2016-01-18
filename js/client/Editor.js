@@ -1,10 +1,13 @@
-const Path = require('path');
 const React = require('react');
 const EditorStore = require('js/client/stores/EditorStore');
 const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
+const aceExtModelist = require('build/ext-modelist');
+
+// There isn't a great way to require ace right now, load it as a separate package
+// which puts it on window.
+const ace = window.ace;
 
 require('client/style/Editor');
-const { getModeForPath } = require('thirdparty/ace-builds/src/ext-modelist');
 
 // For now, just hard-code the theme
 const ACE_THEME = 'solarized_dark';
@@ -36,7 +39,7 @@ class Editor extends React.Component {
     EditorStore.addChangeListener(this.onStoreChange);
     SourceFileSystemStore.addChangeListener(this.onStoreChange);
 
-    this.editor = ace.edit("ace-editor");
+    this.editor = ace.edit('ace-editor');
     this.editor.setTheme(`ace/theme/${ACE_THEME}`);
     this.editor.$blockScrolling = Infinity;
   }
@@ -69,10 +72,8 @@ class Editor extends React.Component {
         this.editor.selection.clearSelection();
         this.editor.lastPath = this.state.currentPath;
 
-        const ext = getModeForPath(this.state.currentPath);
-        const aceMode = ext in extToMode ? extToMode[ext] : 'plain_text';
-
-        this.editor.getSession().setMode(`ace/mode/${aceMode}`);
+        const aceMode = aceExtModelist.getModeForPath(this.state.currentPath).mode;
+        this.editor.getSession().setMode(aceMode);
       }
     }
 
