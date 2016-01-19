@@ -8,3 +8,6 @@ build
 coverage
 .jestcovrc
 jsdoc
+localsettings.demo.js
+localsettings.localhost.js
+

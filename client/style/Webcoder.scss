@@ -15,7 +15,7 @@
   width: 200px;
   padding: 5px;
   border-right: 1px solid $divider-color;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   white-space: nowrap;
 }
