@@ -52,7 +52,7 @@ describe('Routing:index', () => {
     agent
       .post('/login')
       .send({ username: 'testuser', password: 'testpass' })
-      .end((err, res) => {
+      .end((err, _res) => {
         done = true;
       });
     waitsFor(() => {

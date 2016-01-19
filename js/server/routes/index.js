@@ -1,7 +1,6 @@
 const { ROOT_SOURCE_PATH } = require('settings')();
-const { readfile, storefile } = require('../serverfs');
+const { fileFinderQuery, readfile, storefile } = require('../serverfs');
 const ls = require('../ls');
-const passport = require('passport');
 const path = require('path');
 const express = require('express');
 const router = express.Router();
@@ -24,7 +23,7 @@ function loggedInJson(req, res, next) {
   if (req.user) {
     next();
   } else {
-    res.status(401).json({error: 'logged-out'});
+    res.status(401).json({ error: 'logged-out' });
   }
 }
 
@@ -66,6 +65,14 @@ router.post('/storefile/:path(*)', loggedInJson, (req, res, _next) => {
   // TODO(mike): handle error cases
   const storefileResult = storefile(ROOT_SOURCE_PATH, req.params.path, req.body.contents);
   res.json(storefileResult);
+});
+
+// TODO(mike): integration-test this, make sure enforces logged in too
+router.get('/filefinderquery/:query(*)', loggedInJson, (req, res, _next) => {
+  disableBrowserCache(res);
+  // TODO(mike): handle error cases
+  const queryResult = fileFinderQuery(ROOT_SOURCE_PATH, req.params.query);
+  res.json(queryResult);
 });
 
 module.exports = router;

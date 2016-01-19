@@ -3,7 +3,7 @@ const { AlertActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const Immutable = require('immutable');
 
-const MESSAGE_TIME_MSEC = 5000;
+const MESSAGE_TIME_MSEC = 3000;
 
 let _state = Immutable.Map({
   message: null,

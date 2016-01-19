@@ -1,0 +1,42 @@
+@import "client/style/Colors";
+
+.file-finder__outer {
+  width: 100%;
+  position: relative;  // change to absolute for overlay
+  z-index: 10;
+}
+
+.file-finder__inner {
+  border: 20px solid $background-color;
+  width: auto;
+  background: $editor-overlay-background;
+}
+
+.file-finder__query__outer {
+  padding-right: 16px;
+}
+
+.file-finder__query__input {
+  width: 100%;
+  font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  color: $editor-overlay-input-text-color;
+  background: $editor-overlay-input-background;
+  border: 0;
+  padding: 8px;
+}
+
+.file-finder__entry:hover, .file-finder__link:focus .file-finder__entry {
+  background-color: $editor-overlay-selected-background;
+}
+
+.file-finder__entry {  // need 'a' to override a { ...}
+  padding: 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  color: $editor-overlay-text-color;
+}
+
+.file-finder__entry__path {
+  color: $editor-overlay-subtext-color;
+  padding-left: 8px;
+}

@@ -25,7 +25,7 @@ describe('AlertStore', () => {
 
     // Test alert goes away after a few seconds
     expect(setTimeout).toBeCalled();
-    expect(setTimeout.mock.calls[0][1]).toEqual(5000);
+    expect(setTimeout.mock.calls[0][1]).toEqual(3000);
     const hideAlertCallback = setTimeout.mock.calls[0][0];
     Store.prototype.emitChange.mockClear();
     hideAlertCallback();
@@ -41,7 +41,7 @@ describe('AlertStore', () => {
     expect(Store.prototype.emitChange).toBeCalled();
     expect(AlertStore.getState().get('message')).toEqual('message1');
     expect(setTimeout).toBeCalled();
-    expect(setTimeout.mock.calls[0][1]).toEqual(5000);
+    expect(setTimeout.mock.calls[0][1]).toEqual(3000);
     const hideAlertCallback1 = setTimeout.mock.calls[0][0];
     Store.prototype.emitChange.mockClear();
 
@@ -51,7 +51,7 @@ describe('AlertStore', () => {
     expect(clearTimeout).toBeCalledWith(hideAlertCallback1);
     expect(AlertStore.getState().get('message')).toEqual('message2');
     expect(setTimeout).toBeCalled();
-    expect(setTimeout.mock.calls[1][1]).toEqual(5000);
+    expect(setTimeout.mock.calls[1][1]).toEqual(3000);
     const hideAlertCallback2 = setTimeout.mock.calls[1][0];
     Store.prototype.emitChange.mockClear();
 
