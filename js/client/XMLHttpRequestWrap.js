@@ -22,7 +22,7 @@ class XMLHttpRequestWrap {
   }
 
   abort(...funcArgs) {
-    this.req.abort();
+    this.req.abort(...funcArgs);
   }
 }
 
