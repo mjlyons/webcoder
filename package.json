@@ -72,6 +72,7 @@
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
+    "eslint-friendly-formatter": "^1.2.2",
     "eslint-plugin-react": "^3.11.3",
     "jest-cli": "^0.8.2",
     "jest-webpack-alias": "^2.0.0",
