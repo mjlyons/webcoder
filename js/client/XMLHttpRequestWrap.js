@@ -20,6 +20,10 @@ class XMLHttpRequestWrap {
   setRequestHeader(...funcArgs) {
     this.req.setRequestHeader(...funcArgs);
   }
+
+  abort(...funcArgs) {
+    this.req.abort();
+  }
 }
 
 module.exports = XMLHttpRequestWrap;

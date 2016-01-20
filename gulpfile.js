@@ -49,7 +49,7 @@ gulp.task("localsettings", function() {
 gulp.task('lint', function() {
   return gulp.src(paths.allScripts)
     .pipe(eslint({"fix": true}))
-    .pipe(eslint.format())
+    .pipe(eslint.format("nocolor"))
     .pipe(eslint.failAfterError())
     .pipe(gulpIf(isFixed, gulp.dest('js/')));
 });

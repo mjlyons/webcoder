@@ -17,12 +17,15 @@ let _state = Immutable.fromJS({
   results: [],
 });
 
+let _pendingXhr = null;
+
 class FileFinderStore extends Store {
   getState() { return _state; }
 }
 const storeInst = new FileFinderStore();
 
 function _handleQueryServerResponse(response) {
+  _pendingXhr = null;
   // TODO(mike): properly announce error codes
   if (response.status !== 200) {
     AlertActionCreators.showAlert(QUERY_GENERIC_ERROR);
@@ -37,18 +40,24 @@ function _handleQueryServerResponse(response) {
   storeInst.emitChange();
 }
 
-// TODO(mike): kill old requests if a new one is coming in
 function _queryServer(query) {
-  const req = new XMLHttpRequestWrap();
-  req.addEventListener('load', function onLoad() {
+  // Remove preview request if it's in progress
+  if (_pendingXhr) {
+    _pendingXhr.abort();
+    _pendingXhr = null;
+  }
+
+  _pendingXhr = new XMLHttpRequestWrap();
+  _pendingXhr.addEventListener('load', function onLoad() {
     _handleQueryServerResponse(this);
   });
-  req.addEventListener('error', function onError() {
+  _pendingXhr.addEventListener('error', function onError() {
+    _pendingXhr = null;
     AlertActionCreators.showAlert(QUERY_NETWORK_ERROR_MESSAGE);
   });
   // TODO(mike): escape query?
-  req.open('GET', `${settings.SERVER_HOST}/filefinderquery/${query}`);
-  req.send();
+  _pendingXhr.open('GET', `${settings.SERVER_HOST}/filefinderquery/${query}`);
+  _pendingXhr.send();
 }
 
 function _updateQuery(query) {
