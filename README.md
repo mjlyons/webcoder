@@ -10,26 +10,24 @@ remote server. You shouldn't need to install a bunch of tools on your computer j
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
 if you could just visit a webpage and write some code?
 
-There's still a lot of work to be done - right now you can just browse through your
-source file system - open folders and see what files are in them. You can't view/edit
-the contents of files yet.
 
-![Folder Browser only screencast](https://www.dropbox.com/s/2a4tndwo4fvf8pb/folder-browser-only.gif?raw=1)
 
-The backend is a Node/Express server. Right now it just responds to /ls/<PATH> with a JSON
-blob describing the (shallow) contents of the file.
+## Architecture
 
-The front-end is React/Flux, and use the /ls/ endpoint to implement a "Folder Browser" - you can
-see the files and folders inside your source directory, though you can't open them yet.
+### Client: React/Flux
+
+* Renders the editor in the browser
+
+### Server: Node/Express
+
+* Serves the front-end html/javascript
+* Responds to filesystem requests from the client (load/save files, ls, fast-filename-search, etc.)
+* Authentication
 
 ## TODO
 
-There's many more things to do, but here's the next steps:
+There's many more things to do, but here's [the next steps](https://paper.dropbox.com/doc/Webcoder-todo-tBEymxvwsMrI8GkaaAeHj)
 
-* Authenticate users (right now anyone could just modify code)
-* Fast fuzzy filename search (ctrl-p style)
-* Do more to not let you lose unsaved changes
-* Testing/cleanup
 
 ## License
 
