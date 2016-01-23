@@ -10,7 +10,21 @@ remote server. You shouldn't need to install a bunch of tools on your computer j
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
 if you could just visit a webpage and write some code?
 
+## Install instructions
 
+* [Install Node 4 or higher](https://nodejs.org/en/) if you haven't already
+* Clone the repository: `git clone git@github.com:mjlyons/webcoder.git`
+* Navigate to the repository: `cd webcoder`
+* Clone the submodules (Ace editor): `git submodule init && git submodule upgrade`
+* Install the required node modules: `npm install`
+* Create and configure `localsettings.js` (for an example, check out `localsettings.ci_mode.js`)
+  * Use `passhash.js` to create password hashes for each user
+* Start the server: `npm run build && npm start`
+
+## Usage
+
+* Make sure the server is running: `npm run build && npm start` (you can just do `npm start` if you haven't changed localsettings.js or pulled/changed the webcoder source).
+* In your web browser, navigate to the server hostname (defined in your `localsettings.js` file). It'll look something like https://example.com:3000 or http://localhost:3000.
 
 ## Architecture
 
@@ -27,7 +41,6 @@ if you could just visit a webpage and write some code?
 ## TODO
 
 There's many more things to do, but here's [the next steps](https://paper.dropbox.com/doc/Webcoder-todo-tBEymxvwsMrI8GkaaAeHj)
-
 
 ## License
 
