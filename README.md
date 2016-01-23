@@ -10,6 +10,16 @@ remote server. You shouldn't need to install a bunch of tools on your computer j
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
 if you could just visit a webpage and write some code?
 
+## Features
+
+* Edit code on another computer, VM, or AWS/DigitalOcean instance without latency issues
+* All you need is a web browser to edit code - just an iPad and wireless keyboard works
+* Self-hosted, open source, and free
+* Authentication - you wouldn't want anyone editing your code!
+* Fast File Search (Ctrl-P) - open a file anywhere in your source tree quickly
+* Folder browser sidebar
+* Code formatting and syntax highlighting (from the Ace editor) for many languages
+
 ## Install instructions
 
 * [Install Node 4 or higher](https://nodejs.org/en/) if you haven't already
