@@ -15,7 +15,7 @@ if you could just visit a webpage and write some code?
 ## Features
 
 * Edit code on another computer, VM, or AWS/DigitalOcean instance without latency issues
-* All you need is a web browser to edit code - just an iPad and wireless keyboard works
+* All you need is a web browser to edit code - put that netbook in your closet to use!
 * Self-hosted, open source, and free
 * Authentication - you wouldn't want anyone editing your code!
 * Fast File Search (Ctrl-P) - open a file anywhere in your source tree quickly
