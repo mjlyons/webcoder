@@ -1,7 +1,8 @@
 module.exports = {
   ROOT_SOURCE_PATH: '/example/webcoder',
 
-  SERVER_HOST_PORT: '3000',
+  SERVER_PORT: '3000',
+  SERVER_HOSTNAME: 'example.org',
   SERVER_HOST: 'https://example.org:3000',
   CLIENT_HOST: 'https://example.org:3000',
   CLIENT_JS_BUNDLE_PATH: '/static/client/bundle.js',
