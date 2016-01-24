@@ -27,7 +27,7 @@ if you could just visit a webpage and write some code?
 * [Install Node 4 or higher](https://nodejs.org/en/) if you haven't already
 * Clone the repository: `git clone git@github.com:mjlyons/webcoder.git`
 * Navigate to the repository: `cd webcoder`
-* Clone the submodules (Ace editor): `git submodule init && git submodule upgrade`
+* Clone the submodules (Ace editor): `git submodule init && git submodule update`
 * Install the required node modules: `npm install`
 * Create and configure `localsettings.js` (for an example, check out `localsettings.ci_mode.js`)
   * Use `passhash.js` to create password hashes for each user
