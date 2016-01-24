@@ -1,3 +1,5 @@
+require('babel-polyfill')
+
 const React = require('react');
 const FileFinderController = require('js/client/FileFinderController');
 const FileFinderStore = require('js/client/stores/FileFinderStore');
