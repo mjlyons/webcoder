@@ -10,7 +10,7 @@ remote server. You shouldn't need to install a bunch of tools on your computer j
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
 if you could just visit a webpage and write some code?
 
-![Webcoder screenshot](https://www.dropbox.com/s/klj3x70izp2lbez/Screenshot%202016-01-23%2018.57.27.png?raw=1)
+![Webcoder screenshot](https://www.dropbox.com/s/k7w4yljfgtfr0xc/Screenshot%202016-01-23%2021.01.20.png?raw=1)
 
 ## Features
 
