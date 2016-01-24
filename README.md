@@ -33,6 +33,10 @@ if you could just visit a webpage and write some code?
   * Use `passhash.js` to create password hashes for each user
 * Start the server: `npm run build && npm start`
 
+### Set up nginx (optional)
+
+You may want to set up nginx (if you want to set up https, listen on port 80, etc.). [Check out this page](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) on setting this up. Use `bin/server/www` as your "app". For example: `pm2 start bin/server/www`.
+
 ## Usage
 
 * Make sure the server is running: `npm run build && npm start` (you can just do `npm start` if you haven't changed localsettings.js or pulled/changed the webcoder source).
