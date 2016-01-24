@@ -13,11 +13,13 @@ var app = require('js/server/app');
 var debug = require('debug')('webcoder-server:server');
 var http = require('http');
 
+const settings = require('settings')();
+
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(settings.SERVER_PORT);
 app.set('port', port);
 
 /**
