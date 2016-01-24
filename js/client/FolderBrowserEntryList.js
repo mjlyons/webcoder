@@ -34,7 +34,7 @@ class FolderBrowserEntryList extends React.Component {
       return (
         <FolderBrowserEntry fileinfo={fileInfo} key={fileInfo.path} />
       );
-    });
+    }).toArray();
   }
 
   render() {

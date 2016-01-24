@@ -49,7 +49,7 @@ class FileFinderView extends React.Component {
           </div>
         </a>
       );
-    });
+    }).toArray();
   }
 
   render() {

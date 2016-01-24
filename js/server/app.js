@@ -13,6 +13,7 @@ const { SESSION_SECRET } = require('settings')();
 const passport = require('passport');
 const LocalPassportStrategy = require('passport-local').Strategy;
 const users = require('js/server/users');
+const buildsettings = require('buildsettings');
 
 passport.use(new LocalPassportStrategy((username, password, done) => {
   users.findByUsername(username, (err, user) => {
@@ -64,9 +65,8 @@ app.use('/static', express.static(path.join(__dirname, '../../static')));
 
 // Allows javascript (at webcoder:8080) to access all routes on server
 app.use((_req, res, next) => {
-  // Uncomment/modify the following if static client html is hosted on a different domain
-  // res.setHeader('Access-Control-Allow-Origin', '[STATIC_HTML_HOST]');
-  // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Origin', buildsettings.CLIENT_HOST);
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
