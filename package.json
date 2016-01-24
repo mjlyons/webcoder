@@ -21,6 +21,8 @@
     "jsdoc": "jsdoc -r ./js -d ./jsdoc",
     "lint": "gulp lint",
     "make:jestcovrc": "node ./makeJestCovRc.js",
+    "pm2:restart": "pm2 restart bin/server/www",
+    "pm2:start": "pm2 start bin/server/www",
     "start": "node ./bin/server/www",
     "start:watch": "nodemon --ignore build/ --exec 'npm test && npm run build && npm start'",
     "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
