@@ -10,6 +10,8 @@ remote server. You shouldn't need to install a bunch of tools on your computer j
 edit code hosted on another server (DigitalOcean, AWS, etc.). Instead, wouldn't it be nice
 if you could just visit a webpage and write some code?
 
+![Webcoder screenshot](https://www.dropbox.com/s/klj3x70izp2lbez/Screenshot%202016-01-23%2018.57.27.png?raw=1)
+
 ## Features
 
 * Edit code on another computer, VM, or AWS/DigitalOcean instance without latency issues
@@ -34,7 +36,7 @@ if you could just visit a webpage and write some code?
 ## Usage
 
 * Make sure the server is running: `npm run build && npm start` (you can just do `npm start` if you haven't changed localsettings.js or pulled/changed the webcoder source).
-* In your web browser, navigate to the server hostname (defined in your `localsettings.js` file). It'll look something like https://example.com:3000 or http://localhost:3000.
+* In your web browser, navigate to the server hostname (defined in your `localsettings.js` file).
 
 ## Architecture
 
