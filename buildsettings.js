@@ -1,4 +1,3 @@
-const process = require('process');
 const settings = require('./settings')();
 const isWebpackDevServer = 'WEBPACK_DEV_SERVER' in process.env;
 

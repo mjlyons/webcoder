@@ -13,6 +13,7 @@ jest.mock('js/server/fswrap');
 const mockLocalsettings = {
   ROOT_SOURCE_PATH: '/my-root-src',
   SESSION_SECRET: 'session-secret',
+  CLIENT_HOST: 'http://localhost:3000',
   userRecords: [
     {
       id: 1,
