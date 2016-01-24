@@ -1,8 +1,8 @@
 // This is a simple wrapper around XMLHttpRequest so that it can be unit tested.
 
 class XMLHttpRequestWrap {
-  constructor(...funcArgs) {
-    this.req = new XMLHttpRequest(...funcArgs);
+  constructor() {
+    this.req = new XMLHttpRequest();
   }
 
   addEventListener(...funcArgs) {
