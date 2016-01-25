@@ -70,6 +70,14 @@ class Editor extends React.Component {
     if (!this.state.currentPath) {
       return;
     }
+
+    // Remove trailing spaces
+    // TODO(mike): make enabling/disabling this a user/global setting
+    this.editor.replaceAll('', {
+      needle: '\\s*$',
+      regExp: true,
+    });
+
     WebcoderActions.saveFile(this.state.currentPath, this.editor.getValue());
   }
 
@@ -82,6 +90,15 @@ class Editor extends React.Component {
       const aceMode = aceExtModelist.getModeForPath(this.state.currentPath).mode;
       const editSession = new ace.EditSession(this.state.fileContents || '', aceMode);
       editSession.setUndoManager(new ace.UndoManager());
+
+      // TODO(mike): put tab spacing stuff below in user and/or local settings
+      // Use four spaces for .py files, 2 otherwise.
+      editSession.setUseSoftTabs(true);  // use spaces instead of tabs
+      editSession.setTabSize(!!this.state.currentPath && this.state.currentPath.toLowerCase().endsWith('.py') ? 4 : 2);
+      // Column guide at 100 characters
+      this.editor.setPrintMarginColumn(100);
+      this.editor.setShowInvisibles(true);
+
       WebcoderActions.setEditSession(this.state.currentPath, editSession);
     }
   }
@@ -103,7 +120,6 @@ class Editor extends React.Component {
         this.editor.setSession(this.state.editSession);
       }
     }
-
 
     return (
       <div id="ace-editor" className="ace-editor" />
