@@ -47,4 +47,17 @@ module.exports = {
       query,
     });
   },
+
+  /**
+   * Sets the Ace EditSessions for a file (path)
+   * @param {string} path - Path of the file
+   * @param {EditSession} editSession - Ace editor session for the specified file
+   */
+  setEditSession: (path, editSession) => {
+    Dispatcher.dispatch({
+      type: WebcoderActionTypes.SET_EDIT_SESSION,
+      path,
+      editSession,
+    });
+  },
 };

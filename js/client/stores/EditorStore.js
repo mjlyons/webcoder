@@ -6,6 +6,7 @@ const { Filetypes } = require('js/common/FileEntry');
 
 let _state = Immutable.Map({
   currentPath: null,
+  editSessions: Immutable.Map({}),  // Path to Ace:EditSession
 });
 
 /**
@@ -27,6 +28,11 @@ storeInst.dispatchToken = Dispatcher.register(action => {
         _state = _state.set('currentPath', action.fileinfo.path);
         storeInst.emitChange();
       }
+      break;
+
+    case WebcoderActionTypes.SET_EDIT_SESSION:
+      _state = _state.setIn(['editSessions', action.path], action.editSession);
+      storeInst.emitChange();
       break;
 
     default:

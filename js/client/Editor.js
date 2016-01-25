@@ -15,9 +15,11 @@ const ACE_THEME = 'solarized_dark';
 
 function _getStateFromStores() {
   const currentPath = EditorStore.getState().get('currentPath');
+  const editSession = EditorStore.getState().getIn(['editSessions', currentPath], null);
   const fileContents = SourceFileSystemStore.getFileContents(currentPath);
   return {
     currentPath,
+    editSession,
     fileContents,
   };
 }
@@ -36,7 +38,6 @@ class Editor extends React.Component {
     this.state = _getStateFromStores();
     this.onStoreChange = this.onStoreChange.bind(this);
     this.editor = null;
-    this.lastPath = null;
   }
 
   componentDidMount() {
@@ -46,6 +47,7 @@ class Editor extends React.Component {
     this.editor = ace.edit('ace-editor');
     this.editor.setTheme(`ace/theme/${ACE_THEME}`);
     this.editor.$blockScrolling = Infinity;
+    this.prevEditSessionPath = null;  // Path of the last valid ace edit session
 
     // Set up save command
     this.editor.commands.addCommand({
@@ -73,6 +75,15 @@ class Editor extends React.Component {
 
   onStoreChange() {
     this.setState(_getStateFromStores());
+
+    // Create a new edit session if it doesn't already exist
+    if (this.prevEditSessionPath !== this.state.currentPath && !this.state.editSession) {
+      this.prevEditSessionPath = this.state.currentPath;
+      const aceMode = aceExtModelist.getModeForPath(this.state.currentPath).mode;
+      const editSession = new ace.EditSession(this.state.fileContents || '', aceMode);
+      editSession.setUndoManager(new ace.UndoManager());
+      WebcoderActions.setEditSession(this.state.currentPath, editSession);
+    }
   }
 
   /**
@@ -88,14 +99,8 @@ class Editor extends React.Component {
     // to be in the DOM, which doenst' happen until this is first rendered. DO NOT use this.editor
     // unless inside this block
     if (this.editor) {
-      if (this.lastPath !== this.state.currentPath) {  // TODO(mike): invalidate when reload file
-        this.editor.setValue(this.state.fileContents || '');
-        this.editor.selection.moveCursorTo(0, 0, false);
-        this.editor.selection.clearSelection();
-        this.editor.lastPath = this.state.currentPath;
-
-        const aceMode = aceExtModelist.getModeForPath(this.state.currentPath).mode;
-        this.editor.getSession().setMode(aceMode);
+      if (!!this.state.editSession) {
+        this.editor.setSession(this.state.editSession);
       }
     }
 
