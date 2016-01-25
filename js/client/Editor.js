@@ -97,7 +97,6 @@ class Editor extends React.Component {
       editSession.setTabSize(!!this.state.currentPath && this.state.currentPath.toLowerCase().endsWith('.py') ? 4 : 2);
       // Column guide at 100 characters
       this.editor.setPrintMarginColumn(100);
-      this.editor.setShowInvisibles(true);
 
       WebcoderActions.setEditSession(this.state.currentPath, editSession);
     }
