@@ -9,6 +9,9 @@ module.exports = {
   WEBPACK_DEV_SERVER_HOST: 'http://localhost:8080',
   WEBPACK_DEV_SERVER_JS_BUNDLE_PATH: '/bundle.js',
 
+  IGNORED_FILE_ENTRIES: ['node_modules', 'build', '.git'],
+  FAST_FILENAME_SEARCH_EXTENSIONS: ['.py', '.js', '.coffee', '.scss'],
+
   FONT_AWESOME_URL: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
 
   SESSION_SECRET: 'put-anything-here-just-dont-tell-anyone',

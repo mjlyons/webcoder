@@ -1,6 +1,7 @@
 const fs = require('fs'); // TODO(mike): use fswrap so we can test
 const path = require('path');
 const fuzzy = require('fuzzy');
+const settings = require('settings')();
 
 // TODO(mike): rename fs to serverfs module, merge readfile and ls in
 // TODO(mike): unit test readfile
@@ -50,12 +51,17 @@ function storefile(rootPath, reqPath, contents) {
 
 // TODO(mike): should probably be smarter about parallelizing this
 // TODO(mike): invalidate cache when a file is added/moved/removed
-const filePathCache = [];
-const IGNORE = ['node_modules', 'build', '.git'];  // TODO(mike): expose this in localsettings.js
+
+// Fast filename search (FFS) cache: List of the fuzzy-inputs ("extension:filename:path") -> path
+const ffsFuzzyInputsCache = [];
+
+//  FFS: Map {fuzzy-input -> path} to determine path of a found result
+const ffsFuzzyInputsToMapCache = {};
+
 function _recScanDir(rootPath, currPath) {
   const folderContents = fs.readdirSync(currPath);
   for (const entry of folderContents) {
-    if (IGNORE.indexOf(entry) !== -1) {
+    if (!!settings.IGNORE_FILE_ENTRIES && settings.IGNORE_FILE_ENTRIES.indexOf(entry) !== -1) {
       continue;
     }
     const entryPath = path.join(currPath, entry);
@@ -67,17 +73,25 @@ function _recScanDir(rootPath, currPath) {
     }
 
     if (entryStat.isFile()) {
-      filePathCache.push(entryPath.substr(rootPath.length));
+      const entryExt = path.extname(entry).toLowerCase();
+      if (settings.FAST_FILENAME_SEARCH_EXTENSIONS &&
+          settings.FAST_FILENAME_SEARCH_EXTENSIONS.indexOf(entryExt) === -1) {
+        continue;
+      }
+      const serverPath = entryPath.substr(rootPath.length);
+      const searchEntry = `${entryExt}:${entry}:${serverPath}`;
+      ffsFuzzyInputsCache.push(searchEntry);
+      ffsFuzzyInputsToMapCache[searchEntry] = serverPath;
     } else if (entryStat.isDirectory()) {
       _recScanDir(rootPath, entryPath);
     }
   }
 }
 function getFileList(rootPath) {
-  if (filePathCache.length === 0) {
+  if (ffsFuzzyInputsCache.length === 0) {
     _recScanDir(rootPath, rootPath);
   }
-  return filePathCache;
+  return ffsFuzzyInputsCache;
 }
 
 // TODO(mike): unit test this
@@ -88,10 +102,9 @@ function fileFinderQuery(rootPath, query) {
   const pathList = getFileList(rootPath);
   const formattedResults = fuzzy.filter(query, pathList);
 
-
   // TODO(mike): don't hide fuzzy bolding
   const results = formattedResults.slice(0, FILE_FINDER_QUERY_MAX_RESULTS).map(formattedResult => {
-    return formattedResult.string;
+    return ffsFuzzyInputsToMapCache[formattedResult.string];
   });
   return {
     query,
