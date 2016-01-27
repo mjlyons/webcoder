@@ -74,7 +74,6 @@
     "babel-cli": "^6.4.5",
     "babel-istanbul": "^0.6.0",
     "babel-jest": "^6.0.1",
-    "babel-polyfill": "^6.3.14",
     "chai": "^3.4.1",
     "coveralls": "^2.11.6",
     "esdoc": "^0.4.3",
