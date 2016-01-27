@@ -28,7 +28,7 @@
     "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
     "test:cov": "npm run test:mocha && npm run make:jestcovrc && jest --coverage --config=.jestcovrc && rm -rf .jestcovrc",
     "test:mocha": "mocha --recursive --compilers js:babel-core/register --require test/mocha-bootstrap.js",
-    "test:mocha-cov": "babel-istanbul cover _mocha -- --require test/mocha-bootstrap.js test/server/serverfs.js",
+    "test:mocha-cov": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha -- --require test/mocha-bootstrap.js --recursive",
     "test:nocov": "npm run test:mocha && jest --config=.jestrc",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'",
     "watch:server": "npm run build:client && nodemon --ignore build/ --exec 'npm run build:server && npm start'",
@@ -71,6 +71,8 @@
     "webpack": "^1.12.9"
   },
   "devDependencies": {
+    "babel-cli": "^6.4.5",
+    "babel-istanbul": "^0.6.0",
     "babel-jest": "^6.0.1",
     "babel-polyfill": "^6.3.14",
     "chai": "^3.4.1",
@@ -85,8 +87,8 @@
     "jsdoc": "^3.4.0",
     "mocha": "^2.4.2",
     "nodemon": "^1.8.1",
+    "proxyquire": "^1.7.3",
     "react-addons-test-utils": "^0.14.3",
-    "rewire": "^2.5.1",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
     "supertest": "^1.1.0",
