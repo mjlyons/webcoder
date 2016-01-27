@@ -26,8 +26,10 @@
     "start": "node ./bin/server/www",
     "start:watch": "nodemon --ignore build/ --exec 'npm test && npm run build && npm start'",
     "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
-    "test:cov": "npm run make:jestcovrc && jest --coverage --config=.jestcovrc && rm -rf .jestcovrc",
-    "test:nocov": "jest --config=.jestrc",
+    "test:cov": "npm run test:mocha && npm run make:jestcovrc && jest --coverage --config=.jestcovrc && rm -rf .jestcovrc",
+    "test:mocha": "mocha --recursive --compilers js:babel-core/register --require test/mocha-bootstrap.js",
+    "test:mocha-cov": "babel-istanbul cover _mocha -- --require test/mocha-bootstrap.js test/server/serverfs.js",
+    "test:nocov": "npm run test:mocha && jest --config=.jestrc",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'",
     "watch:server": "npm run build:client && nodemon --ignore build/ --exec 'npm run build:server && npm start'",
     "watch:test": "npm run build:client && nodemon --ignore build/ --exec 'npm test && npm run build:server && npm start'"
@@ -71,6 +73,7 @@
   "devDependencies": {
     "babel-jest": "^6.0.1",
     "babel-polyfill": "^6.3.14",
+    "chai": "^3.4.1",
     "coveralls": "^2.11.6",
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
@@ -80,8 +83,12 @@
     "jest-cli": "^0.8.2",
     "jest-webpack-alias": "^2.0.0",
     "jsdoc": "^3.4.0",
+    "mocha": "^2.4.2",
     "nodemon": "^1.8.1",
     "react-addons-test-utils": "^0.14.3",
+    "rewire": "^2.5.1",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0",
     "supertest": "^1.1.0",
     "webpack-dev-server": "^1.14.0"
   }

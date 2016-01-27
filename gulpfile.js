@@ -11,6 +11,9 @@ var paths = {
   allScripts: [
     'js/**/*.js'
   ],
+  allTests: [
+    'test/**/*.js'
+  ],
   ace: [
     'thirdparty/ace-builds/src-min-noconflict/**',
   ],
@@ -46,12 +49,20 @@ gulp.task("localsettings", function() {
     .pipe(gulp.dest("build/"));
 });
 
-gulp.task('lint', function() {
+gulp.task('lint-js', function() {
   return gulp.src(paths.allScripts)
     .pipe(eslint({"fix": true}))
     .pipe(eslint.format("node_modules/eslint-friendly-formatter"))
     .pipe(eslint.failAfterError())
     .pipe(gulpIf(isFixed, gulp.dest('js/')));
 });
+gulp.task('lint-test', function() {
+  return gulp.src(paths.allTests)
+    .pipe(eslint({"fix": true, "rules": {'no-unused-expressions': 0}}))  // expect()... is an unused expression
+    .pipe(eslint.format("node_modules/eslint-friendly-formatter"))
+    .pipe(eslint.failAfterError())
+    .pipe(gulpIf(isFixed, gulp.dest('test/')));
+});
+gulp.task('lint', ['lint-js', 'lint-test']);
 
 gulp.task('default', ['localsettings', 'scripts', 'static', 'ace']);
