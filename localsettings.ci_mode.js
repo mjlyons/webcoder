@@ -22,7 +22,7 @@ module.exports = {
       username: 'testuser',
       displayName: 'Test User',
       emails: ['testuser@example.org'],
-      passhash: 'hash-from-passhash.js-goes-here',
+      passhash: '$2a$10$dElg7PQLacPNmWCQwmvIvO3gikSNbLVq1LLhp01/Nfz4mIKtcfN.S',
     },
   ],
 };
