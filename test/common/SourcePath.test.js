@@ -1,21 +1,23 @@
+const chai = require('chai');
+const expect = chai.expect;
+
+const SourcePath = require('js/common/SourcePath');
+
 describe('SourcePath', () => {
   describe('getParentPath', () => {
     it('returns the parent folder', () => {
-      const SourcePath = require.requireActual('../SourcePath');
       const parentPath = SourcePath.getParentPath('/parentFolder/childFolder');
-      expect(parentPath).toEqual('/parentFolder/');
+      expect(parentPath).to.equal('/parentFolder/');
     });
 
     it('returns the parent folder when it is root', () => {
-      const SourcePath = require.requireActual('../SourcePath');
       const parentPath = SourcePath.getParentPath('/childFolder');
-      expect(parentPath).toEqual('/');
+      expect(parentPath).to.equal('/');
     });
 
     it('returns null when child folder is root', () => {
-      const SourcePath = require.requireActual('../SourcePath');
       const parentPath = SourcePath.getParentPath('/');
-      expect(parentPath).toEqual(null);
+      expect(parentPath).to.equal(null);
     });
   });
 });
