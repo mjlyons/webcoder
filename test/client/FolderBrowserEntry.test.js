@@ -8,7 +8,6 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const TestUtils = require('react-addons-test-utils');
 
-//const Immutable = require('immutable');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
 
 describe('FolderBrowserEntry', () => {
