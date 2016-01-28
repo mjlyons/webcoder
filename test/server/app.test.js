@@ -1,5 +1,7 @@
 const request = require('supertest');
 const path = require('path');
+const chai = require('chai');
+const expect = chai.expect;
 
 describe('routing:defaults', () => {
   const origNodeEnv = process.env.NODE_ENV;
@@ -44,5 +46,38 @@ describe('routing:defaults', () => {
     request(app)
     .get('/test/500')
     .expect(500, done);
+  });
+
+  it('redirects to the editor when access a protected url and not logged in', (done) => {
+    const app = require('js/server/app.js');
+    request.agent(app)
+    .post('/login')
+    .send({ username: 'testuser', password: 'testpass' })
+    .end((err, res) => {
+      expect(res.header.location).to.include('/editor');
+      done();
+    });
+  });
+
+  it('redirects back to the editor try logging in with bad username', (done) => {
+    const app = require('js/server/app.js');
+    request.agent(app)
+    .post('/login')
+    .send({ username: 'baduser', password: 'testpass' })
+    .end((err, res) => {
+      expect(res.header.location).to.include('/login');
+      done();
+    });
+  });
+
+  it('redirects back to the editor try logging in with bad password', (done) => {
+    const app = require('js/server/app.js');
+    request.agent(app)
+    .post('/login')
+    .send({ username: 'testuser', password: 'badpass' })
+    .end((err, res) => {
+      expect(res.header.location).to.include('/login');
+      done();
+    });
   });
 });
