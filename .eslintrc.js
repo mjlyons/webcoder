@@ -4,7 +4,6 @@ module.exports = {
     'react',
   ],
   'env': {
-    'jest': true,
     'jasmine': true,
   },
   'rules': {
