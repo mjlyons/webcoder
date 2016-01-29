@@ -26,7 +26,6 @@ function ls(rootPath, reqPath = '') {
     return { error: 'not-authorized' };
   }
   if (!fs.existsSync(fullPath)) {
-    console.log(`can't find: ${fullPath}`);
     return { error: 'not-exists' };
   }
   if (!fs.statSync(fullPath).isDirectory()) {

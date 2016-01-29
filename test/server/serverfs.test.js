@@ -1,15 +1,13 @@
 const chai = require('chai');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
 const mockfs = require('mock-fs');
 const expect = chai.expect;
 chai.use(require('sinon-chai'));
 
-const serverfs = require('js/server/serverfs')
+const serverfs = require('js/server/serverfs');
 
 describe('serverfs', () => {
-    beforeEach(() => {
-      mockfs({
+  beforeEach(() => {
+    mockfs({
         '/rootpath': {
           'subdir': {
             'aDir': {},
@@ -18,11 +16,11 @@ describe('serverfs', () => {
           'file.txt': 'fake file contents',
         },
       });
-    });
+  });
 
-    afterEach(() => {
-      mockfs.restore();
-    });
+  afterEach(() => {
+    mockfs.restore();
+  });
 
   describe('ls', () => {
     it('disallows using / to break out root path', () => {

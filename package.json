@@ -27,7 +27,7 @@
     "test": "if test \"$CI_MODE\"; then npm run coveralls; else npm run test:nocov; fi",
     "test:mocha": "export CI_MODE=1 && mocha --compilers js:babel-core/register,scss:test/style-null-compiler.js --require test/mocha-bootstrap.js test/**/*.test.js",
     "test:cov": "export CI_MODE=1 && babel-node ./node_modules/.bin/babel-istanbul cover _mocha -- --compilers scss:test/style-null-compiler.js --require test/mocha-bootstrap.js test/**/*.test.js",
-    "test:nocov": "npm run test:mocha"
+    "test:nocov": "npm run test:mocha",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'",
     "watch:server": "npm run build:client && nodemon --ignore build/ --exec 'npm run build:server && npm start'",
     "watch:test": "npm run build:client && nodemon --ignore build/ --exec 'npm test && npm run build:server && npm start'"
