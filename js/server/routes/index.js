@@ -1,6 +1,5 @@
 const { ROOT_SOURCE_PATH } = require('settings')();
-const { fileFinderQuery, readfile, storefile } = require('../serverfs');
-const ls = require('../ls');
+const { ls, fileFinderQuery, readfile, storefile } = require('../serverfs');
 const path = require('path');
 const express = require('express');
 const router = express.Router();

@@ -1,10 +1,59 @@
-const fs = require('fs'); // TODO(mike): use fswrap so we can test
+const fs = require('js/server/fswrap'); // TODO(mike): use fswrap so we can test
 const path = require('path');
 const fuzzy = require('fuzzy');
 const settings = require('settings')();
 
+/**
+ * Returns a json object with information about files in the requested directory
+ *
+ * In successful case, returns:
+ * {
+ *   path: <string> absolute path of requested directory
+ *   contents: {
+ *     [filename1]: { type: <string> "file"|"dir" }
+ *     [filename2]: ...
+ *   }
+ * }
+ *
+ * If there was an error, returns { error: <string> description } where description is:
+ * - not-authorized (path was outside the rootPath)
+ * - not-exists (path does not exist)
+ * - not-dir (path is not a directory - maybe it's a file)
+ */
+function ls(rootPath, reqPath = '') {
+  const fullPath = path.resolve(rootPath, reqPath);
+  if (!fullPath.startsWith(rootPath)) {
+    return { error: 'not-authorized' };
+  }
+  if (!fs.existsSync(fullPath)) {
+    console.log(`can't find: ${fullPath}`);
+    return { error: 'not-exists' };
+  }
+  if (!fs.statSync(fullPath).isDirectory()) {
+    return { error: 'not-dir' };
+  }
+
+  const childFilenames = fs.readdirSync(fullPath);
+  const contents = {};
+  for (const childFilename of childFilenames) {
+    const childPath = path.join(fullPath, childFilename);
+    const stats = fs.statSync(childPath);
+    let typeDesc = 'unknown';
+    if (stats.isFile()) {
+      typeDesc = 'file';
+    } else if (stats.isDirectory()) {
+      typeDesc = 'dir';
+    }
+    contents[childFilename] = { 'type': typeDesc };
+  }
+
+  return {
+    'path': '/' + reqPath,
+    contents,
+  };
+}
+
 // TODO(mike): rename fs to serverfs module, merge readfile and ls in
-// TODO(mike): unit test readfile
 function readfile(rootPath, reqPath = '') {
   // TODO(mike): Should probably merge this with the ls code (very similar)
   const fullPath = path.resolve(rootPath, reqPath);
@@ -112,4 +161,4 @@ function fileFinderQuery(rootPath, query) {
   };
 }
 
-module.exports = { fileFinderQuery, readfile, storefile };
+module.exports = { ls, fileFinderQuery, readfile, storefile };

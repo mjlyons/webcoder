@@ -14,4 +14,12 @@ function statSync(...funcArgs) {
   return fs.statSync(...funcArgs);
 }
 
-module.exports = { readdirSync, existsSync, statSync };
+function readFileSync(...funcArgs) {
+  return fs.readFileSync(...funcArgs);
+}
+
+function writeFileSync(...funcArgs) {
+  return fs.writeFileSync(...funcArgs);
+}
+
+module.exports = { readdirSync, existsSync, statSync, readFileSync, writeFileSync };
