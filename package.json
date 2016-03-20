@@ -14,7 +14,7 @@
     "build:client": "npm run fix:ext-modelist && webpack -p --progress --color",
     "build:server": "gulp",
     "client:build:watch": "webpack -d --progress --color --watch",
-    "client:dev": "export WEBPACK_DEV_SERVER=1 && npm run build && npm start | webpack-dev-server -d --inline --progress --colors",
+    "client:dev": "export WEBPACK_DEV_SERVER=1 && npm run build && npm start | webpack-dev-server -d --inline --progress --colors --inline --hot",
     "coveralls": "npm run test:cov && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "fix:ext-modelist": "node buildhelpers/fix-ext-modelist.js",
     "debug:server": "node debug ./bin/server/www",
