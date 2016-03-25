@@ -80,6 +80,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
+    "babel-istanbul": "^0.7.0",
     "babel-plugin-rewire": "^1.0.0-rc-1",
     "babel-template": "^6.7.0",
     "babel-types": "^6.7.2",
