@@ -8,7 +8,8 @@ module.exports = {
     UPDATE_FILE_FINDER_QUERY: Symbol('UPDATE_FILE_FINDER_QUERY'),
   },
 
-  AlertActionTypes: {
-    SHOW_ALERT: Symbol('SHOW_ALERT'),
-  },
+  ActionTypes: {
+    SHOW_ALERT: 'SHOW_ALERT',
+    CLEAR_ALERT: 'CLEAR_ALERT',
+  }
 };

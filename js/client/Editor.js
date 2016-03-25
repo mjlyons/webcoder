@@ -1,3 +1,6 @@
+import Store from 'js/client/Store';
+import { ActionTypes } from 'js/client/Constants';
+
 const React = require('react');
 const EditorStore = require('js/client/stores/EditorStore');
 const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');
@@ -8,7 +11,7 @@ const WebcoderActions = require('js/client/WebcoderActions');
 // which puts it on window.
 const ace = window.ace;
 
-require('client/style/Editor');
+require('client/style/Editor.scss');
 
 // For now, just hard-code the theme
 const ACE_THEME = 'solarized_dark';

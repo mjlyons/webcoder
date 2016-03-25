@@ -1,5 +1,7 @@
+import store from 'js/client/Store';
+
 const settings = require('settings')();
-const Store = require('js/client/stores/Store');
+const StoreClass = require('js/client/stores/Store');
 const { WebcoderActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const Immutable = require('immutable');
@@ -19,7 +21,7 @@ let _state = Immutable.fromJS({
 
 let _pendingXhr = null;
 
-class FileFinderStore extends Store {
+class FileFinderStore extends StoreClass {
   getState() { return _state; }
 }
 const storeInst = new FileFinderStore();
@@ -28,7 +30,7 @@ function _handleQueryServerResponse(response) {
   _pendingXhr = null;
   // TODO(mike): properly announce error codes
   if (response.status !== 200) {
-    AlertActionCreators.showAlert(QUERY_GENERIC_ERROR);
+    store.dispatch(AlertActionCreators.showAlert(QUERY_GENERIC_ERROR));
     return;
   }
 
@@ -53,7 +55,7 @@ function _queryServer(query) {
   });
   _pendingXhr.addEventListener('error', function onError() {
     _pendingXhr = null;
-    AlertActionCreators.showAlert(QUERY_NETWORK_ERROR_MESSAGE);
+    store.dispatch(AlertActionCreators.showAlert(QUERY_NETWORK_ERROR_MESSAGE));
   });
   // TODO(mike): escape query?
   _pendingXhr.open('GET', `${settings.SERVER_HOST}/filefinderquery/${query}`);

@@ -1,5 +1,5 @@
 const Store = require('js/client/stores/Store');
-const { AlertActionTypes } = require('js/client/Constants');
+const { ActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
 const Immutable = require('immutable');
 
@@ -24,7 +24,7 @@ function _changeMessage(newMessage) {
 
 AlertStore.dispatchToken = Dispatcher.register(action => {
   switch (action.type) {
-    case AlertActionTypes.SHOW_ALERT:
+    case ActionTypes.SHOW_ALERT:
       _changeMessage(action.message);
 
       // Remove message after a delay

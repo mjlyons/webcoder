@@ -1,27 +1,13 @@
 const React = require('react');
 const AlertStore = require('js/client/stores/AlertStore');
+import { connect } from 'react-redux';
 
 require('client/style/AlertHeader.scss');
-
-function _getStateFromStores() {
-  return {
-    alertMessage: AlertStore.getState().get('message'),
-  };
-}
 
 class AlertHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = _getStateFromStores();
     this.onStoreChange = this.onStoreChange.bind(this);
-  }
-
-  componentDidMount() {
-    AlertStore.addChangeListener(this.onStoreChange);
-  }
-
-  componentWillUnmount() {
-    AlertStore.removeChangeListener(this.onStoreChange);
   }
 
   onStoreChange() {
@@ -30,18 +16,26 @@ class AlertHeader extends React.Component {
 
   render() {
     // Don't display header if there's no alert message
-    if (!this.state.alertMessage) {
+    if (!this.props.message) {
       return null;
     }
 
     return (
-      <div className="alert-header">{this.state.alertMessage}</div>
+      <div className="alert-header">{this.props.message}</div>
     );
   }
 }
+AlertHeader = connect(mapStateToProps)(AlertHeader);
 
 AlertHeader.propTypes = {
-  message: React.PropTypes.string,
+  message: React.PropTypes.string, // supplied by store
 };
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    message: ownProps.message || state.alerts.get('message'),
+  }
+};
+AlertHeader = connect(mapStateToProps)(AlertHeader);
 
 module.exports = AlertHeader;

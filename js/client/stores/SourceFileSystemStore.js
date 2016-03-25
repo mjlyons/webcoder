@@ -1,7 +1,9 @@
+import store from 'js/client/Store';
+
 const settings = require('settings')();
 const path = require('path');
 
-const Store = require('js/client/stores/Store');
+const StoreClass = require('js/client/stores/Store');
 const AlertActionCreators = require('js/client/AlertActionCreators');
 const { WebcoderActionTypes } = require('js/client/Constants');
 const Dispatcher = require('js/client/Dispatcher');
@@ -46,7 +48,7 @@ function _getFileContents(filePath) {
   return _state.getIn(['fileContents', filePath], null);
 }
 
-class SourceFileSystemStore extends Store {
+class SourceFileSystemStore extends StoreClass {
   constructor() { super(); }
   getState() { return _state; }
   getFolderContents(folderPath) { return _getFolderContents(folderPath); }
@@ -65,7 +67,7 @@ function _handleServerLsResponse(response) {
     500: LS_SERVER_ERROR_MESSAGE,
   };
   if (response.status in statusToError) {
-    AlertActionCreators.showAlert(statusToError[response.status]);
+    store.dispatch(AlertActionCreators.showAlert(statusToError[response.status]));
     return;
   }
 
@@ -90,7 +92,7 @@ function _updateFolderContents(requestedPath) {
     _handleServerLsResponse(this);
   });
   req.addEventListener('error', function onError() {
-    AlertActionCreators.showAlert(LS_NETWORK_ERROR_MESSAGE);
+    store.dispatch(AlertActionCreators.showAlert(LS_NETWORK_ERROR_MESSAGE));
   });
   req.open('GET', `${settings.SERVER_HOST}/ls${requestedPath}`);
   req.send();
@@ -105,7 +107,7 @@ function _handleServerReadfileResponse(response) {
     500: READFILE_SERVER_ERROR_MESSAGE,
   };
   if (response.status in statusToError) {
-    AlertActionCreators.showAlert(statusToError[response.status]);
+    store.dispatch(AlertActionCreators.showAlert(statusToError[response.status]));
     return;
   }
 
@@ -120,7 +122,7 @@ function _updateFileContents(requestedPath) {
     _handleServerReadfileResponse(this);
   });
   req.addEventListener('error', function onError() {
-    AlertActionCreators.showAlert(READFILE_NETWORK_ERROR_MESSAGE);
+    store.dispatch(AlertActionCreators.showAlert(READFILE_NETWORK_ERROR_MESSAGE));
   });
   req.open('GET', `${settings.SERVER_HOST}/readfile${requestedPath}`);
   req.send();
@@ -129,9 +131,9 @@ function _updateFileContents(requestedPath) {
 function _handleServerStorefileResponse(response) {
   // TODO(mike): sane error messages (401, 403, ...)
   if (response.status !== 200) {
-    AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE);
+    store.dispatch(AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE));
   } else {
-    AlertActionCreators.showAlert(STOREFILE_RESULT_OK);
+    store.dispatch(AlertActionCreators.showAlert(STOREFILE_RESULT_OK));
   }
 }
 
@@ -141,7 +143,7 @@ function _storeFileContents(filepath, contents) {
     _handleServerStorefileResponse(this);
   });
   req.addEventListener('error', function onError() {
-    AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE);
+    store.dispatch(AlertActionCreators.showAlert(STOREFILE_NETWORK_ERROR_MESSAGE));
   });
   req.open('POST', `${settings.SERVER_HOST}/storefile${filepath}`);
   req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
