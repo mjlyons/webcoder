@@ -18,4 +18,8 @@ describe('AlertReducer', () => {
     AlertReducer(mockState, { type: ActionTypes.CLEAR_ALERT });
     expect(mockState.set).toHaveBeenCalledWith('message', null);
   });
+  it('handles unrelated action types', () => {
+    AlertReducer(mockState, { type: 'OTHER_ACTION_TYPE' });
+    expect(mockState.set).not.toHaveBeenCalled();
+  });
 });
