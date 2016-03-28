@@ -1,5 +1,3 @@
-require('babel-polyfill');
-
 import React from 'react';
 import FileFinderController from 'js/client/FileFinderController';
 import FileFinderStore from 'js/client/stores/FileFinderStore';
