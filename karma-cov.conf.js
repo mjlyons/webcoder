@@ -19,9 +19,9 @@ module.exports = function(config) {
       },
       module: {
         loaders: [
-          { test: /\.scss$/, exclude: /node_modules/, loader: 'ignore-loader' },
           { test: /\.test.js$/, exclude: /node_modules/, loader: 'babel-loader' },
           { test: /^((?!\.test\.js).)*$/, exclude: /node_modules|test-context.js/, loader: 'isparta' },
+          { test: /\.scss$/, exclude: /node_modules/, loader: 'ignore-loader' },
         ]
       },
       watch: true
