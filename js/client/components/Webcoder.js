@@ -1,12 +1,12 @@
 require('babel-polyfill');
 
-const React = require('react');
-const FileFinderController = require('js/client/FileFinderController');
-const FileFinderStore = require('js/client/stores/FileFinderStore');
-const FolderBrowser = require('js/client/FolderBrowser');
-const Editor = require('js/client/Editor');
-const AlertHeader = require('js/client/AlertHeader');
-const WebcoderActions = require('js/client/WebcoderActions');
+import React from 'react';
+import FileFinderController from 'js/client/FileFinderController';
+import FileFinderStore from 'js/client/stores/FileFinderStore';
+import FolderBrowser from 'js/client/FolderBrowser';
+import Editor from 'js/client/Editor';
+import AlertHeader from 'js/client/AlertHeader';
+import WebcoderActions from 'js/client/WebcoderActions';
 
 require('client/style/Webcoder.scss');
 
@@ -14,7 +14,7 @@ require('client/style/Webcoder.scss');
  * The root component for the webcoder front-end
  */
 
-class Webcoder extends React.Component {
+export default class Webcoder extends React.Component {
   componentDidMount() {
     document.addEventListener('keydown', this.onKeydown);
   }
@@ -44,9 +44,9 @@ class Webcoder extends React.Component {
   render() {
     return (
       <div>
-        <AlertHeader />
+        <AlertHeader message={this.props.alertMessage} />
         <div className="pane-container">
-          <div className="sidebar-pane">
+          <div className="sidebar-panes">
             <FolderBrowser />
           </div>
           <div className="content-pane">
@@ -59,4 +59,6 @@ class Webcoder extends React.Component {
   }
 }
 
-module.exports = Webcoder;
+Webcoder.propTypes = {
+  alertMessage: React.PropTypes.string, // banner at the top, null hides.
+};

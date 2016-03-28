@@ -2,8 +2,8 @@ const { Record } = require('immutable');
 const path = require('path');
 
 const Filetypes = {
-  FILE: Symbol('FILE'),
-  FOLDER: Symbol('FOLDER'),
+  FILE: 'FILE',
+  FOLDER: 'FOLDER',
 };
 
 const _fileEntryDefaults = {

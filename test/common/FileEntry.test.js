@@ -22,6 +22,6 @@ describe('FileEntry', () => {
   });
   it('toString() description', () => {
     const entry = new FileEntry({ filetype: Filetypes.FILE, path: '/file.txt' });
-    expect(entry.toString()).to.equal('/file.txt - Symbol(FILE)');
+    expect(entry.toString()).to.equal('/file.txt - FILE');
   });
 });

@@ -1,7 +1,7 @@
 const React = require('react');
 
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
-const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
+const FolderBrowserEntry = require('js/client/components/FolderBrowserEntry');
 
 require('client/style/FolderBrowserEntryList.scss');
 

@@ -8,14 +8,14 @@ const serverfs = require('js/server/serverfs');
 describe('serverfs', () => {
   beforeEach(() => {
     mockfs({
-        '/rootpath': {
-          'subdir': {
-            'aDir': {},
-            'aFile.txt': 'aFile.txt contents',
-          },
-          'file.txt': 'fake file contents',
+      '/rootpath': {
+        'subdir': {
+          'aDir': {},
+          'aFile.txt': 'aFile.txt contents',
         },
-      });
+        'file.txt': 'fake file contents',
+      },
+    });
   });
 
   afterEach(() => {

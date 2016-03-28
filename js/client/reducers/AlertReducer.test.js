@@ -1,4 +1,4 @@
-import AlertReducer from './AlertReducer';
+import alertReducer from './AlertReducer';
 import { ActionTypes } from 'js/client/Constants';
 
 describe('AlertReducer', () => {
@@ -11,15 +11,15 @@ describe('AlertReducer', () => {
   });
 
   it('handles SHOW_ALERT', () => {
-    AlertReducer(mockState, { type: ActionTypes.SHOW_ALERT, message: 'alert message' });
+    alertReducer(mockState, { type: ActionTypes.SHOW_ALERT, message: 'alert message' });
     expect(mockState.set).toHaveBeenCalledWith('message', 'alert message');
   });
   it('handles CLEAR_ALERT', () => {
-    AlertReducer(mockState, { type: ActionTypes.CLEAR_ALERT });
+    alertReducer(mockState, { type: ActionTypes.CLEAR_ALERT });
     expect(mockState.set).toHaveBeenCalledWith('message', null);
   });
   it('handles unrelated action types', () => {
-    AlertReducer(mockState, { type: 'OTHER_ACTION_TYPE' });
+    alertReducer(mockState, { type: 'OTHER_ACTION_TYPE' });
     expect(mockState.set).not.toHaveBeenCalled();
   });
 });

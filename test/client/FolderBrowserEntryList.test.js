@@ -6,7 +6,7 @@ const TestUtils = require('react-addons-test-utils');
 
 const Immutable = require('immutable');
 const { FileEntry, Filetypes } = require('js/common/FileEntry');
-const FolderBrowserEntry = require('js/client/FolderBrowserEntry');
+const FolderBrowserEntry = require('js/client/components/FolderBrowserEntry');
 
 const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
 

@@ -1,6 +1,6 @@
 import { Record } from 'immutable';
 import { ActionTypes } from 'js/client/Constants';
-const AlertStateRecord = Record({message: null});
+const AlertStateRecord = Record({ message: null });
 
 export default function alert(state = new AlertStateRecord(), action) {
   switch (action.type) {

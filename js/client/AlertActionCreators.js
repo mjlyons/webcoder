@@ -19,7 +19,6 @@ function _clearAlert() {
 
 function showAlert(message) {
   return (dispatch) => {
-    console.log('in inner!');
     // Display message now
     dispatch(_setAlert(message));
     if (!!pendingHideAlert) {
