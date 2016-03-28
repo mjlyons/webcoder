@@ -2,11 +2,16 @@ const buildsettings = require('./buildsettings');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const settings = require('./settings')();
 const path = require('path');
+const webpack = require('webpack');
 
 const clientJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_JS_PACKAGE_PATH;
+const clientVendorJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_VENDOR_JS_PACKAGE_URL;
 
 module.exports = {
-  entry: "./js/client/client.js",
+  entry: {
+    app: "./js/client/client.js",
+    vendor: ['immutable', 'react', 'react-dom', 'react-redux', 'redux', 'redux-thunk'],
+  },
   output: {
     path: path.join(__dirname, 'build/static/client'),
     filename: "bundle.js"
@@ -37,7 +42,9 @@ module.exports = {
       filename: 'client.html',
       template: 'client/html/client.html',
       settings: settings,
-      CLIENT_JS_PACKAGE_URL: clientJsPackageUrl
+      CLIENT_JS_PACKAGE_URL: clientJsPackageUrl,
+      CLIENT_VENDOR_JS_PACKAGE_URL: clientVendorJsPackageUrl,
     }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   ],
 }

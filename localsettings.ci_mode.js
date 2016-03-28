@@ -6,8 +6,10 @@ module.exports = {
   SERVER_HOST: 'https://example.org:3000',
   CLIENT_HOST: 'https://example.org:3000',
   CLIENT_JS_BUNDLE_PATH: '/static/client/bundle.js',
+  CLIENT_VENDOR_JS_BUNDLE_PATH: '/static/client/vendor.bundle.js',
   WEBPACK_DEV_SERVER_HOST: 'http://localhost:8080',
   WEBPACK_DEV_SERVER_JS_BUNDLE_PATH: '/bundle.js',
+  WEBPACK_DEV_SERVER_VENDOR_JS_BUNDLE_PATH: '/vendor.bundle.js',
 
   IGNORED_FILE_ENTRIES: ['node_modules', 'build', '.git'],
   FAST_FILENAME_SEARCH_EXTENSIONS: ['.py', '.js', '.coffee', '.scss'],

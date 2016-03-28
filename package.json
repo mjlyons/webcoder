@@ -30,6 +30,7 @@
     "test:jasmine": "jasmine",
     "test:karma": "karma start --single-run",
     "test:karma:cov": "karma start karma-cov.conf.js",
+    "test:karma:watch": "karma start",
     "test:chrome": "karma start --browsers Chrome",
     "test:nocov": "npm run test:mocha",
     "test:watch": "nodemon --ignore build/ --exec 'npm test && npm run lint'",
