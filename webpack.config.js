@@ -5,7 +5,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const clientJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_JS_PACKAGE_PATH;
-const clientVendorJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_VENDOR_JS_PACKAGE_URL;
+const clientVendorJsPackageUrl = buildsettings.CLIENT_HOST + buildsettings.CLIENT_VENDOR_JS_PACKAGE_PATH;
 
 module.exports = {
   entry: {
