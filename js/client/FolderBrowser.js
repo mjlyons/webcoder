@@ -4,7 +4,7 @@ const { FileEntry, Filetypes } = require('js/common/FileEntry');
 const SourcePath = require('js/common/SourcePath');
 
 const WebcoderActions = require('js/client/WebcoderActions');
-const FolderBrowserEntryList = require('js/client/FolderBrowserEntryList');
+const FolderBrowserEntryList = require('js/client/components/FolderBrowserEntryList');
 
 const FolderBrowserStore = require('js/client/stores/FolderBrowserStore');
 const SourceFileSystemStore = require('js/client/stores/SourceFileSystemStore');

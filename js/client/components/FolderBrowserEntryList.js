@@ -1,7 +1,7 @@
-const React = require('react');
+import React from 'react';
 
-const { FileEntry, Filetypes } = require('js/common/FileEntry');
-const FolderBrowserEntry = require('js/client/components/FolderBrowserEntry');
+import { FileEntry, Filetypes } from 'js/common/FileEntry';
+import FolderBrowserEntry from 'js/client/components/FolderBrowserEntry';
 
 require('client/style/FolderBrowserEntryList.scss');
 
