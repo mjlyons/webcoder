@@ -1,5 +1,5 @@
-const { Record } = require('immutable');
-const path = require('path');
+import { Record } from 'immutable';
+import path from 'path';
 
 const Filetypes = {
   FILE: 'FILE',
